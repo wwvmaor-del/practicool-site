@@ -1,5 +1,6 @@
 (function(){
 document.addEventListener('click',function(e){
+var lk=e.target.closest&&e.target.closest('a[href]');if(lk&&window.gtag){var hr=lk.getAttribute('href')||'';if(hr.indexOf('wa.me')>-1)gtag('event','whatsapp_click');else if(hr.indexOf('tel:')===0)gtag('event','phone_click')}
 var h=document.querySelector('.hdr'),b=document.getElementById('nx-burger');
 if(h&&b){if(e.target.closest('#nx-burger')){var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');return}
 if(e.target.closest('.hdr .nav a')){h.classList.remove('open');b.setAttribute('aria-expanded','false')}}
@@ -19,7 +20,7 @@ var data={access_key:'0ac1bba8-fb1a-41e3-a861-c75ad4f730e2',subject:'פנייה 
 'נשלח מדף':document.body.getAttribute('data-page')||'',botcheck:hp&&hp.checked?true:''};
 fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)})
 .then(function(r){return r.json()}).then(function(j){if(!j||!j.success)throw 0;
-f.reset();if(btn){btn.textContent='נשלח ✓'}d3.hidden=false;
+f.reset();if(btn){btn.textContent='נשלח ✓'}if(window.gtag)gtag('event','generate_lead',{method:'form'});d3.hidden=false;
 d3.innerHTML='<b>תודה! קיבלנו את הפרטים ונחזור אליכם בהקדם.</b><br>רוצים מהר יותר? <a href="'+u+'" target="_blank" rel="noopener">המשיכו איתנו בוואטסאפ</a>'})
 .catch(function(){f.__busy=false;if(btn){btn.disabled=false;btn.textContent='שלחו ונחזור אליכם'}d3.hidden=false;
 d3.innerHTML='לא הצלחנו לשלוח כרגע. <a href="'+u+'" target="_blank" rel="noopener">שלחו לנו את הפנייה בוואטסאפ</a> או התקשרו 051-500-2490.'})});
