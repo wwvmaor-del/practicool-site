@@ -1643,6 +1643,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .vx-brands{list-style:none;padding:0;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;max-width:1000px}
 .vx-brands li{background:#F4F7FB;border:1px solid #DCE3EC;border-radius:14px;padding:14px 10px}
 .vx-brands b{display:block;font:800 17px Heebo,sans-serif;color:#0F3C5F}.vx-brands span{display:block;font:400 13px Heebo,sans-serif;color:#4A5866;margin-top:3px}
+.vx-fig{max-width:420px;margin:0 auto 26px}.vx-fig img{width:100%;height:auto;border-radius:16px;display:block}.vx-fig figcaption{font:400 14px Heebo,sans-serif;color:#4A5866;margin-top:8px}
 .vx-more{margin-top:22px}.vx-more a{color:#0F3C5F;font:700 16px Heebo,sans-serif}.vx-more a.pc-simbtn{color:#0A1628}
 .vx-pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;text-align:right}
 .vx-pc{background:#fff;border:1px solid #DCE3EC;border-radius:16px;padding:18px 20px}.vx-pc h3{font:800 20px Heebo,sans-serif;color:#0A1628;margin:0 0 10px}
