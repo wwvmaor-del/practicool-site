@@ -1615,6 +1615,8 @@ img{height:auto}
 .pc-simband{background:#0A1628;color:#fff;text-align:center;padding:40px 20px}.pc-simband h2{font:900 28px Heebo,sans-serif;margin:0 0 8px}.pc-simband p{margin:0 0 18px;color:#F0F6FB}
 .pc-simband a{display:inline-block;background:#C9A227;color:#0A1628;text-decoration:none;font:800 18px Heebo,sans-serif;border-radius:12px;padding:14px 28px}
 
+@media(min-width:1440px){.hdr .in>.con:first-child{flex:0 0 auto!important;margin-left:28px}.hdr .in>.con:nth-child(2){flex:1 1 auto!important;min-width:0}.hdr .nav{flex-wrap:wrap!important;justify-content:center;column-gap:16px;row-gap:6px}}
+
 .pc-pricing{background:#F4F7FB;padding:72px 20px}.pc-pricing .pc-in{max-width:1180px;margin:0 auto;text-align:center}
 .pc-eyebrow{color:#8A6D12;font:800 14px Heebo,sans-serif;letter-spacing:.04em;margin-bottom:8px}
 .pc-pricing h2{font:900 clamp(30px,4vw,44px)/1.15 Heebo,sans-serif;color:#0A1628;margin:0 0 12px}
