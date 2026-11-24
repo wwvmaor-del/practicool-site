@@ -4,7 +4,7 @@ var h=document.querySelector('.hdr'),b=document.getElementById('nx-burger');
 if(h&&b){if(e.target.closest('#nx-burger')){var o=h.classList.toggle('open');b.setAttribute('aria-expanded',o?'true':'false');return}
 if(e.target.closest('.hdr .nav a')){h.classList.remove('open');b.setAttribute('aria-expanded','false')}}
 var t=e.target.closest('.pc-tour-btn');if(t){var w=t.parentNode,f=document.createElement('iframe');f.src=w.getAttribute('data-src');f.title='סיור תלת־ממד';f.allow='fullscreen';f.setAttribute('allowfullscreen','');w.appendChild(f);t.remove();return}
-var v=e.target.closest('.pc-vid');if(v&&!v.querySelector('iframe')){var y=document.createElement('iframe');y.src='https://www.youtube-nocookie.com/embed/'+v.getAttribute('data-yt')+'?autoplay=1&rel=0';y.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';y.title='סרטון';v.appendChild(y)}});
+var v=e.target.closest('.pc-vid');if(v&&v.getAttribute('data-mp4')&&!v.querySelector('video')){var m=document.createElement('video');m.src=v.getAttribute('data-mp4');m.controls=true;m.autoplay=true;m.muted=true;m.playsInline=true;m.setAttribute('playsinline','');v.appendChild(m);m.play&&m.play().catch(function(){});return}if(v&&!v.getAttribute('data-mp4')&&!v.querySelector('iframe')){var y=document.createElement('iframe');y.src='https://www.youtube-nocookie.com/embed/'+v.getAttribute('data-yt')+'?autoplay=1&rel=0';y.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';y.title='סרטון';v.appendChild(y)}});
 document.addEventListener('submit',function(e){
 if(!e.target||e.target.id!=='nx-form')return;e.preventDefault();
 var g=function(i){var x=document.getElementById(i);return x?x.value.trim():''};
