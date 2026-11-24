@@ -14,7 +14,7 @@ var u='https://wa.me/972515002490?text='+encodeURIComponent(m);
 if(window.__PC_PREVIEW){var d2=document.getElementById('nx-done');d2.hidden=false;d2.innerHTML='בתצוגה המקדימה: <a href="'+u+'" target="_blank" rel="noopener">לחצו כאן לפתיחת הפנייה בוואטסאפ</a>';return}
 location.href=u});
 })();
-(function(){
+window.pcsInit=function(){
 var el=document.getElementById('pcs-data');if(!el)return;var D=JSON.parse(el.textContent);
 var nf=function(x){return x.toLocaleString('he-IL')};
 var val=function(n){var c=document.querySelector('input[name="'+n+'"]:checked');return c?c.value:null};
@@ -24,7 +24,7 @@ var TXT={big:'גדול',small:'קטן',unknown:'לא ידוע'};
 function render(){
  var rooms=val('rooms'),shaft=val('shaft'),use=val('use');var res=document.getElementById('pcs-res');
  if(!rooms){return}
- document.getElementById('pcs-hint').hidden=true;res.hidden=false;document.getElementById('pcs-note').hidden=false;document.getElementById('pcs-cta').hidden=false;
+ document.getElementById('pcs-hint').hidden=true;res.hidden=false;if(shaft&&use&&!window.__pcsSeen){window.__pcsSeen=1;setTimeout(function(){res.scrollIntoView({behavior:'smooth',block:'start'})},150)}document.getElementById('pcs-note').hidden=false;document.getElementById('pcs-cta').hidden=false;
  var P=D.prices[rooms];var cards=D.options.map(function(o){
   var off=(shaft==='small'&&+rooms>=4&&(o.k==='split'||o.k==='mini_split'));
   var rec=!off&&REC[use].indexOf(o.k)>=0;
@@ -46,7 +46,10 @@ function render(){
  document.getElementById('pcs-wa').href='https://wa.me/'+D.wa+'?text='+encodeURIComponent('שלום, אשמח להצעת מחיר מדויקת.\n'+sum);
  document.getElementById('pcs-plan').href='https://wa.me/'+D.wa+'?text='+encodeURIComponent('שלום, מצרף/ת תוכנית דירה ואשמח לקבל סיור תלת־ממד והצעה.\n'+sum);
 }
-document.addEventListener('change',function(e){if(e.target.closest&&e.target.closest('#pcs'))render()});
-document.addEventListener('click',function(e){var c=e.target.closest&&e.target.closest('.pcs-card');if(c&&!c.disabled){chosen=c.getAttribute('data-k');render()}});
+window.__pcs={render:render,pick:function(k){chosen=k;render()}};
+if(!window.__pcsBound){window.__pcsBound=1;
+document.addEventListener('change',function(e){if(e.target.closest&&e.target.closest('#pcs'))window.__pcs.render()});
+document.addEventListener('click',function(e){var c=e.target.closest&&e.target.closest('.pcs-card');if(c&&!c.disabled){window.__pcs.pick(c.getAttribute('data-k'))}});}
 render();
-})();
+};
+window.pcsInit();
