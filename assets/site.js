@@ -11,8 +11,18 @@ var g=function(i){var x=document.getElementById(i);return x?x.value.trim():''};
 if(!g('f-name')||!g('f-phone')){var d=document.getElementById('nx-done');d.hidden=false;d.textContent='נא למלא שם וטלפון.';return}
 var m='פנייה מטופס האתר\nשם: '+g('f-name')+'\nטלפון: '+g('f-phone')+'\nעיר / פרויקט: '+g('f-city')+'\nסוג לקוח: '+g('f-who')+(g('f-msg')?'\nהודעה: '+g('f-msg'):'')+'\n(נשלח מהאתר · דף: '+document.body.getAttribute('data-page')+' · טופס)';
 var u='https://wa.me/972515002490?text='+encodeURIComponent(m);
-if(window.__PC_PREVIEW){var d2=document.getElementById('nx-done');d2.hidden=false;d2.innerHTML='בתצוגה המקדימה: <a href="'+u+'" target="_blank" rel="noopener">לחצו כאן לפתיחת הפנייה בוואטסאפ</a>';return}
-location.href=u});
+var f=e.target,btn=f.querySelector('button[type=submit]'),d3=document.getElementById('nx-done');
+if(f.__busy)return;f.__busy=true;if(btn){btn.disabled=true;btn.textContent='שולח…'}
+var hp=f.querySelector('[name=botcheck]');
+var data={access_key:'0ac1bba8-fb1a-41e3-a861-c75ad4f730e2',subject:'פנייה חדשה מהאתר – '+g('f-name'),from_name:'אתר פרקטי-קור',
+'שם':g('f-name'),'טלפון':g('f-phone'),'עיר / פרויקט':g('f-city'),'סוג לקוח':g('f-who'),'הודעה':g('f-msg'),
+'נשלח מדף':document.body.getAttribute('data-page')||'',botcheck:hp&&hp.checked?true:''};
+fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)})
+.then(function(r){return r.json()}).then(function(j){if(!j||!j.success)throw 0;
+f.reset();if(btn){btn.textContent='נשלח ✓'}d3.hidden=false;
+d3.innerHTML='<b>תודה! קיבלנו את הפרטים ונחזור אליכם בהקדם.</b><br>רוצים מהר יותר? <a href="'+u+'" target="_blank" rel="noopener">המשיכו איתנו בוואטסאפ</a>'})
+.catch(function(){f.__busy=false;if(btn){btn.disabled=false;btn.textContent='שלחו ונחזור אליכם'}d3.hidden=false;
+d3.innerHTML='לא הצלחנו לשלוח כרגע. <a href="'+u+'" target="_blank" rel="noopener">שלחו לנו את הפנייה בוואטסאפ</a> או התקשרו 051-500-2490.'})});
 })();
 window.pcsInit=function(){
 var el=document.getElementById('pcs-data');if(!el)return;var D=JSON.parse(el.textContent);
