@@ -1,0 +1,1037 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>תכנון מיזוג · לוד · דירת 6 חדרים · VRF · פרקטי-קור</title>
+<style>
+*{box-sizing:border-box}
+:root{--bg:#e9ecee;--scene:#e6e9eb;--panel:#ffffffee;--fg:#16212a;--muted:#5d6a72;--accent:#0b7fa8;--gold:#C9A227;--navy:#0F3C5F;--line:#d3dadf;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);font-family:"Heebo",system-ui,"Segoe UI",Arial,sans-serif}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#121719;--scene:#182024;--panel:#1f282dee;--fg:#e8eef1;--muted:#9aa9b1;--accent:#4cc0e6;--line:#34424a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#121719;--scene:#182024;--panel:#1f282dee;--fg:#e8eef1;--muted:#9aa9b1;--accent:#4cc0e6;--line:#34424a;color-scheme:dark}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--fg);overflow:hidden;direction:rtl}
+#gl,#ov{position:fixed;inset:0;width:100%;height:100%;display:block}#gl{touch-action:none}#ov{pointer-events:none;z-index:2}
+.top{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);right:12px;left:12px;display:flex;flex-direction:column;gap:8px;pointer-events:none;z-index:5;align-items:flex-start}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 14px;box-shadow:0 4px 18px rgba(0,0,0,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);pointer-events:auto}
+.title b{font-size:17px;font-weight:800}.title b i{font-style:normal;color:var(--gold)}
+.title small{display:block;color:var(--muted);font-size:12px;font-weight:600;margin-top:2px}
+.legend{font-size:12px;line-height:1.6;max-width:270px;cursor:pointer}.legend .lt{font-weight:800;font-size:12.5px}.legend.closed div{display:none}.legend.closed .lt::after{content:" ◂"}
+.legend div::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;margin-left:7px;background:var(--c,var(--accent))}
+.legend.min{display:none}
+.bar{position:fixed;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);z-index:5;display:flex;flex-direction:column;gap:7px;align-items:center;pointer-events:none}
+.row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;pointer-events:auto}
+.seg{pointer-events:auto;display:flex;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px;box-shadow:0 4px 18px rgba(0,0,0,.08)}
+.seg button,.tg{border:0;background:transparent;color:var(--fg);font:700 13.5px inherit;font-family:inherit;padding:9px 13px;border-radius:10px;cursor:pointer;min-height:40px}
+.seg button[aria-pressed="true"]{background:var(--navy);color:#fff}
+.tg{background:var(--panel);border:1px solid var(--line);font-size:12px;padding:6px 10px;min-height:34px}
+.tg[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.tg.gold{background:var(--gold);border-color:var(--gold);color:#1b1400}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,39,.75)}70%{box-shadow:0 0 0 13px rgba(201,162,39,0)}100%{box-shadow:0 0 0 0 rgba(201,162,39,0)}}
+.blink{animation:pulse 1.4s ease-out infinite}
+#rooms{pointer-events:auto;display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+#rooms button{background:var(--panel);border:1px solid var(--line);color:var(--fg);border-radius:999px;padding:7px 12px;font:700 12.5px inherit;font-family:inherit;cursor:pointer}
+#rooms button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#1b1400}
+#joy{position:fixed;left:16px;bottom:calc(env(safe-area-inset-bottom,0px) + 200px);width:136px;height:136px;border-radius:50%;background:radial-gradient(circle at 50% 40%,rgba(255,255,255,.95),rgba(225,231,236,.9));border:2px solid rgba(15,60,95,.25);z-index:7;touch-action:none;box-shadow:0 10px 28px rgba(0,0,0,.22),inset 0 2px 6px rgba(255,255,255,.8)}
+#knob{position:absolute;left:41px;top:41px;width:50px;height:50px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#2a6a99,#0F3C5F);border:3px solid var(--gold);box-shadow:0 4px 12px rgba(0,0,0,.35);transition:transform .08s}
+.card{position:fixed;right:12px;left:12px;max-width:560px;margin:0 auto;bottom:calc(env(safe-area-inset-bottom,0px) + 118px);background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--gold);
+  border-radius:18px;padding:13px 16px;z-index:6;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.card .n{position:absolute;left:44px;top:13px;color:var(--muted);font-weight:700;font-size:13px}
+.card .x{position:absolute;left:10px;top:7px;border:0;background:transparent;color:var(--muted);font-size:20px;cursor:pointer}
+.card .t{color:var(--gold);font-weight:800;font-size:13px}.card .h{font-weight:800;font-size:19px;margin:2px 0 4px}.card .s{color:var(--muted);font-size:14px;line-height:1.45}
+.card .nav{display:flex;gap:6px;margin-top:10px}.card .nav button{flex:1;min-height:42px;border-radius:11px;border:1px solid var(--line);background:transparent;color:var(--fg);font:800 14px inherit;font-family:inherit;cursor:pointer}
+.card .nav .p{background:var(--gold);border-color:var(--gold);color:#1b1400}
+[hidden]{display:none!important}
+.sheet{position:fixed;left:10px;right:10px;bottom:calc(env(safe-area-inset-bottom,0px) + 10px);max-width:560px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px 16px 14px;z-index:9;box-shadow:0 16px 40px rgba(0,0,0,.28);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);max-height:78vh;overflow:auto}
+.sheet h3{margin:0 0 10px;font-size:19px;font-weight:800}.sheet .x{position:absolute;left:12px;top:10px;border:0;background:transparent;color:var(--fg);font-size:24px;cursor:pointer}
+.sheet .sec{font-size:12.5px;font-weight:800;color:var(--muted);margin:12px 0 6px}.sheet .opts{display:flex;flex-wrap:wrap;gap:6px}
+.sheet .opts button{flex:1 1 30%;min-height:44px;border-radius:12px;border:1px solid var(--line);background:transparent;color:var(--fg);font:800 13.5px inherit;font-family:inherit;cursor:pointer}
+.sheet .opts button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.sheet .tip{font-size:12px;color:var(--muted);margin-top:12px}
+.boq{width:100%;border-collapse:collapse;font-size:13px}.boq th{color:var(--muted);font-weight:800;text-align:right;padding:6px 4px;border-bottom:1px solid var(--line)}
+.boq td{padding:8px 4px;border-bottom:1px solid var(--line)}.boq td.n{font-weight:800;white-space:nowrap}.boq td.o{color:var(--muted);font-size:12px;white-space:nowrap}
+.info{position:fixed;left:12px;right:12px;max-width:420px;margin:0 auto;top:calc(env(safe-area-inset-top,0px) + 120px);background:var(--panel);border:1px solid var(--line);border-inline-start:5px solid var(--gold);border-radius:16px;padding:12px 14px;z-index:8;box-shadow:0 10px 28px rgba(0,0,0,.2)}
+.info b{display:block;font-size:16px;margin-bottom:4px}.info span{color:var(--muted);font-size:13.5px;line-height:1.5}
+.hud{position:fixed;top:calc(env(safe-area-inset-top,0px) + 120px);right:12px;background:rgba(11,22,34,.82);color:#fff;border-radius:14px;padding:10px 14px;z-index:6;font-weight:800;font-size:15px;text-align:center}
+.hud small{display:block;font-size:11px;color:#9fd3f5;font-weight:700}
+
+.hint{color:var(--muted);font-size:11.5px;pointer-events:none}
+.call{display:inline-block;margin-top:6px;padding:7px 14px;border-radius:999px;background:#0F3C5F;color:#fff;font-size:13.5px;text-decoration:none;pointer-events:auto;box-shadow:0 2px 8px rgba(0,0,0,.18);user-select:text}
+.call b{color:#C9A227;font-weight:700;letter-spacing:.3px}
+#err{display:none;position:fixed;inset:0;align-items:center;justify-content:center;text-align:center;padding:30px;z-index:9}
+</style>
+</head><body>
+<canvas id="gl"></canvas><canvas id="ov"></canvas>
+<div class="top">
+  <div class="chip title"><b>פרקטי<i>—</i>קור · תכנון מיזוג</b><small>לוד · דירת 6 חדרים · VRF</small></div>
+  <div class="chip legend closed" id="legend" onclick="this.classList.toggle('closed')"><span class="lt">מקרא המערכת</span>
+    <div style="--c:#7a4fd1">מיני מרכזי 36,000 · 4 שרשורים</div>
+    <div style="--c:#0b7fa8">סלוט 1.5 מ׳ לסלון + למטבח</div>
+    <div style="--c:#e0782b">עילי 9,600 ×3</div>
+    <div style="--c:#b87333">4 מעבים במסתור</div>
+    <div style="--c:#9aa3a8">גבס במבואה (שקוף)</div>
+  </div>
+</div>
+<div id="joy" hidden><div id="knob"></div><div style="position:absolute;bottom:-22px;left:0;right:0;text-align:center;font:800 11px Heebo,Arial;color:var(--fg)">🚶 הליכה</div></div>
+<div class="card" id="card" hidden>
+  <button class="x" id="cx" aria-label="סגור">✕</button>
+  <div class="n" id="cn"></div><div class="t" id="ct"></div><div class="h" id="ch"></div><div class="s" id="cs"></div>
+  <div class="nav"><button id="bPrev">→ הקודם</button><button class="p" id="bPause">❚❚ עצור</button><button id="bNext">הבא ←</button></div>
+  <div class="nav"><button id="bVoice" aria-pressed="true">🔊 קריינות</button></div>
+</div>
+<div class="bar">
+  <div id="rooms" hidden></div>
+  <div class="row" id="tools">
+    <button class="tg gold blink" id="tGuide">▶ סיור מודרך</button>
+    <button class="tg" id="tOpts">⚙️ אפשרויות</button>
+  </div>
+  <div class="seg"><button id="m-iso" aria-pressed="true">תלת־ממד</button><button id="m-top" aria-pressed="false">מבט על</button><button id="m-tour" aria-pressed="false">סיור בדירה</button></div>
+  <div class="hint" id="hint">גרירה לסיבוב · צביטה לזום · שתי אצבעות להזזה</div>
+  <a class="call" id="call" href="tel:0515002490">📞 להצעות התקשרו ל־<b dir="ltr">051-5002490</b> · פרקטי־קור</a>
+</div>
+<div class="sheet" id="sheet" hidden>
+  <button class="x" id="shX" aria-label="סגור">✕</button><h3>אפשרויות</h3>
+  <div class="sec">תצוגה</div>
+  <div class="opts"><button id="tWall" aria-pressed="true">קירות נמוכים</button><button id="tGyp" aria-pressed="true">גבס: שקוף</button><button id="tLbl" aria-pressed="true">תוויות</button><button id="tAir" aria-pressed="true">זרימת אוויר</button></div>
+  <div class="sec">הדגמה ללקוח</div>
+  <div class="opts"><button id="oNight" aria-pressed="false">🌙 מצב לילה</button><button id="oBefore" aria-pressed="false">לפני — בלי מיזוג</button><button id="oCool" aria-pressed="false">❄️ הדמיית קירור</button><button id="oLed" aria-pressed="false">💡 פסי לד מגנטיים</button></div>
+  <div class="sec">למתקין</div>
+  <div class="opts"><button id="oInst" aria-pressed="false">שכבת התקנה</button><button id="oBoq" aria-pressed="false">📋 כתב כמויות</button></div>
+  <div class="tip">טיפ: לחיצה על מזגן, גריל או מעבה במודל מציגה את הפרטים שלו.</div>
+</div>
+<div class="sheet" id="boqSheet" hidden><button class="x" id="bqX" aria-label="סגור">✕</button><h3>כתב כמויות</h3><div id="boqBody"></div>
+  <div class="tip">אורכים מחושבים מהתוכנית בקנ"מ 1:50. "להזמנה" כולל 10% רזרבה. גבס לפי מטר רץ: מסדרון 1:1, איפה שיש גריל ×1.5.</div></div>
+<div class="info" id="info" hidden></div>
+<div class="hud" id="hud" hidden></div>
+<div id="err">לא הצלחתי לטעון את מנוע התלת-ממד. רענן את העמוד.</div><script>window.TOUR_DATA={"K": 75.6, "origin": [530.1, 464.9], "HW": 2.6, "GYP_Y": 2.29, "floorTypes": true, "W": [[31.0, 249.5, 400.9, 263.8, [[56.1, 120.8, "door"]]], [31.0, 249.5, 45.4, 694.8, []], [31.0, 680.4, 670.2, 694.8, [[81.3, 264.4, "glass"], [365.0, 440.4, "win"], [537.3, 612.7, "win"]]], [386.5, 19.7, 400.9, 263.8, []], [386.5, 19.7, 673.8, 34.0, []], [659.4, 19.7, 673.8, 267.4, []], [386.5, 249.5, 673.8, 267.4, [[591.2, 652.2, "door"]]], [397.3, 267.4, 404.5, 371.6, []], [397.3, 364.4, 594.8, 371.6, []], [585.4, 267.4, 594.8, 371.6, [[285.4, 350.0, "door"]]], [673.8, 131.0, 684.6, 371.6, []], [673.8, 131.0, 1076.0, 141.8, []], [673.8, 360.8, 810.2, 371.6, []], [799.5, 141.8, 810.2, 364.4, [[227.9, 278.2, "door"]]], [799.5, 364.4, 810.2, 436.2, [[370.1, 421.8, "door"]]], [1061.6, 131.0, 1076.0, 436.2, [[289.0, 364.4, "win"]]], [799.5, 425.4, 1151.4, 436.2, []], [436.8, 442.0, 670.2, 452.0, []], [498.5, 442.0, 508.6, 687.6, []], [659.4, 442.0, 670.2, 694.8, [[615.8, 676.8, "door"]]], [749.2, 436.2, 757.8, 601.4, []], [749.2, 590.6, 896.4, 601.4, [[817.4, 878.5, "door"]]], [882.1, 436.2, 889.2, 601.4, [[457.8, 529.6, "door"]]], [889.2, 601.4, 1151.4, 612.2, []], [1004.2, 436.2, 1014.9, 601.4, [[464.9, 536.8, "door"]]], [659.4, 684.0, 896.4, 694.8, [[691.7, 745.6, "door"]]], [659.4, 694.8, 670.2, 928.2, []], [885.7, 612.2, 896.4, 917.4, [[619.4, 680.4, "door"]]], [659.4, 913.8, 1151.4, 928.2, [[763.6, 842.6, "win"], [971.8, 1050.8, "win"]]], [1140.6, 605.0, 1151.4, 928.2, [[680.4, 752.2, "win"]]]], "F": [[45.4, 263.8, 321.1, 680.4, "pub"], [321.1, 263.8, 397.3, 368.0, "pub"], [321.1, 368.0, 799.5, 442.0, "pub"], [321.1, 442.0, 498.5, 680.4, "pub"], [594.8, 267.4, 673.8, 368.0, "pub"], [670.2, 442.0, 749.2, 590.6, "pub"], [670.2, 590.6, 885.7, 684.0, "pub"], [400.9, 34.0, 659.4, 249.5, "wood"], [810.2, 141.8, 1061.6, 425.4, "wood"], [508.6, 452.0, 659.4, 680.4, "wood"], [670.2, 694.8, 885.7, 913.8, "wood"], [896.4, 612.2, 1140.6, 913.8, "wood"], [404.5, 267.4, 585.4, 364.4, "tile"], [684.6, 141.8, 799.5, 360.8, "tile"], [757.8, 436.2, 882.1, 590.6, "tile"], [889.2, 436.2, 1004.2, 601.4, "tile"], [1014.9, 436.2, 1140.6, 601.4, "deck"], [31.0, 694.8, 508.6, 895.9, "deck"]], "furniture": [["counter", 458.3, 452.0, 498.5, 680.4, 1, "w", 2.29], ["counter", 321.1, 637.3, 458.3, 680.4, 0, "n"], ["fridge", 458.3, 452.0, 498.5, 500.9], ["sink", 478.4, 601.4], ["stove", 347.0, 660.3], ["sofa", 56.1, 407.5, 113.6, 579.9, "e"], ["coffee", 142.3, 464.9, 185.4, 522.4], ["rug", 52.5, 393.1, 221.3, 594.2], ["dining", 221.3, 508.0, 293.1, 622.9], ["plant", 63.3, 666.0], ["bed", 867.7, 141.8, 1004.2, 292.6, "n"], ["bed", 670.2, 752.2, 817.4, 874.3, "w"], ["bed", 997.0, 612.2, 1133.4, 759.4, "n"], ["bed", 515.8, 452.0, 587.6, 601.4, "n"], ["bed", 408.1, 41.2, 479.9, 192.0, "n"], ["tub", 763.6, 529.6, 874.9, 585.6], ["toilet", 849.7, 468.5, "w"], ["vanity", 760.0, 442.0, 810.2, 486.5], ["toilet", 458.3, 324.9, "e"], ["vanity", 508.6, 271.0, 558.9, 314.1], ["shower", 686.7, 289.0, 795.9, 358.6], ["toilet", 738.4, 177.7, "s"], ["vanity", 686.7, 220.8, 727.6, 278.2]], "rooms": [["סלון", 156.7, 364.4], ["מטבח", 386.5, 551.1], ["כניסה", 92.0, 292.6], ["מרפסת", 242.9, 809.7], ["מסדרון", 515.8, 403.9], ["ממ\"ד", 530.1, 127.4], ["שירותי אורחים", 494.2, 321.3], ["חדר הורים", 932.3, 335.7], ["רחצת הורים", 742.0, 249.5], ["חצי חדר", 584.0, 637.3], ["אמבטיה", 817.4, 543.9], ["כביסה", 946.7, 508.0], ["מסתור", 1076.0, 508.0], ["חדר שינה", 781.5, 888.7], ["חדר שינה 2", 1018.5, 824.0], ["מבואת חדרים", 781.5, 637.3]], "focus": [587.6, 464.9], "louvers": [[1142.1, 443.4, 1142.1, 600.0]], "condFace": "e", "thermo": [], "highWalls": true, "colors": {"pub": 12563619, "tile": 11383473, "wood": 11768688}, "miniDir": "w", "mini": [792.3, 468.5, 56.7, 98.28, 22.68], "COLY": [484.5, 508.5, 532.5], "ret": [602.0, 403.9], "slots": [[458.3, 565.5, 189.0, "z", -1, 0.13], [401.6, 403.9, 60.48, "z", -1, 0.13]], "ducts": [[[769.62, 484.5], [731.2, 475.7], [709.7, 418.3], [530.1, 414.7], [479.9, 436.2], [490.6, 508.0], [466.3, 540.5]], [[769.62, 508.5], [724.1, 497.3], [702.5, 429.0], [530.1, 425.4], [490.6, 443.4], [494.2, 579.9], [466.3, 590.5]], [[769.62, 532.5], [716.9, 518.8], [695.3, 439.8], [458.3, 436.2], [422.4, 407.5], [407.6, 403.9]]], "gypPoly": [{"pts": [[397.0, 368.0], [397.0, 441.5], [458.0, 442.0], [458.0, 679.5], [498.0, 679.5], [498.5, 441.5], [670.0, 442.0], [670.0, 683.5], [885.0, 683.5], [885.5, 600.5], [1003.5, 600.5], [1003.5, 436.0], [799.5, 436.0], [799.0, 368.0], [673.0, 367.5], [673.0, 267.0], [594.5, 267.0], [594.0, 368.0]], "y": 2.29}], "gyp": [], "splits": [[621.4, 249.5, "n"], [810.2, 396.0, "e"], [659.4, 645.9, "w"], [885.7, 729.2, "w"], [896.4, 649.5, "e"]], "conds": [[1079.6, 518.8, 2]], "cond1": [], "spots": [[436.8, 403.9], [530.1, 403.9], [709.7, 403.9], [709.7, 508.0], [745.6, 637.3], [839.0, 637.3], [616.3, 321.3]], "pipes": {"solid": [[[810.2, 540.4], [792.3, 536.8], [817.4, 508.0], [946.7, 493.7], [1061.6, 518.8]], [[621.4, 258.1], [630.7, 321.3], [652.2, 393.1], [709.7, 414.7], [716.9, 464.9], [821.7, 508.0], [946.7, 498.0], [1061.6, 521.0]], [[804.5, 396.0], [774.3, 400.3], [734.8, 450.6], [738.4, 500.9], [813.1, 508.0], [946.7, 489.4], [1061.6, 516.7]], [[665.2, 645.9], [688.1, 644.5], [731.2, 615.8], [767.2, 594.2], [824.6, 508.0], [946.7, 500.9], [1061.6, 522.4]], [[890.7, 649.5], [853.3, 644.5], [817.4, 615.8], [795.9, 594.2], [810.2, 508.0], [946.7, 486.5], [1061.6, 515.2]], [[889.2, 684.0], [846.2, 666.0], [810.2, 608.6], [827.5, 508.0], [946.7, 503.7], [1061.6, 523.8]]], "chase": [[[889.2, 729.2], [889.2, 689.0]]], "prep": []}, "title": "לוד · דירת 6 חדרים · VRF", "legend": [["#7a4fd1", "יחידה מושלכת VRF באמצע תקרת האמבטיה · 3 שרשורים"], ["#0b7fa8", "גריל 2.5 מ׳ על סינר לכל אורך ארונות המטבח, נושב אל המטבח והסלון · גריל 80 בקצה המסדרון אל הכניסה"], ["#e0782b", "5 עיליים VRF: מעל הדלת בחדר ההורים, בממ\"ד, בחצי חדר ובחדר שינה 2 · מול המיטה בחדר השינה"], ["#b87333", "מעבה VRF אחד במסתור הכביסה"], ["#9aa3a8", "גבס: מסדרון, מבואת החדרים וסינר מעל ארונות המטבח — חתיכה אחת · תקרה מונמכת באמבטיה ובכביסה"]], "acInfo": ["יחידה מושלכת VRF באמצע תקרת האמבטיה. המרכזייה פונה מערבה אל המסדרון, 3 שרשורים: 2 לגריל המטבח ואחד לגריל בקצה המסדרון. אוויר חוזר בתקרת המסדרון בלי שרשור, פתח שירות מתחת ליחידה.", "סינר גבס לכל אורך ארונות המטבח, עם גריל 2.5 מ׳ שנושב לאורך המטבח אל הסלון.", "גריל 80 בקצה המסדרון, בקו אפס עם קיר השירותים, נושב אל הכניסה והסלון.", "עילי VRF מעל דלת חדר ההורים, נושב אל החדר. הצנרת עוברת ישר דרך הקיר לגבס המסדרון.", "עילי VRF בחדר השינה על הקיר השמאלי כשנכנסים לחדר, מול המיטה. הצנרת עולה בחציבה קצרה אל גבס המבואה שסוגר את המעבר מול האמבטיה.", "עילי VRF מעל הדלת בממ\"ד, בחצי חדר ובחדר שינה 2. הצנרת יוצאת דרך הקיר לגבס.", "מעבה VRF אחד במסתור הכביסה לכל 6 יחידות הפנים."], "acLabels": [["יחידה מושלכת VRF", 820.65, 517.64, 3.0, "#7a4fd1", "ceil"], ["גריל 2.5 מ׳ · מטבח", 458.3, 565.5, 2.75, "#0b7fa8", "ceil"], ["גריל 80 · מסדרון", 401.6, 403.9, 2.75, "#0b7fa8", "ceil"], ["עילי VRF", 621.4, 235.1, 2.85, "#e0782b", "ceil", "ממ\"ד"], ["עילי VRF", 824.6, 396.0, 2.85, "#e0782b", "ceil", "חדר הורים"], ["עילי VRF", 645.1, 645.9, 2.85, "#e0782b", "ceil", "חצי חדר"], ["עילי VRF", 871.3, 729.2, 2.85, "#e0782b", "ceil", "חדר שינה"], ["עילי VRF", 910.8, 649.5, 2.85, "#e0782b", "ceil", "חדר שינה 2"], ["מעבה VRF", 1079.6, 518.8, 2.4, "#b87333", "base"]], "boq": [["יחידה מושלכת VRF", "1", "יח׳", "סלון + מטבח · בתקרת האמבטיה"], ["עילי VRF", "5", "יח׳", "הורים · ממ\"ד · חצי חדר · 2 חדרי שינה"], ["מעבה VRF", "1", "יח׳", "במסתור הכביסה"], ["גריל סלוט 2.5 מ׳ · גובה 10", "1", "יח׳", "סינר מעל ארונות המטבח"], ["גריל סלוט 80 · גובה 10", "1", "יח׳", "קצה המסדרון"], ["גריל אוויר חוזר 54×54", "1", "יח׳", "תקרת המסדרון"], ["פתח שירות 54×54", "1", "יח׳", "באמבטיה מתחת ליחידה"], ["צנרת נחושת (זוג)", "46.0", "מ'", "הערכה · להזמנה 51 מ'"], ["ספוטים", "7", "יח׳", ""], ["גבס", "22.8", "מטר רץ", "הערכה"]], "tourRooms": [["סלון", 120.8, 464.9, 458.3, 565.5, 2.3], ["מטבח", 386.5, 536.8, 458.3, 565.5, 2.3], ["מסדרון", 530.1, 403.9, 602.0, 403.9, 2.3], ["חדר הורים", 932.3, 249.5, 810.2, 396.0, 2.2], ["ממ\"ד", 530.1, 77.1, 621.4, 249.5, 2.2], ["חצי חדר", 573.2, 536.8, 659.4, 645.9, 2.2], ["חדר שינה", 745.6, 824.0, 885.7, 729.2, 2.2], ["חדר שינה 2", 1032.9, 752.2, 896.4, 649.5, 2.2], ["מסתור", 1076.0, 508.0, 1079.6, 518.8, 0.8]], "stations": [["מבט על", "תכנון VRF לדירה", "יחידה מושלכת לסלון ולמטבח, 5 עיליים בחדרים, ומעבה VRF אחד במסתור הכביסה.", "all", null, null, 0, "T"], ["מטבח", "גריל 2.5 מ׳ מעל הארונות", "סינר גבס לכל אורך ארונות המטבח, עם גריל 2.5 מ׳ שנושב לאורך המטבח אל הסלון.", "pt", [171.0, 1.55, 572.7], [458.3, 2.25, 565.5], 0, "R"], ["מסדרון", "גריל 80 בקצה המסדרון", "גריל 80 בקצה המסדרון, בקו אפס עם קיר השירותים, נושב אל הכניסה והסלון.", "pt", [171.0, 1.55, 364.4], [401.6, 2.25, 403.9], 0, "R"], ["מעל הגבס", "היחידה והשרשורים", "יחידה מושלכת VRF באמצע תקרת האמבטיה. המרכזייה פונה מערבה אל המסדרון, 3 שרשורים: 2 לגריל המטבח ואחד לגריל בקצה המסדרון. אוויר חוזר בתקרת המסדרון בלי שרשור, פתח שירות מתחת ליחידה.", "pt", [566.1, 4.8, 716.3], [792.3, 0.9, 508.0], 1, "N"], ["חדר הורים", "עילי מעל הדלת", "עילי VRF מעל דלת חדר ההורים, נושב אל החדר. הצנרת עוברת ישר דרך הקיר לגבס המסדרון.", "pt", [975.4, 1.55, 249.5], [810.2, 2.0, 396.0], 0, "R"], ["חדר שינה", "עילי מול המיטה", "עילי VRF בחדר השינה על הקיר השמאלי כשנכנסים לחדר, מול המיטה. הצנרת עולה בחציבה קצרה אל גבס המבואה שסוגר את המעבר מול האמבטיה.", "pt", [709.7, 1.55, 824.0], [885.7, 2.0, 729.2], 0, "R"], ["ממ\"ד", "עילי מעל הדלת", "עילי VRF מעל הדלת בממ\"ד, בחצי חדר ובחדר שינה 2. הצנרת יוצאת דרך הקיר לגבס.", "pt", [515.8, 1.55, 91.5], [621.4, 2.0, 249.5], 0, "R"], ["מסתור", "מעבה VRF", "מעבה VRF אחד במסתור הכביסה לכל 6 יחידות הפנים.", "pt", [1076.0, 2.7, 666.0], [1079.6, 0.9, 518.8], 1, "N"]]};</script>
+<script>/* PractiCool Tour Engine — WebGL2, ללא ספריות. בסיס קבוע לכל סיורי התוכניות. */
+var PCE=(function(){
+'use strict';
+function hex(c){return [((c>>16)&255)/255,((c>>8)&255)/255,(c&255)/255];}
+var V={sub:function(a,b){return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];},add:function(a,b){return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];},
+  mul:function(a,s){return [a[0]*s,a[1]*s,a[2]*s];},dot:function(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];},
+  cross:function(a,b){return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];},
+  len:function(a){return Math.hypot(a[0],a[1],a[2]);},norm:function(a){var l=Math.hypot(a[0],a[1],a[2])||1;return [a[0]/l,a[1]/l,a[2]/l];},
+  lerp:function(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}};
+var M4={
+  persp:function(f,a,n,fa){var t=1/Math.tan(f/2),nf=1/(n-fa);return [t/a,0,0,0,0,t,0,0,0,0,(fa+n)*nf,-1,0,0,2*fa*n*nf,0];},
+  ortho:function(l,r,b,t,n,f){return [2/(r-l),0,0,0,0,2/(t-b),0,0,0,0,-2/(f-n),0,-(r+l)/(r-l),-(t+b)/(t-b),-(f+n)/(f-n),1];},
+  look:function(e,c,u){var z=V.norm(V.sub(e,c)),x=V.norm(V.cross(u,z)),y=V.cross(z,x);
+    return [x[0],y[0],z[0],0,x[1],y[1],z[1],0,x[2],y[2],z[2],0,-V.dot(x,e),-V.dot(y,e),-V.dot(z,e),1];},
+  mul:function(a,b){var o=new Array(16);for(var i=0;i<4;i++)for(var j=0;j<4;j++){var s=0;for(var k=0;k<4;k++)s+=a[k*4+j]*b[i*4+k];o[i*4+j]=s;}return o;},
+  xf:function(m,p){var x=p[0],y=p[1],z=p[2],w=m[3]*x+m[7]*y+m[11]*z+m[15];return [(m[0]*x+m[4]*y+m[8]*z+m[12])/w,(m[1]*x+m[5]*y+m[9]*z+m[13])/w,(m[2]*x+m[6]*y+m[10]*z+m[14])/w,w];}};
+
+/* ---------- גיאומטריה (בקואורדינטות עולם, מחושבת פעם אחת) ---------- */
+function Geo(){this.p=[];this.n=[];this.i=[];}
+Geo.prototype.quad=function(a,b,c,d,n){var o=this.p.length/3;[a,b,c,d].forEach(function(v){this.p.push(v[0],v[1],v[2]);this.n.push(n[0],n[1],n[2]);},this);this.i.push(o,o+1,o+2,o,o+2,o+3);};
+function rotY(v,r){var c=Math.cos(r),s=Math.sin(r);return [v[0]*c+v[2]*s,v[1],-v[0]*s+v[2]*c];}
+function boxGeo(g,w,h,d,x,y,z,ry,edges){var hx=w/2,hy=h/2,hz=d/2,T=function(v){v=rotY(v,ry||0);return [v[0]+x,v[1]+y,v[2]+z];},N=function(v){return rotY(v,ry||0);};
+  var P=[[-hx,-hy,-hz],[hx,-hy,-hz],[hx,hy,-hz],[-hx,hy,-hz],[-hx,-hy,hz],[hx,-hy,hz],[hx,hy,hz],[-hx,hy,hz]].map(T);
+  g.quad(P[4],P[5],P[6],P[7],N([0,0,1]));g.quad(P[1],P[0],P[3],P[2],N([0,0,-1]));g.quad(P[5],P[1],P[2],P[6],N([1,0,0]));
+  g.quad(P[0],P[4],P[7],P[3],N([-1,0,0]));g.quad(P[7],P[6],P[2],P[3],[0,1,0]);g.quad(P[0],P[1],P[5],P[4],[0,-1,0]);
+  if(edges){[[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]].forEach(function(e){edges.push(P[e[0]][0],P[e[0]][1],P[e[0]][2],P[e[1]][0],P[e[1]][1],P[e[1]][2]);});}}
+function cr(pts,res){var P=[pts[0]].concat(pts,[pts[pts.length-1]]),o=[];
+  for(var i=1;i<P.length-2;i++){var a=P[i-1],b=P[i],c=P[i+1],e=P[i+2];for(var k=0;k<res;k++){var t=k/res,t2=t*t,t3=t2*t;
+    o.push([0,1,2].map(function(j){return .5*(2*b[j]+(-a[j]+c[j])*t+(2*a[j]-5*b[j]+4*c[j]-e[j])*t2+(-a[j]+3*b[j]-3*c[j]+e[j])*t3);}));}}
+  o.push(pts[pts.length-1]);return o;}
+function tubeGeo(g,pts,r,seg,rib,res){var d=cr(pts,res||14),S=[0];for(var i=1;i<d.length;i++)S.push(S[i-1]+V.len(V.sub(d[i],d[i-1])));
+  var base=g.p.length/3,prevN=null;
+  for(var i=0;i<d.length;i++){var t=V.norm(V.sub(d[Math.min(i+1,d.length-1)],d[Math.max(i-1,0)]));
+    var up=Math.abs(t[1])>0.9?[1,0,0]:[0,1,0];var nx=V.norm(V.cross(up,t));if(prevN&&V.dot(nx,prevN)<0)nx=V.mul(nx,-1);prevN=nx;var by=V.cross(t,nx);
+    var rr=r*(rib?1+rib*Math.pow(Math.max(0,Math.sin(S[i]*2*Math.PI/0.045)),6):1);
+    for(var k=0;k<=seg;k++){var a=k/seg*Math.PI*2,c=Math.cos(a),s=Math.sin(a);var n=V.add(V.mul(nx,c),V.mul(by,s));
+      g.p.push(d[i][0]+n[0]*rr,d[i][1]+n[1]*rr,d[i][2]+n[2]*rr);g.n.push(n[0],n[1],n[2]);}}
+  for(var i=0;i<d.length-1;i++)for(var k=0;k<seg;k++){var a=base+i*(seg+1)+k,b=a+seg+1;g.i.push(a,a+1,b,b,a+1,b+1);}   // כיוון החוצה — אחרת השיידר הופך את הנורמל וכל צינור מואר מהצד הלא נכון
+  return d;}
+function cylGeo(g,r,h,x,y,z,axis,seg){seg=seg||20;var pts=axis==='x'?[[x-h/2,y,z],[x+h/2,y,z]]:axis==='z'?[[x,y,z-h/2],[x,y,z+h/2]]:[[x,y-h/2,z],[x,y+h/2,z]];
+  tubeGeo(g,pts,r,seg,0,1);
+  // מכסים
+  [0,1].forEach(function(e){var c=pts[e],t=V.norm(V.sub(pts[1],pts[0]));if(e===0)t=V.mul(t,-1);var up=Math.abs(t[1])>0.9?[1,0,0]:[0,1,0],nx=V.norm(V.cross(up,t)),by=V.cross(t,nx);
+    var o=g.p.length/3;g.p.push(c[0],c[1],c[2]);g.n.push(t[0],t[1],t[2]);
+    for(var k=0;k<=seg;k++){var a=k/seg*Math.PI*2;var n=V.add(V.mul(nx,Math.cos(a)*r),V.mul(by,Math.sin(a)*r));g.p.push(c[0]+n[0],c[1]+n[1],c[2]+n[2]);g.n.push(t[0],t[1],t[2]);}
+    for(var k=0;k<seg;k++)g.i.push(o,o+1+k,o+2+k);});}
+
+/* ---------- עזרי גיאומטריה חדשים: משולש עם כיוון נכון, שילוש מצולע ---------- */
+function pushTri(g,A,B,C,nA,nB,nC){   // דואג שכיוון המשולש יתאים לנורמל (השיידר הופך נורמל של פאה אחורית)
+  var u=V.sub(B,A),w=V.sub(C,A),f=V.cross(u,w),m=[nA[0]+nB[0]+nC[0],nA[1]+nB[1]+nC[1],nA[2]+nB[2]+nC[2]];
+  if(V.dot(f,m)<0){var t=B;B=C;C=t;t=nB;nB=nC;nC=t;}
+  var o=g.p.length/3;g.p.push(A[0],A[1],A[2],B[0],B[1],B[2],C[0],C[1],C[2]);g.n.push(nA[0],nA[1],nA[2],nB[0],nB[1],nB[2],nC[0],nC[1],nC[2]);g.i.push(o,o+1,o+2);}
+function ccw2(P){var a=0,n=P.length;for(var i=0;i<n;i++){var p=P[i],q=P[(i+1)%n];a+=p[0]*q[1]-q[0]*p[1];}return a<0?P.slice().reverse():P.slice();}
+function tri2(P){var n=P.length,idx=[],tris=[],guard=0,i,k;for(i=0;i<n;i++)idx.push(i);
+  function cross(a,b,c){return (b[0]-a[0])*(c[1]-a[1])-(b[1]-a[1])*(c[0]-a[0]);}
+  function inside(p,a,b,c){return cross(a,b,p)>=0&&cross(b,c,p)>=0&&cross(c,a,p)>=0;}
+  while(idx.length>3&&guard++<4000){var cut=false;
+    for(k=0;k<idx.length;k++){var i0=idx[(k+idx.length-1)%idx.length],i1=idx[k],i2=idx[(k+1)%idx.length],A=P[i0],B=P[i1],Cc=P[i2];
+      if(cross(A,B,Cc)<=1e-12)continue;var ok=true;
+      for(var m=0;m<idx.length;m++){var q=idx[m];if(q===i0||q===i1||q===i2)continue;if(inside(P[q],A,B,Cc)){ok=false;break;}}
+      if(!ok)continue;tris.push([i0,i1,i2]);idx.splice(k,1);cut=true;break;}
+    if(!cut)break;}
+  if(idx.length===3)tris.push(idx.slice());return tris;}
+// מלבן מעוגל (רשימת נקודות) — לבסיסי ריהוט, לוחות ופלטות
+function rrect(w,h,r,seg){r=Math.max(0.0005,Math.min(r,w/2-1e-4,h/2-1e-4));seg=seg||5;var P=[];
+  [[w/2-r,h/2-r,0],[-w/2+r,h/2-r,1],[-w/2+r,-h/2+r,2],[w/2-r,-h/2+r,3]].forEach(function(c){for(var k=0;k<=seg;k++){var a=(c[2]+k/seg)*Math.PI/2;P.push([c[0]+Math.cos(a)*r,c[1]+Math.sin(a)*r]);}});return P;}
+
+/* ---------- סצנה: אצוות לפי קבוצה+חומר ---------- */
+function Scene(){this.batches={};this.lines={};this.groups={};}
+Scene.prototype.group=function(name){if(!this.groups[name])this.groups[name]={sy:1,dy:0,visible:true};return this.groups[name];};
+Scene.prototype._b=function(o){var g=o.g||'base';this.group(g);
+  var key=g+'|'+(o.c||0xffffff)+'|'+(o.a==null?1:o.a)+'|'+(o.sh||0)+'|'+(o.ns?1:0)+'|'+(o.e||0)+'|'+(o.pat||0)+'|'+(o.gl||0)+'|'+(o.fx||0)+'|'+(o.add?1:0)+'|'+(o.nhm?1:0)+'|'+(o.refl?1:0);
+  if(!this.batches[key])this.batches[key]={g:g,c:hex(o.c==null?0xffffff:o.c),a:o.a==null?1:o.a,sh:o.sh||0,ns:!!o.ns,emit:o.e||0,pat:o.pat||0,gl:o.gl||0,fx:o.fx||0,add:!!o.add,nhm:!!o.nhm,refl:!!o.refl,geo:new Geo(),key:key};return this.batches[key];};
+Scene.prototype._l=function(o){var g=o.g||'base';var key=g+'|'+(o.lc||0x0F3C5F);if(!this.lines[key])this.lines[key]={g:g,c:hex(o.lc||0x0F3C5F),v:[]};return this.lines[key].v;};
+Scene.prototype.box=function(w,h,d,x,y,z,o){o=o||{};boxGeo(this._b(o).geo,w,h,d,x,y,z,o.ry,o.edge?this._l(o):null);};
+Scene.prototype.tube=function(pts,r,o){o=o||{};return tubeGeo(this._b(o).geo,pts,r,o.seg||14,o.rib||0,o.res);};
+Scene.prototype.cyl=function(r,h,x,y,z,o){o=o||{};cylGeo(this._b(o).geo,r,h,x,y,z,o.axis||'y',o.seg);};
+Scene.prototype.disc=function(r,x,y,z,o){o=o||{};var g=this._b(o).geo,seg=o.seg||24,b=g.p.length/3,ny=o.down?-1:1,fx=o.fx;
+  // fx (שלולית אור): הנורמל נושא את המרחק מהמרכז (0 במרכז, 1 בשפה) — השקיפות דועכת החוצה
+  g.p.push(x,y,z);if(fx)g.n.push(0,0,0);else g.n.push(0,ny,0);
+  for(var k=0;k<=seg;k++){var a=k/seg*Math.PI*2;g.p.push(x+Math.cos(a)*r,y,z+Math.sin(a)*r);if(fx)g.n.push(Math.cos(a),0,Math.sin(a));else g.n.push(0,ny,0);}
+  for(var k=0;k<seg;k++){if(ny>0)g.i.push(b,b+2+k,b+1+k);else g.i.push(b,b+1+k,b+2+k);}};
+Scene.prototype.cone=function(r0,r1,h,x,y,z,o){o=o||{};var g=this._b(o).geo,seg=o.seg||28,b=g.p.length/3,fx=o.fx;   // חרוט קטום אנכי, פתוח (אלומת אור)
+  for(var k=0;k<=seg;k++){var a=k/seg*Math.PI*2,c=Math.cos(a),s=Math.sin(a);var n=V.norm([c,(r1-r0)/h,s]);
+    g.p.push(x+c*r0,y,z+s*r0);if(fx)g.n.push(0,0,0);else g.n.push(n[0],n[1],n[2]);   // fx (אלומה): הנורמל נושא את המיקום לאורך האלומה (0 למעלה, 1 למטה)
+    g.p.push(x+c*r1,y-h,z+s*r1);if(fx)g.n.push(0,1,0);else g.n.push(n[0],n[1],n[2]);}
+  for(var k=0;k<seg;k++){var i=b+k*2;g.i.push(i,i+2,i+1,i+1,i+2,i+3);}};
+// גוף מנסרתי ממצולע (גבס בצורה חופשית, מקשה אחת): pts=[[x,z],...], בין y0 ל-y1
+Scene.prototype.prism=function(pts,y0,y1,o){o=o||{};var g=this._b(o).geo,n=pts.length,i,k;
+  var P=ccw2(pts),tris=tri2(P);
+  var b0=g.p.length/3;for(i=0;i<n;i++){g.p.push(P[i][0],y1,P[i][1]);g.n.push(0,1,0);}
+  var b1=g.p.length/3;for(i=0;i<n;i++){g.p.push(P[i][0],y0,P[i][1]);g.n.push(0,-1,0);}
+  tris.forEach(function(t){g.i.push(b0+t[0],b0+t[2],b0+t[1]);g.i.push(b1+t[0],b1+t[1],b1+t[2]);});
+  var EN=[];for(i=0;i<n;i++){var a=P[i],b=P[(i+1)%n],dx=b[0]-a[0],dz=b[1]-a[1],l=Math.hypot(dx,dz)||1;EN.push([dz/l,-dx/l]);}
+  for(i=0;i<n;i++){var a=P[i],b=P[(i+1)%n],e=EN[i],na=e,nb=e;
+    if(o.smooth){var ep=EN[(i+n-1)%n],en=EN[(i+1)%n];   // נורמל ממוצע בפינות מעוגלות — הצללה רכה
+      if(ep[0]*e[0]+ep[1]*e[1]>0.5){var m=Math.hypot(ep[0]+e[0],ep[1]+e[1])||1;na=[(ep[0]+e[0])/m,(ep[1]+e[1])/m];}
+      if(en[0]*e[0]+en[1]*e[1]>0.5){var m2=Math.hypot(en[0]+e[0],en[1]+e[1])||1;nb=[(en[0]+e[0])/m2,(en[1]+e[1])/m2];}}
+    var s0=g.p.length/3;g.p.push(a[0],y0,a[1],b[0],y0,b[1],b[0],y1,b[1],a[0],y1,a[1]);
+    g.n.push(na[0],0,na[1],nb[0],0,nb[1],nb[0],0,nb[1],na[0],0,na[1]);g.i.push(s0,s0+2,s0+1,s0,s0+3,s0+2);}
+  if(o.edge){var v=this._l(o);for(i=0;i<n;i++){var a=P[i],b=P[(i+1)%n];v.push(a[0],y0,a[1],b[0],y0,b[1]);v.push(a[0],y1,a[1],b[0],y1,b[1]);v.push(a[0],y0,a[1],a[0],y1,a[1]);}}
+};
+// תיבה עם פינות אנכיות מעוגלות (ריהוט, מעבים, משטחים): r = רדיוס הפינה, o.ry = סיבוב
+Scene.prototype.rbox=function(w,h,d,x,y,z,r,o){o=o||{};var ry=o.ry||0,c=Math.cos(ry),s=Math.sin(ry);
+  var P=rrect(w,d,r,o.cs||5).map(function(p){return [x+p[0]*c+p[1]*s,z-p[0]*s+p[1]*c];});
+  var oo={};for(var k in o)oo[k]=o[k];oo.smooth=true;oo.edge=false;this.prism(P,y-h/2,y+h/2,oo);};
+// שחול פרופיל: prof=[[עומק,גובה],...] (מצולע סגור במישור הצד), נמשך לרוחב w סביב (x,y,z), עם סיבוב o.ry.
+// כך בונים גוף מזגן עילי מעוגל, כריות, דש, פלטת בקר — כל צורה עם חתך קבוע.
+Scene.prototype.extr=function(prof,w,x,y,z,o){o=o||{};var g=this._b(o).geo,ry=o.ry||0,P=ccw2(prof),n=P.length,i;
+  function T(lx,ly,lz){var v=rotY([lx,ly,lz],ry);return [v[0]+x,v[1]+y,v[2]+z];}
+  function Nn(ly,lz){return rotY([0,ly,lz],ry);}
+  var EN=[];for(i=0;i<n;i++){var a=P[i],b=P[(i+1)%n],dd=b[0]-a[0],dh=b[1]-a[1],l=Math.hypot(dd,dh)||1;EN.push([dh/l,-dd/l]);}   // נורמל חיצוני במישור (עומק,גובה)
+  for(i=0;i<n;i++){var a=P[i],b=P[(i+1)%n],e=EN[i],na=e,nb=e,ep=EN[(i+n-1)%n],en=EN[(i+1)%n];
+    if(o.smooth!==false){if(ep[0]*e[0]+ep[1]*e[1]>0.55){var m=Math.hypot(ep[0]+e[0],ep[1]+e[1])||1;na=[(ep[0]+e[0])/m,(ep[1]+e[1])/m];}
+      if(en[0]*e[0]+en[1]*e[1]>0.55){var m2=Math.hypot(en[0]+e[0],en[1]+e[1])||1;nb=[(en[0]+e[0])/m2,(en[1]+e[1])/m2];}}
+    var A0=T(-w/2,a[1],a[0]),A1=T(w/2,a[1],a[0]),B0=T(-w/2,b[1],b[0]),B1=T(w/2,b[1],b[0]),NA=Nn(na[1],na[0]),NB=Nn(nb[1],nb[0]);
+    pushTri(g,A0,B0,B1,NA,NB,NB);pushTri(g,A0,B1,A1,NA,NB,NA);}
+  var tris=tri2(P),nl=rotY([-1,0,0],ry),nr=rotY([1,0,0],ry);
+  tris.forEach(function(t){var a=P[t[0]],b=P[t[1]],c=P[t[2]];
+    pushTri(g,T(-w/2,a[1],a[0]),T(-w/2,b[1],b[0]),T(-w/2,c[1],c[0]),nl,nl,nl);pushTri(g,T(w/2,a[1],a[0]),T(w/2,b[1],b[0]),T(w/2,c[1],c[0]),nr,nr,nr);});};
+Scene.prototype.sphere=function(r,x,y,z,o){o=o||{};var g=this._b(o).geo,U=o.seg||14,W=Math.max(6,Math.round(U*0.6)),sy=o.sy||1;
+  function P(i,j){var th=i/U*Math.PI*2,ph=j/W*Math.PI,n=[Math.sin(ph)*Math.cos(th),Math.cos(ph),Math.sin(ph)*Math.sin(th)];return {p:[x+n[0]*r,y+n[1]*r*sy,z+n[2]*r],n:n};}
+  for(var i=0;i<U;i++)for(var j=0;j<W;j++){var a=P(i,j),b=P(i+1,j),c=P(i+1,j+1),d=P(i,j+1);
+    if(j>0)pushTri(g,a.p,b.p,c.p,a.n,b.n,c.n);if(j<W-1)pushTri(g,a.p,c.p,d.p,a.n,c.n,d.n);}};
+Scene.prototype.line=function(pts,o){var v=this._l(o||{});for(var i=0;i<pts.length-1;i++)v.push(pts[i][0],pts[i][1],pts[i][2],pts[i+1][0],pts[i+1][1],pts[i+1][2]);};
+
+/* ---------- רנדרר ---------- */
+var NPL=8;
+var VS=['#version 300 es','layout(location=0) in vec3 aP;layout(location=1) in vec3 aN;uniform mat4 uVP;uniform mat4 uSVP;uniform vec2 uG;uniform vec2 uRfl;out vec3 vN;out vec3 vW;out vec4 vS;',
+ 'void main(){vec3 p=aP;p.y=p.y*uG.x+uG.y;vW=p;vN=aN;vS=uSVP*vec4(p+aN*0.012,1.);vec3 q=p;if(uRfl.x>.5)q.y=2.*uRfl.y-p.y;gl_Position=uVP*vec4(q,1.);}'].join('\n');
+var FS=['#version 300 es','precision highp float;','precision highp int;',
+ 'in vec3 vN;in vec3 vW;in vec4 vS;',
+ 'uniform vec3 uC;uniform float uA;uniform float uSh;uniform float uE;uniform float uPat;uniform float uGl;uniform float uFx;',
+ 'uniform vec3 uSun;uniform vec3 uEye;uniform vec3 uSky;uniform vec3 uGnd;uniform vec3 uLt;',
+ 'uniform highp sampler2D uSM;uniform highp sampler2D uHM;uniform vec3 uHMr;uniform float uUS;uniform float uAO;uniform float uQ;uniform float uDbg;',
+ 'uniform vec4 uPL['+NPL+'];uniform vec4 uPLb['+NPL+'];uniform int uPLn;uniform float uPLi;',
+ 'uniform sampler2D uRT;uniform vec2 uInv;uniform float uRf;uniform float uRflOn;',
+ 'out vec4 o;',
+ 'float h21(vec2 p){p=fract(p*vec2(123.34,456.21));p+=dot(p,p+45.32);return fract(p.x*p.y);}',
+ 'float vn(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h21(i),h21(i+vec2(1.,0.)),f.x),mix(h21(i+vec2(0.,1.)),h21(i+1.),f.x),f.y);}',
+ 'float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<4;i++){s+=a*vn(p);p*=2.03;a*=.5;}return s;}',
+ // טקסטורות בשיידר: 1 פרקט אלון · 2 פורצלן · 3 שיש · 4 בד · 5 בטון/טיח עדין
+ 'vec3 pat(vec3 b,vec3 n){vec2 q=vW.xz;',
+ ' if(uPat<1.5){float row=floor(q.y/.19);float off=h21(vec2(row,3.))*1.4;float col=floor((q.x+off)/1.4);float t=h21(vec2(row,col));',
+ '  float g=fbm(vec2(q.x*1.6+t*7.,q.y*46.));float m=(.84+.26*t)*(.9+.2*g);float ex=fract((q.x+off)/1.4),ey=fract(q.y/.19);',
+ '  m*=(ex<.003||ex>.997||ey<.025)?.72:1.;return b*m;}',
+ ' if(uPat<2.5){return b*(.965+.07*fbm(q*2.5));}',
+ ' if(uPat<3.5){float f=fbm(q*1.5);float v=abs(sin((q.x*1.2+q.y*.8+f*5.)*3.1416));v=pow(1.-v,14.);float v2=pow(1.-abs(sin((q.x*.4-q.y*1.1+f*3.)*6.2832)),22.);',
+ '  return b*(.985+.03*fbm(q*7.))*(1.-.3*v-.15*v2);}',
+ ' vec2 r=abs(n.y)>.5?vW.xz:(abs(n.x)>.5?vW.zy:vW.xy);',
+ ' if(uPat<4.5){return b*(.93+.1*vn(r*160.)*.6+.04*fbm(r*9.));}',
+ ' return b*(.97+.05*fbm(r*5.));}',
+ // צל השמש: 16 דגימות (4 באיכות נמוכה)
+ 'float shad(){vec3 p=vS.xyz/vS.w*.5+.5;if(p.x<0.||p.x>1.||p.y<0.||p.y>1.||p.z>1.)return 1.;vec2 t=1.6/vec2(textureSize(uSM,0));float s=0.,w=0.;',
+ ' for(int x=0;x<4;x++){for(int y=0;y<4;y++){if(uQ<.5&&(x==0||x==3||y==0||y==3))continue;float d=texture(uSM,p.xy+(vec2(float(x),float(y))-1.5)*t).r;s+=(p.z-0.0012>d)?0.:1.;w+=1.;}}',
+ ' return s/max(w,1.);}',
+ // הצללת סביבה (AO) ממפת גבהים: אדום = גובה עליון של מה שעומד בנקודה, ירוק = גובה תחתון. צל רך בפינות, ליד קירות ומתחת לרהיטים
+ 'float hao(vec3 n){float ny=n.y;vec2 nx=n.xz;float nl=length(nx);vec2 nh=nl>1e-4?nx/nl:vec2(0.);vec2 base=vW.xz+nx*.05;float y=vW.y;float occ=0.;',
+ ' for(int i=0;i<8;i++){float a=float(i)*.7854+.3;float rr=(i-(i/2)*2==0)?.13:.38;vec2 dir=vec2(cos(a),sin(a));',
+ '  if(abs(ny)<.5){float dn=dot(dir,nh);if(dn<0.)dir-=2.*dn*nh;}',
+ '  vec2 q=base+dir*rr;vec2 uv=vec2(.5+(q.x-uHMr.x)*uHMr.z,.5-(q.y-uHMr.y)*uHMr.z);vec4 t=texture(uHM,uv);float hi=t.r*3.2,lo=t.g*3.2;',
+ '  if(ny<-.5)occ+=smoothstep(y-.55,y-.15,hi)*(1.-smoothstep(y-1.1,y-.45,lo));',
+ '  else occ+=smoothstep(y+.02,y+.30,hi)*(1.-smoothstep(y+.10,y+.60,lo));}',
+ ' return 1.-uAO*occ/8.;}',
+ 'void main(){',
+ // אפקטי אור (אלומת ספוט, שלולית אור על הרצפה): צבע טהור, שקיפות דועכת
+ ' if(uFx>2.5){float day=clamp(uLt.x,0.,1.);vec3 d=normalize(vW-uEye);',
+ '  if(uFx>3.5){o=vec4(mix(uC*.10,uC,day)*(.82+.18*clamp(vW.y/18.,0.,1.)),1.);return;}   // בניינים רחוקים באובך',
+ '  vec3 zen=mix(vec3(.015,.025,.06),vec3(.33,.56,.86),day),hor=mix(vec3(.06,.07,.12),vec3(.83,.90,.96),day),gd=mix(vec3(.03,.035,.05),vec3(.70,.72,.70),day);vec3 c;',
+ '  if(d.y>0.)c=mix(hor,zen,pow(d.y+1e-4,.5));else c=mix(hor,gd,clamp(-d.y*7.,0.,1.));',
+ '  c+=vec3(1.,.93,.75)*pow(max(dot(d,uSun),0.)+1e-4,90.)*.9*day;o=vec4(c,1.);return;}   // שמיים: אופק בהיר, זנית כחול, והילת שמש',
+ ' if(uFx>.5){float a;if(uFx<1.5){float t=clamp(vN.y,0.,1.);a=(1.-t)*(1.-t)*(.3+.7*(1.-t));}else{float r=clamp(length(vN.xz),0.,1.);a=(1.-r)*(1.-r);}',
+ '  o=vec4(uC*uE*uLt.z,a*uA);return;}',
+ ' vec3 n=normalize(vN);bool ff=gl_FrontFacing;if(uRflOn>.5)ff=!ff;if(!ff)n=-n;vec3 b=pow(uC,vec3(2.2));if(uPat>.5)b=pat(b,n);',
+ ' float hm=.5+.5*n.y;vec3 amb=mix(uGnd,uSky,hm);float nd=max(dot(n,uSun),0.);float sh=1.;if(uUS>.5&&nd>0.)sh=shad();',
+ ' float ao=mix(.86,1.,smoothstep(0.,.5,vW.y));if(uAO>0.)ao*=hao(n);',
+ ' if(uDbg>.5){o=vec4(vec3(uDbg<1.5?ao:sh),1.);return;}',
+ ' vec3 v=normalize(uEye-vW);float ndv=max(dot(n,v),0.);',
+ ' vec3 c=b*(amb*ao*uLt.y+vec3(1.,.95,.88)*1.25*nd*sh*uLt.x)+b*uE*uLt.z;',
+ // ברק מהשמש — בלי pow(0,0): זה מה שצבע תקרות בשחור בטלפונים מסוימים
+ ' if(uSh>0.){vec3 h=normalize(uSun+v+vec3(0.,1e-4,0.));c+=(pow(max(dot(n,h),1e-4),max(uSh,1.))*.45*sh+pow(1.-ndv+1e-4,3.)*.10)*uLt.x;}',
+ // ספוטים ותאורת חדר: מקורות אור אמיתיים, תחומים לחדר שלהם (האור לא עובר קירות)
+ ' if(uPLi>0.){vec3 acc=vec3(0.);float sp2=0.;',
+ '  for(int i=0;i<'+NPL+';i++){if(i>=uPLn)break;vec3 L=uPL[i].xyz-vW;float d=max(length(L),1e-3);L/=d;',
+ '   vec2 dd=max(uPLb[i].xy-vW.xz,vW.xz-uPLb[i].zw);float inb=1.-smoothstep(0.,.3,max(dd.x,dd.y));',
+ '   float room=step(uPL[i].w,0.);float w=abs(uPL[i].w);',
+ '   float cone=mix(smoothstep(-.05,.7,L.y),smoothstep(-.6,.25,L.y),room);float df=max(dot(n,L),0.)*.9+.1;',
+ '   float at=w*inb*cone/(1.+d*d*mix(1.3,.30,room));acc+=mix(vec3(1.,.84,.62),vec3(1.,.95,.86),room)*df*at;',
+ '   if(uGl>0.){vec3 hh=normalize(L+v+vec3(0.,1e-4,0.));sp2+=pow(max(dot(n,hh),1e-4),90.)*at;}}',
+ '  c+=b*acc*uPLi*ao;c+=vec3(1.,.9,.75)*sp2*uGl*uPLi*1.6;}',
+ // השתקפות עדינה של הסביבה במשטחים מבריקים (רצפה מלוטשת, מזגן, זכוכית)
+ ' if(uGl>0.&&uRf<.5){vec3 r=reflect(-v,n);float fr=pow(1.-ndv+1e-4,4.);vec3 env=mix(uGnd*.7,uSky,smoothstep(-.3,.5,r.y));c+=env*(.025+.5*fr)*uGl*uLt.y;}',
+ ' if(any(isnan(c))||any(isinf(c)))c=b*.55;c=max(c,vec3(0.));   // הגנה אחרונה מערכים לא חוקיים',
+ ' c=(c*(2.51*c+.03))/(c*(2.43*c+.59)+.14);c=pow(clamp(c,0.,1.)+1e-5,vec3(1./2.2));',
+ // השתקפות אמיתית ברצפה: הסצנה צוירה הפוכה לתמונה נפרדת, וכאן היא נמזגת לפי זווית המבט (יותר השתקפות במבט שטוח)
+ ' if(uRf>.5){vec2 uv=gl_FragCoord.xy*uInv;vec2 e=uInv*2.2;vec3 r=texture(uRT,uv).rgb*.36+(texture(uRT,uv+vec2(e.x,0.)).rgb+texture(uRT,uv-vec2(e.x,0.)).rgb+texture(uRT,uv+vec2(0.,e.y)).rgb+texture(uRT,uv-vec2(0.,e.y)).rgb)*.16;',
+ '  float F=clamp((.05+.6*pow(1.-ndv+1e-4,3.))*uGl*1.5,0.,.6);c=mix(c,r,F);}',
+ ' o=vec4(c,uA);}'].join('\n');
+var SVS='#version 300 es\nlayout(location=0) in vec3 aP;uniform mat4 uSVP;uniform vec2 uG;out float vY;void main(){vec3 p=aP;p.y=p.y*uG.x+uG.y;vY=p.y;gl_Position=uSVP*vec4(p,1.);}';
+var SFS='#version 300 es\nprecision highp float;in float vY;out vec4 o;void main(){float h=clamp(vY/3.2,0.,1.);o=vec4(h,h,h,1.);}';
+var LVS='#version 300 es\nlayout(location=0) in vec3 aP;uniform mat4 uVP;uniform vec2 uG;void main(){vec3 p=aP;p.y=p.y*uG.x+uG.y;gl_Position=uVP*vec4(p,1.);gl_Position.z-=0.0006*gl_Position.w;}';
+var LFS='#version 300 es\nprecision highp float;uniform vec3 uC;uniform float uA;out vec4 o;void main(){o=vec4(uC,uA);}';
+function Renderer(canvas){var gl=canvas.getContext('webgl2',{antialias:true,preserveDrawingBuffer:true,alpha:false});if(!gl)throw new Error('no webgl2');this.gl=gl;this.canvas=canvas;
+  function prog(vs,fs){function sh(t,s){var x=gl.createShader(t);gl.shaderSource(x,s);gl.compileShader(x);if(!gl.getShaderParameter(x,gl.COMPILE_STATUS))throw new Error(gl.getShaderInfoLog(x));return x;}
+    var p=gl.createProgram();gl.attachShader(p,sh(gl.VERTEX_SHADER,vs));gl.attachShader(p,sh(gl.FRAGMENT_SHADER,fs));gl.linkProgram(p);if(!gl.getProgramParameter(p,gl.LINK_STATUS))throw new Error(gl.getProgramInfoLog(p));
+    var u={};var n=gl.getProgramParameter(p,gl.ACTIVE_UNIFORMS);for(var i=0;i<n;i++){var a=gl.getActiveUniform(p,i);u[a.name]=gl.getUniformLocation(p,a.name);}return {p:p,u:u};}
+  this.P=prog(VS,FS);this.S=prog(SVS,SFS);this.L=prog(LVS,LFS);
+  var SZ=this.SZ=2048;this.smTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,this.smTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.DEPTH_COMPONENT24,SZ,SZ,0,gl.DEPTH_COMPONENT,gl.UNSIGNED_INT,null);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.NEAREST);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  this.fb=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,this.fb);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.TEXTURE_2D,this.smTex,0);
+  // מפת גבהים (מבט מלמעלה): RGBA8 רגיל — נתמך בכל טלפון, עם סינון ליניארי
+  var HZ=this.HZ=1024;this.hmTex=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,this.hmTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,HZ,HZ,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  this.hfb=gl.createFramebuffer();gl.bindFramebuffer(gl.FRAMEBUFFER,this.hfb);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,this.hmTex,0);
+  var rb=gl.createRenderbuffer();gl.bindRenderbuffer(gl.RENDERBUFFER,rb);gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT16,HZ,HZ);gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,rb);
+  this.hmOK=gl.checkFramebufferStatus(gl.FRAMEBUFFER)===gl.FRAMEBUFFER_COMPLETE;gl.bindFramebuffer(gl.FRAMEBUFFER,null);
+  this.rtTex=gl.createTexture();this.rfb=gl.createFramebuffer();this.rrb=gl.createRenderbuffer();this.rtW=0;this.rtH=0;this.rtOK=false;this.reflOn=false;this.reflY=0.011;
+  this.sun=V.norm([-0.45,1,-0.6]);this.lt=[1,1,1];this.pl=[];this.plb=[];this.plI=0.;this.ao=0.6;this.q=1;this.hmC=[0,0];this.hmR=12;
+  this.sky=[0.82,0.85,0.9];this.gnd=[0.48,0.45,0.42];this.bg=[0.9,0.91,0.92];this.shadowDirty=true;}
+Renderer.prototype.upload=function(scene){var gl=this.gl;this.scene=scene;this.draw=[];this.ldraw=[];
+  for(var k in scene.batches){var b=scene.batches[k];if(!b.geo.i.length)continue;var vao=gl.createVertexArray();gl.bindVertexArray(vao);
+    var pb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,pb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(b.geo.p),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);
+    var nb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,nb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(b.geo.n),gl.STATIC_DRAW);gl.enableVertexAttribArray(1);gl.vertexAttribPointer(1,3,gl.FLOAT,false,0,0);
+    var ib=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint32Array(b.geo.i),gl.STATIC_DRAW);
+    this.draw.push({b:b,vao:vao,n:b.geo.i.length});}
+  for(var k in scene.lines){var l=scene.lines[k];if(!l.v.length)continue;var vao=gl.createVertexArray();gl.bindVertexArray(vao);var pb=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,pb);
+    gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(l.v),gl.STATIC_DRAW);gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);this.ldraw.push({l:l,vao:vao,n:l.v.length/3});}
+  gl.bindVertexArray(null);this.draw.sort(function(a,b){return a.b.a-b.b.a;}).reverse();};
+Renderer.prototype.render=function(cam){var gl=this.gl,cv=this.canvas,S=this.scene,G=S.groups;
+  var dpr=Math.min(window.devicePixelRatio||1,this.q?2:1.5),W=Math.round(cv.clientWidth*dpr),H=Math.round(cv.clientHeight*dpr);if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H;}
+  var c=[0,0,0],r=12,L=V.add(c,V.mul(this.sun,20));var SVP=M4.mul(M4.ortho(-r,r,-r,r,1,45),M4.look(L,c,[0,1,0]));
+  if(this.shadowDirty){var Sp=this.S;gl.useProgram(Sp.p);gl.enable(gl.DEPTH_TEST);gl.disable(gl.BLEND);gl.depthMask(true);
+    // 1) צל השמש. תקרה שמסומנת cast (בסיור בדירה) חוסמת את השמש — האור נכנס רק מהחלונות
+    gl.bindFramebuffer(gl.FRAMEBUFFER,this.fb);gl.viewport(0,0,this.SZ,this.SZ);gl.clear(gl.DEPTH_BUFFER_BIT);
+    gl.uniformMatrix4fv(Sp.u.uSVP,false,SVP);gl.enable(gl.POLYGON_OFFSET_FILL);gl.polygonOffset(1.5,3);
+    this.draw.forEach(function(d){var g=G[d.b.g];if(!g.visible||g.hidden||d.b.a<1||d.b.fx||(d.b.ns&&!g.cast))return;gl.uniform2f(Sp.u.uG,g.sy,g.dy);gl.bindVertexArray(d.vao);gl.drawElements(gl.TRIANGLES,d.n,gl.UNSIGNED_INT,0);});
+    gl.disable(gl.POLYGON_OFFSET_FILL);
+    // 2) מפת גבהים להצללת סביבה: מעבר ראשון = הגובה העליון (אדום), מעבר שני = הגובה התחתון (ירוק)
+    if(this.hmOK){var R_=this.hmR,C_=this.hmC,HVP=M4.mul(M4.ortho(-R_,R_,-R_,R_,0.5,14),M4.look([C_[0],12,C_[1]],[C_[0],0,C_[1]],[0,0,-1]));
+      gl.bindFramebuffer(gl.FRAMEBUFFER,this.hfb);gl.viewport(0,0,this.HZ,this.HZ);gl.uniformMatrix4fv(Sp.u.uSVP,false,HVP);
+      var drawHM=function(d){var g=G[d.b.g];if(!g.visible||g.hidden||g.noHM||d.b.a<1||d.b.ns||d.b.fx||d.b.nhm)return;gl.uniform2f(Sp.u.uG,g.sy,g.dy);gl.bindVertexArray(d.vao);gl.drawElements(gl.TRIANGLES,d.n,gl.UNSIGNED_INT,0);};
+      gl.colorMask(true,true,true,true);gl.clearColor(0,1,0,1);gl.clearDepth(1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+      gl.colorMask(true,false,false,false);gl.depthFunc(gl.LESS);this.draw.forEach(drawHM);
+      gl.colorMask(false,true,false,false);gl.clearDepth(0);gl.clear(gl.DEPTH_BUFFER_BIT);gl.depthFunc(gl.GREATER);this.draw.forEach(drawHM);
+      gl.colorMask(true,true,true,true);gl.depthFunc(gl.LESS);gl.clearDepth(1);}
+    gl.bindFramebuffer(gl.FRAMEBUFFER,null);this.shadowDirty=false;}
+  // יעד ההשתקפות: חצי רזולוציה, נבנה מחדש כשגודל המסך משתנה
+  var doR=!!(this.reflOn&&this.q),rw=Math.max(2,W>>1),rh=Math.max(2,H>>1);
+  if(doR&&(this.rtW!==rw||this.rtH!==rh)){this.rtW=rw;this.rtH=rh;gl.bindTexture(gl.TEXTURE_2D,this.rtTex);gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA8,rw,rh,0,gl.RGBA,gl.UNSIGNED_BYTE,null);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    gl.bindFramebuffer(gl.FRAMEBUFFER,this.rfb);gl.framebufferTexture2D(gl.FRAMEBUFFER,gl.COLOR_ATTACHMENT0,gl.TEXTURE_2D,this.rtTex,0);
+    gl.bindRenderbuffer(gl.RENDERBUFFER,this.rrb);gl.renderbufferStorage(gl.RENDERBUFFER,gl.DEPTH_COMPONENT16,rw,rh);gl.framebufferRenderbuffer(gl.FRAMEBUFFER,gl.DEPTH_ATTACHMENT,gl.RENDERBUFFER,this.rrb);
+    this.rtOK=gl.checkFramebufferStatus(gl.FRAMEBUFFER)===gl.FRAMEBUFFER_COMPLETE;gl.bindFramebuffer(gl.FRAMEBUFFER,null);}
+  doR=doR&&this.rtOK;
+  gl.enable(gl.DEPTH_TEST);gl.disable(gl.CULL_FACE);gl.depthMask(true);gl.disable(gl.BLEND);
+  var VP=M4.mul(M4.persp(cam.fov,W/H,0.05,120),M4.look(cam.eye,cam.target,[0,1,0]));this.VP=VP;var P=this.P;gl.useProgram(P.p);
+  gl.uniformMatrix4fv(P.u.uVP,false,VP);gl.uniformMatrix4fv(P.u.uSVP,false,SVP);gl.uniform3fv(P.u.uSun,this.sun);gl.uniform3fv(P.u.uSky,this.sky);gl.uniform3fv(P.u.uGnd,this.gnd);gl.uniform3fv(P.u.uLt,this.lt);
+  var nl=this.q?NPL:5,pl=this.pl.slice(0,nl),plb=this.plb.slice(0,nl);gl.uniform1f(P.u.uPLi,pl.length?(this.plI||0):0);gl.uniform1i(P.u.uPLn,pl.length);
+  if(pl.length){var fa=new Float32Array(NPL*4),fb2=new Float32Array(NPL*4);for(var i=0;i<pl.length;i++){fa.set(pl[i],i*4);fb2.set(plb[i]||[-1e4,-1e4,1e4,1e4],i*4);}
+    if(P.u['uPL[0]'])gl.uniform4fv(P.u['uPL[0]'],fa);if(P.u['uPLb[0]'])gl.uniform4fv(P.u['uPLb[0]'],fb2);}
+  gl.activeTexture(gl.TEXTURE0);gl.bindTexture(gl.TEXTURE_2D,this.smTex);gl.uniform1i(P.u.uSM,0);gl.uniform1f(P.u.uUS,1);
+  gl.activeTexture(gl.TEXTURE1);gl.bindTexture(gl.TEXTURE_2D,this.hmTex);gl.uniform1i(P.u.uHM,1);gl.uniform1i(P.u.uRT,2);gl.activeTexture(gl.TEXTURE0);
+  gl.uniform3f(P.u.uHMr,this.hmC[0],this.hmC[1],0.5/this.hmR);gl.uniform1f(P.u.uAO,(this.hmOK&&this.q)?this.ao:0);gl.uniform1f(P.u.uQ,this.q);gl.uniform1f(P.u.uDbg,this.dbg||0);
+  var self=this;function pass(kind,refl){self.draw.forEach(function(d){var b=d.b,g=G[b.g];if(!g.visible||g.hidden)return;if(refl&&(b.nhm||g.noRefl))return;var k=b.add?2:(b.a<1?1:0);if(k!==kind)return;
+    gl.uniform2f(P.u.uG,g.sy,g.dy);gl.uniform3fv(P.u.uC,b.c);gl.uniform1f(P.u.uA,b.a);gl.uniform1f(P.u.uSh,b.sh);gl.uniform1f(P.u.uE,b.emit);gl.uniform1f(P.u.uPat,b.pat||0);gl.uniform1f(P.u.uGl,b.gl||0);gl.uniform1f(P.u.uFx,b.fx||0);
+    gl.uniform1f(P.u.uRf,(!refl&&doR&&b.refl)?1:0);gl.bindVertexArray(d.vao);gl.drawElements(gl.TRIANGLES,d.n,gl.UNSIGNED_INT,0);});}
+  function drawAll(refl){gl.disable(gl.BLEND);gl.depthMask(true);pass(0,refl);gl.enable(gl.BLEND);gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false);pass(1,refl);
+    gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE,gl.ZERO,gl.ONE);pass(2,refl);   // אור מתווסף (אלומות, שלוליות)
+    gl.blendFuncSeparate(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA,gl.ONE,gl.ONE_MINUS_SRC_ALPHA);}
+  gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,this.hmTex);gl.activeTexture(gl.TEXTURE0);   // בזמן ציור ההשתקפות אסור שהיעד עצמו יהיה מחובר כטקסטורה
+  if(doR){var yp=this.reflY;gl.bindFramebuffer(gl.FRAMEBUFFER,this.rfb);gl.viewport(0,0,rw,rh);gl.clearColor(this.bg[0],this.bg[1],this.bg[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    gl.uniform2f(P.u.uRfl,1,yp);gl.uniform1f(P.u.uRflOn,1);gl.uniform3f(P.u.uEye,cam.eye[0],2*yp-cam.eye[1],cam.eye[2]);gl.uniform2f(P.u.uInv,1/rw,1/rh);drawAll(true);
+    gl.depthMask(true);gl.bindFramebuffer(gl.FRAMEBUFFER,null);gl.activeTexture(gl.TEXTURE2);gl.bindTexture(gl.TEXTURE_2D,this.rtTex);gl.activeTexture(gl.TEXTURE0);}
+  gl.viewport(0,0,W,H);gl.clearColor(this.bg[0],this.bg[1],this.bg[2],1);gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  gl.uniform2f(P.u.uRfl,0,0);gl.uniform1f(P.u.uRflOn,0);gl.uniform3fv(P.u.uEye,cam.eye);gl.uniform2f(P.u.uInv,1/W,1/H);drawAll(false);
+  var Lp=this.L;gl.useProgram(Lp.p);gl.uniformMatrix4fv(Lp.u.uVP,false,VP);this.ldraw.forEach(function(d){var g=G[d.l.g];if(!g.visible||g.hidden)return;gl.uniform2f(Lp.u.uG,g.sy,g.dy);gl.uniform3fv(Lp.u.uC,d.l.c);gl.uniform1f(Lp.u.uA,0.9);gl.bindVertexArray(d.vao);gl.drawArrays(gl.LINES,0,d.n);});
+  gl.depthMask(true);gl.disable(gl.BLEND);gl.bindVertexArray(null);};
+Renderer.prototype.project=function(p,grp){var g=grp&&this.scene.groups[grp];var q=[p[0],g?p[1]*g.sy+g.dy:p[1],p[2]];var r=M4.xf(this.VP,q);if(r[3]<=0.05)return null;
+  return [(r[0]+1)/2*this.canvas.clientWidth,(1-r[1])/2*this.canvas.clientHeight,r[2]];};
+return {V:V,Scene:Scene,Renderer:Renderer,cr:cr,rrect:rrect};
+})();
+</script>
+<script>(function(){
+'use strict';
+try{if(window.TOUR_DATA&&TOUR_DATA.title)document.title='תכנון מיזוג · '+TOUR_DATA.title+' · פרקטי-קור';}catch(e){}
+var D=window.TOUR_DATA, V=PCE.V, K=D.K, O=D.origin, HW=D.HW;
+try{ if(D.title){ var tl=document.querySelector('.title small'); if(tl) tl.textContent=D.title; }
+  if(D.legend){ var lg=document.getElementById('legend'); if(lg) lg.innerHTML='<span class="lt">מקרא המערכת</span>'+D.legend.map(function(l){return '<div style="--c:'+l[0]+'">'+l[1]+'</div>';}).join(''); } }catch(e){}
+function X(x){return (x-O[0])/K;} function Z(y){return (y-O[1])/K;} function L(p){return p/K;}
+var BB0=(function(){var a=[1e9,1e9,-1e9,-1e9];D.F.forEach(function(f){a[0]=Math.min(a[0],f[0]);a[1]=Math.min(a[1],f[1]);a[2]=Math.max(a[2],f[2]);a[3]=Math.max(a[3],f[3]);});return a;})();
+var C={wall:0xf2f0ec,cap:0x3a3f44,pub:0xcfc6b8,wood:0xb89a78,tile:0xc4c7c6,deck:0x9a8a78,ground:0xc9ccc8,glass:0xb9dcec,frame:0x2d333a,
+  gyp:0xfbfbfa,mini:0x7a4fd1,plen:0xb8bec2,duct:0xc6ced5,slot:0xffffff,dark:0x22272b,split:0xf8f8f8,stripe:0xe0782b,cond:0x9aa3a8,copper:0xb87333,ret:0x8c959b,
+  fab:0x8c8f93,fab2:0xe2ddd5,oak:0x7a5b42,white:0xfbfbfa,counter:0x4a5056,cab:0xf1eee9,rug:0xcfc7ba,gold:0xC9A227,spot:0xffd98c,rod:0x3a4148};
+var S=new PCE.Scene(); S.group('wall'); var gc=S.group('ceil'), gg=S.group('gyp');
+// מערכת צירים מקומית של פריט שתלוי על קיר: dx לאורך הקיר, dz החוצה מהקיר
+function LF(x,z,ry){var c=Math.cos(ry),s=Math.sin(ry);return function(dx,dz){return [x+dx*c+dz*s,z-dx*s+dz*c];};}
+var FRY={n:Math.PI,s:0,e:Math.PI/2,w:-Math.PI/2};
+// ספרות דיגיטליות מוארות (תצוגת המזגן והבקר): כל ספרה בנויה מ-7 מקטעים
+var SEG7={'0':'abcdef','1':'bc','2':'abged','3':'abgcd','4':'fgbc','5':'afgcd','6':'afgedc','7':'abc','8':'abcdefg','9':'abfgcd'};
+function seg7(str,lf,cx,cy,dz,h,ry,o){var w=h*0.5,t=h*0.13,gap=h*0.24,n=str.length,tot=n*w+(n-1)*gap,x0=cx-tot/2;
+  function bx(dx,dy,ww,hh){var q=lf(dx,dz);S.box(ww,hh,0.0016,q[0],cy+dy,q[1],{c:o.c,g:o.g,ry:ry,e:o.e,ns:true});}
+  for(var i=0;i<n;i++){var ch=str[i],x=x0+i*(w+gap)+w/2;
+    if(ch==='°'){bx(x-w*0.22,h*0.36,t*1.7,t*1.7);continue;}
+    var s=SEG7[ch]||'';
+    if(s.indexOf('a')>=0)bx(x,h/2-t/2,w,t);if(s.indexOf('g')>=0)bx(x,0,w,t);if(s.indexOf('d')>=0)bx(x,-h/2+t/2,w,t);
+    if(s.indexOf('f')>=0)bx(x-w/2+t/2,h/4,t,h/2);if(s.indexOf('b')>=0)bx(x+w/2-t/2,h/4,t,h/2);
+    if(s.indexOf('e')>=0)bx(x-w/2+t/2,-h/4,t,h/2);if(s.indexOf('c')>=0)bx(x+w/2-t/2,-h/4,t,h/2);}}
+function qcurve(P,p0,p1,p2,n){for(var i=1;i<=n;i++){var t=i/n,u=1-t;P.push([u*u*p0[0]+2*u*t*p1[0]+t*t*p2[0],u*u*p0[1]+2*u*t*p1[1]+t*t*p2[1]]);}}
+// האם נקודה בתוכנית נמצאת בתוך קיר / על רצפה פנימית / בתוך רהיט גבוה
+function wallAt(x,y,m){m=m||0;return D.W.some(function(w){return x>=w[0]-m&&x<=w[2]+m&&y>=w[1]-m&&y<=w[3]+m;});}
+function floorAt(x,y){for(var i=0;i<D.F.length;i++){var f=D.F[i];if(x>=f[0]&&x<=f[2]&&y>=f[1]&&y<=f[3])return f[4];}return null;}
+function furnAt(x,y,m){m=m||0;return (D.furniture||[]).some(function(f){if(typeof f[3]!=='number'||typeof f[4]!=='number'||f.length<5)return false;
+  if(['ward','fridge','counter','sofa','bed','tv','tub','vanity','desk','shower'].indexOf(f[0])<0)return false;
+  var x0=Math.min(f[1],f[3]),x1=Math.max(f[1],f[3]),y0=Math.min(f[2],f[4]),y1=Math.max(f[2],f[4]);return x>=x0-m&&x<=x1+m&&y>=y0-m&&y<=y1+m;});}
+if(D.colors)Object.keys(D.colors).forEach(function(k){C[k]=D.colors[k];});   // גוון רצפה/חומר לפי דירה (אופציונלי)
+// ---- רצפות ----
+S.box(40,0.02,40,0,-0.012,0,{c:C.ground,g:'base',nhm:true});
+var FM={wood:C.wood,tile:C.tile,deck:C.deck,pub:C.pub};
+D.F.forEach(function(f){var c=FM[f[4]]; if(!D.floorTypes&&f[4]==='wood'&&(f[0]>=440||f[0]===553||f[0]===408||f[0]===272))c=C.pub; if(!D.floorTypes&&(f[0]===378||f[0]===782||f[0]===56||f[0]===648&&f[1]===278))c=C.wood;
+  var PT={wood:1,deck:1,pub:2,tile:3}[f[4]]||0;   // טקסטורות: פרקט אלון, פורצלן, שיש
+  var GLS={wood:0.22,deck:0,pub:0.5,tile:0.55}[f[4]]||0;   // ברק עדין: רצפה מלוטשת משקפת את הספוטים
+  S.box(L(f[2]-f[0]),0.02,L(f[3]-f[1]),X((f[0]+f[2])/2),0.001,Z((f[1]+f[3])/2),{c:c,g:'base',pat:PT,nhm:true,gl:GLS,sh:GLS?40:0,refl:GLS>0});});
+// ---- פסי פרקט ופוגות אריחים ----
+D.F.forEach(function(f){var t=f[4],x0=X(f[0]),x1=X(f[2]),z0=Z(f[1]),z1=Z(f[3]);
+  if(t==='wood'){}   // הפרקט מצויר עכשיו בשיידר (לוחות, גוונים וסיבים)
+  else if(t==='tile'){for(var x=x0+0.6;x<x1-0.05;x+=0.6)S.box(0.006,0.002,z1-z0,x,0.012,(z0+z1)/2,{c:0x8f9ba2,g:'base',ns:true});
+    for(var z=z0+0.6;z<z1-0.05;z+=0.6)S.box(x1-x0,0.002,0.006,(x0+x1)/2,0.012,z,{c:0x8f9ba2,g:'base',ns:true});}});
+// ---- קירות עם פתחים ----
+D.W.forEach(function(w){var x0=w[0],y0=w[1],x1=w[2],y1=w[3],ops=w[4].slice().sort(function(a,b){return a[0]-b[0];});
+  var hz=(x1-x0)>=(y1-y0),a0=hz?x0:y0,a1=hz?x1:y1,t0=hz?y0:x0,t1=hz?y1:x1,th=L(t1-t0),cT=(t0+t1)/2;
+  function seg(s,e,yb,yt,c,a){if(e-s<0.5||yt-yb<0.01)return;var len=L(e-s),cA=(s+e)/2,o={c:c||C.wall,g:'wall',a:a};
+    if(hz)S.box(len,yt-yb,th,X(cA),(yb+yt)/2,Z(cT),o);else S.box(th,yt-yb,len,X(cT),(yb+yt)/2,Z(cA),o);}
+  var cur=a0;ops.forEach(function(op){seg(cur,op[0],0,HW);
+    if(op[2]==='door')seg(op[0],op[1],2.1,HW);
+    else{var sill=op[2]==='glass'?0.02:0.9;seg(op[0],op[1],0,sill);seg(op[0],op[1],2.2,HW);
+      var len=L(op[1]-op[0]),c=(op[0]+op[1])/2,gh=2.2-sill,gy=(sill+2.2)/2,fd=Math.min(0.07,th);
+      function wb(l,h,d,off,y,o){if(hz)S.box(l,h,d,X(c)+off,y,Z(cT),o);else S.box(d,h,l,X(cT),y,Z(c)+off,o);}
+      wb(len,gh,0.012,0,gy,{c:C.glass,g:'wall',a:0.3,sh:140,gl:1.0});                                  // זכוכית דקה שמשקפת את השמיים
+      var FR={c:C.frame,g:'wall',sh:60,gl:0.25};wb(len,0.045,fd,0,2.2,FR);wb(len,0.045,fd,0,sill+0.02,FR);          // מסגרת אלומיניום כהה
+      [-1,1].forEach(function(e){wb(0.045,gh,fd,e*(len/2-0.022),gy,FR);});
+      var nm=Math.max(0,Math.round(len/(op[2]==='glass'?1.05:1.2))-1);for(var mi=1;mi<=nm;mi++)wb(0.04,gh,fd,-len/2+mi*len/(nm+1),gy,FR);   // חלוקה לכנפיים
+      if(op[2]!=='glass')wb(len+0.08,0.03,th+0.07,0,sill-0.005,{c:0xf0efea,g:'wall',sh:60,gl:0.3,pat:3});}                                    // אדן שיש
+    cur=op[1];});seg(cur,a1,0,HW);
+  var len=L(a1-a0),cA=(a0+a1)/2;if(hz)S.box(len,0.015,th+0.004,X(cA),HW+0.008,Z(cT),{c:C.cap,g:'wall'});else S.box(th+0.004,0.015,len,X(cT),HW+0.008,Z(cA),{c:C.cap,g:'wall'});});
+// ---- פאנל (שיפולים) לאורך כל קיר פנימי, ומתג תאורה ליד כל דלת — הפרטים הקטנים שהופכים חדר ל"גמור" ----
+D.W.forEach(function(w){var hz=(w[2]-w[0])>=(w[3]-w[1]),a0=hz?w[0]:w[1],a1=hz?w[2]:w[3];
+  [[hz?w[1]:w[0],-1],[hz?w[3]:w[2],1]].forEach(function(fc){var run=null,runs=[];
+    function okAt(t){if(w[4].some(function(op){return (op[2]==='door'||op[2]==='glass')&&t>op[0]-1&&t<op[1]+1;}))return false;
+      var fx=hz?t:fc[0]+fc[1]*5,fy=hz?fc[0]+fc[1]*5:t,ft=floorAt(fx,fy);return !!ft&&ft!=='deck'&&!wallAt(fx,fy,0);}
+    for(var t=a0;t<=a1+0.01;t+=4){if(okAt(Math.min(t,a1))){if(!run)run=[t,t];else run[1]=Math.min(t,a1);}else if(run){runs.push(run);run=null;}}if(run)runs.push(run);
+    runs.forEach(function(r){if(r[1]-r[0]<6)return;var len=L(r[1]-r[0]+4),m=(r[0]+r[1])/2;
+      if(hz)S.box(len,0.07,0.012,X(m),0.035,Z(fc[0])+fc[1]*0.006,{c:0xfcfcfb,g:'wall',sh:50,gl:0.2});else S.box(0.012,0.07,len,X(fc[0])+fc[1]*0.006,0.035,Z(m),{c:0xfcfcfb,g:'wall',sh:50,gl:0.2});});
+    w[4].forEach(function(op){if(op[2]!=='door')return;var t=op[1]+13;if(t>a1-5||!okAt(t)){t=op[0]-13;if(t<a0+5||!okAt(t))return;}
+      var px=hz?t:fc[0],py=hz?fc[0]:t,fx=hz?t:fc[0]+fc[1]*6,fy=hz?fc[0]+fc[1]*6:t;if(furnAt(fx,fy,5))return;
+      var face=hz?(fc[1]<0?'n':'s'):(fc[1]<0?'w':'e'),ry=FRY[face],lf=LF(X(px),Z(py),ry),q=lf(0,0.005);
+      S.box(0.082,0.082,0.009,q[0],1.12,q[1],{c:0xfafafa,g:'wall',ry:ry,sh:110,gl:0.45});q=lf(0,0.0105);S.box(0.036,0.05,0.004,q[0],1.12,q[1],{c:0xf1f2f2,g:'wall',ry:ry,sh:90});});});});
+// ---- רהיטים אמיתיים (ריהוט גבוה בקבוצת הקירות — יורד איתם) ----
+function legs(cx,cz,w,d,h,c,g){[[1,1],[1,-1],[-1,1],[-1,-1]].forEach(function(s){S.cyl(0.02,h,cx+s[0]*(w/2-0.05),h/2,cz+s[1]*(d/2-0.05),{c:c||0x2b2b2b,g:g,seg:10});});}
+function F_sofa(x0,y0,x1,y1,face){var w=L(x1-x0),d=L(y1-y0),cx=X((x0+x1)/2),cz=Z((y0+y1)/2),vert=d>w,len=vert?d:w,dep=vert?w:d;
+  // ספה מעוגלת: בסיס, משענת גב רכה, משענות יד עגולות, כריות מושב וגב נפרדות וכריות נוי
+  function rb(a,b,cA,cB,y,hh,r,c){if(vert)S.rbox(b,hh,a,cx+cB,y,cz+cA,r,{c:c,pat:4});else S.rbox(a,hh,b,cx+cA,y,cz+cB,r,{c:c,pat:4});}
+  var back=(face==='w'||face==='n')?1:-1;legs(cx,cz,vert?dep-0.1:len-0.1,vert?len-0.1:dep-0.1,0.09,0x1f1f1f);
+  rb(len,dep,0,0,0.2,0.2,0.07,C.fab);rb(len-0.1,0.2,0,back*(dep/2-0.1),0.56,0.5,0.08,C.fab);
+  [-1,1].forEach(function(e){rb(0.17,dep-0.04,e*(len/2-0.085),0,0.42,0.3,0.075,C.fab);});
+  var n=len>2.2?3:2,sw=(len-0.36)/n;
+  for(var i=0;i<n;i++){var ca=-(len-0.36)/2+(i+0.5)*sw;rb(sw-0.025,dep-0.3,ca,-back*0.07,0.37,0.14,0.06,C.fab2);rb(sw-0.05,0.15,ca,back*(dep/2-0.27),0.6,0.34,0.06,C.fab2);}
+  rb(0.34,0.13,-len/2+0.36,back*(dep/2-0.36),0.58,0.3,0.05,0xb59f7e);rb(0.34,0.13,len/2-0.36,back*(dep/2-0.36),0.58,0.3,0.05,0x5f6b78);}
+function F_bed(x0,y0,x1,y1,head){var w=L(x1-x0),d=L(y1-y0),cx=X((x0+x1)/2),cz=Z((y0+y1)/2),hz=(head==='n'||head==='s');
+  // מיטה: בסיס מרופד, מזרן, שמיכה עם קיפול, כריות רכות, ראש מיטה מרופד וכיסוי בקצה
+  S.rbox(w,0.26,d,cx,0.19,cz,0.04,{c:0x8a7d70,pat:4});legs(cx,cz,w-0.1,d-0.1,0.07,0x2a2019);S.rbox(w-0.04,0.2,d-0.04,cx,0.42,cz,0.07,{c:0xf6f4f0,pat:4});
+  var hs=hz?(head==='n'?-1:1):(head==='e'?1:-1);
+  if(hz){S.rbox(w+0.02,0.06,d*0.66,cx,0.535,cz-hs*d*0.16,0.06,{c:0xd9d1c4,pat:4});S.rbox(w+0.03,0.07,0.28,cx,0.54,cz-hs*(d/2-0.2),0.05,{c:0x6f7f8c,pat:4});
+    S.rbox(w+0.08,1.05,0.09,cx,0.58,cz+hs*(d/2+0.035),0.035,{c:C.fab,pat:4});
+    var np=w>1.2?2:1;for(var i=0;i<np;i++)S.rbox(np===2?w/2-0.12:w-0.2,0.13,0.38,cx+(np===2?(i?1:-1)*w/4:0),0.585,cz+hs*(d/2-0.27),0.07,{c:0xffffff,pat:4});}
+  else{S.rbox(w*0.66,0.06,d+0.02,cx-hs*w*0.16,0.535,cz,0.06,{c:0xd9d1c4,pat:4});S.rbox(0.28,0.07,d+0.03,cx-hs*(w/2-0.2),0.54,cz,0.05,{c:0x6f7f8c,pat:4});
+    S.rbox(0.09,1.05,d+0.08,cx+hs*(w/2+0.035),0.58,cz,0.035,{c:C.fab,pat:4});
+    var np2=d>1.2?2:1;for(var k=0;k<np2;k++)S.rbox(0.38,0.13,np2===2?d/2-0.12:d-0.2,cx+hs*(w/2-0.27),0.585,cz+(np2===2?(k?1:-1)*d/4:0),0.07,{c:0xffffff,pat:4});}}
+function F_ward(x0,y0,x1,y1,face){var w=L(x1-x0),d=L(y1-y0),cx=X((x0+x1)/2),cz=Z((y0+y1)/2),H=2.35,o={c:C.cab,g:'wall',sh:20};S.box(w,H,d,cx,H/2,cz,o);
+  var alongX=w>d,n=Math.max(2,Math.round((alongX?w:d)/0.5)),fs=(face==='s'||face==='e')?1:-1;
+  for(var i=1;i<n;i++){var t=-0.5+i/n;if(alongX)S.box(0.008,H-0.06,0.006,cx+t*w,H/2,cz+fs*(d/2+0.003),{c:0x9a9184,g:'wall'});else S.box(0.006,H-0.06,0.008,cx+fs*(w/2+0.003),H/2,cz+t*d,{c:0x9a9184,g:'wall'});}
+  for(var i=0;i<n;i++){var t=-0.5+(i+0.5)/n+(i%2?-0.18:0.18)/n;if(alongX)S.box(0.015,0.3,0.02,cx+t*w,1.1,cz+fs*(d/2+0.012),{c:0x5f676c,g:'wall',sh:60});else S.box(0.02,0.3,0.015,cx+fs*(w/2+0.012),1.1,cz+t*d,{c:0x5f676c,g:'wall',sh:60});}}
+function F_kitchen(){S.box(L(270),0.88,L(44),X(866),0.44,Z(402),{c:C.cab});S.box(L(272),0.04,L(46),X(866),0.9,Z(402),{c:C.counter,sh:50});
+  S.box(L(44),0.88,L(96),X(1024),0.44,Z(472),{c:C.cab});S.box(L(46),0.04,L(96),X(1024),0.9,Z(472),{c:C.counter,sh:50});
+  S.box(L(46),2.0,L(46),X(1023),1.0,Z(543),{c:0xd9dde0,g:'wall',sh:60});S.box(0.012,1.2,0.02,X(1000),1.2,Z(527),{c:0x5f676c,g:'wall'});
+  S.box(L(270),0.7,L(26),X(866),1.85,Z(393),{c:C.cab,g:'wall'});S.box(L(26),0.7,L(96),X(1034),1.85,Z(472),{c:C.cab,g:'wall'});
+  S.box(0.62,0.02,0.4,X(930),0.92,Z(402),{c:0x2a2e33,sh:80});S.cyl(0.012,0.28,X(930),1.06,Z(388),{c:0xb8bec2,sh:80});
+  S.box(0.6,0.012,0.5,X(820),0.925,Z(402),{c:0x111111,sh:90});[[-0.13,-0.11],[0.13,-0.11],[-0.13,0.11],[0.13,0.11]].forEach(function(p){S.cyl(0.07,0.004,X(820)+p[0],0.933,Z(402)+p[1],{c:0x333333,seg:16});});
+  for(var i=0;i<6;i++)S.box(0.006,0.8,0.006,X(740)+i*0.6,0.44,Z(424)+0.003,{c:0x9a9184});}
+function F_dining(x0,y0,x1,y1){var w=L(x1-x0),d=L(y1-y0),cx=X((x0+x1)/2),cz=Z((y0+y1)/2);S.rbox(w,0.04,d,cx,0.75,cz,0.05,{c:C.oak,sh:50,gl:0.25,pat:1});legs(cx,cz,w-0.1,d-0.1,0.73,0x1f1f1f);
+  [[-0.25,-1],[0.25,-1],[-0.25,1],[0.25,1]].forEach(function(s){var px=cx+s[0]*w,pz=cz+s[1]*(d/2+0.2);S.rbox(0.44,0.06,0.44,px,0.46,pz,0.08,{c:C.fab2,pat:4});legs(px,pz,0.4,0.4,0.43,0x1f1f1f);
+    S.rbox(0.42,0.4,0.05,px,0.7,pz+s[1]*0.2,0.022,{c:C.fab2,pat:4});});
+  S.cyl(0.06,0.2,cx,0.87,cz,{c:0xf2efe9,seg:18,sh:70,gl:0.3});[[0,0.13,0],[0.06,0.08,0.03],[-0.05,0.07,-0.04]].forEach(function(q){S.sphere(0.07,cx+q[0],0.99+q[1],cz+q[2],{c:0x5f8f58,seg:10});});}
+function F_tv(x0,y0,x1,y1){var w=L(x1-x0),d=L(y1-y0),cx=X((x0+x1)/2),cz=Z((y0+y1)/2);S.box(w,0.42,d,cx,0.21,cz,{c:C.oak,sh:30});
+  S.box(0.04,0.72,1.25,X(x0)+0.03,1.35,cz,{c:0x111418,g:'wall',sh:90});S.box(0.03,0.66,1.18,X(x0)+0.055,1.35,cz,{c:0x1d2732,g:'wall',sh:90,e:0.25});}
+function F_plant(x,y){var px=X(x),pz=Z(y);S.cyl(0.17,0.42,px,0.21,pz,{c:0xe8e2d8,seg:22,sh:40,gl:0.2});S.cyl(0.15,0.01,px,0.425,pz,{c:0x3b2f25,seg:18});S.cyl(0.018,0.5,px,0.67,pz,{c:0x5a4634,seg:8});
+  [[0,0.98,0,0.17],[0.11,0.86,0.04,0.12],[-0.1,0.9,0.07,0.13],[0.03,0.84,-0.11,0.11],[-0.06,1.1,-0.04,0.12],[0.08,1.07,0.07,0.1]].forEach(function(q,i){S.sphere(q[3],px+q[0],q[1],pz+q[2],{c:i%2?0x4f7d4a:0x5f9257,seg:12});});}
+function F_toilet(x,y,face){var cx=X(x),cz=Z(y),ry={s:0,n:Math.PI,w:Math.PI/2,e:-Math.PI/2}[face]||0;S.cyl(0.19,0.4,cx,0.2,cz,{c:0xffffff,sh:60,seg:20});S.box(0.42,0.36,0.16,cx-Math.sin(ry)*0.22,0.55,cz-Math.cos(ry)*0.22,{c:0xffffff,sh:60,ry:ry});}
+function F_vanity(x0,y0,x1,y1){var w=L(x1-x0),d=L(y1-y0),cx=X((x0+x1)/2),cz=Z((y0+y1)/2);S.box(w,0.5,d,cx,0.6,cz,{c:C.oak});S.box(w,0.04,d,cx,0.87,cz,{c:0xffffff,sh:70});S.cyl(0.15,0.03,cx,0.89,cz,{c:0xdfe5ea,sh:80,seg:20});}
+D.furniture.forEach(function(f){var t=f[0];
+  if(t==='sofa')F_sofa(f[1],f[2],f[3],f[4],f[5]);else if(t==='bed')F_bed(f[1],f[2],f[3],f[4],f[5]);else if(t==='ward')F_ward(f[1],f[2],f[3],f[4],f[5]);
+  else if(t==='kitchen')F_kitchen();
+  else if(t==='counter'){var w=L(f[3]-f[1]),d=L(f[4]-f[2]),cx=X((f[1]+f[3])/2),cz=Z((f[2]+f[4])/2),fr=f[6]||'s',along=(fr==='s'||fr==='n'),sg=(fr==='s'||fr==='e')?1:-1,len=along?w:d;
+    S.box(w,0.1,d,cx,0.05,cz,{c:0x2b2f33});S.box(w,0.78,d,cx,0.49,cz,{c:0xf3efe8,sh:20});S.box(w+0.01,0.04,d+0.02,cx,0.9,cz,{c:0xe9e6e1,sh:70,pat:3});
+    var n=Math.max(1,Math.round(len/0.6));
+    for(var i=0;i<n;i++){var u=-len/2+(i+0.5)*len/n;
+      if(i>0){var us=-len/2+i*len/n;if(along)S.box(0.006,0.74,0.004,cx+us,0.49,cz+sg*(d/2+0.002),{c:0xb9b1a5});else S.box(0.004,0.74,0.006,cx+sg*(w/2+0.002),0.49,cz+us,{c:0xb9b1a5});}
+      if(along)S.box(0.22,0.012,0.02,cx+u,0.82,cz+sg*(d/2+0.012),{c:0x30353a,sh:80});else S.box(0.02,0.012,0.22,cx+sg*(w/2+0.012),0.82,cz+u,{c:0x30353a,sh:80});}
+    if(f[5]){var ud=0.34,uz=along?cz-sg*(d/2-ud/2):cz,ux=along?cx:cx-sg*(w/2-ud/2);
+      var top=f[7]||2.22,uh=top-1.5,uy=(1.5+top)/2;   // f[7]: גובה עליון — 2.29 = ארונות עד הגבס
+      if(along){S.box(w,0.6,0.012,cx,1.21,cz-sg*(d/2-0.006),{c:0xe9e4dc,g:'wall'});S.box(w,uh,ud,ux,uy,uz,{c:0xf3efe8,g:'wall',sh:20});}
+      else{S.box(0.012,0.6,d,cx-sg*(w/2-0.006),1.21,cz,{c:0xe9e4dc,g:'wall'});S.box(ud,uh,d,ux,uy,uz,{c:0xf3efe8,g:'wall',sh:20});}
+      for(var i=1;i<n;i++){var us=-len/2+i*len/n;if(along)S.box(0.006,uh-0.02,0.004,ux+us,uy,uz+sg*(ud/2+0.002),{c:0xc9c2b6,g:'wall'});else S.box(0.004,uh-0.02,0.006,ux+sg*(ud/2+0.002),uy,uz+us,{c:0xc9c2b6,g:'wall'});}
+      for(var i=0;i<n;i++){var u=-len/2+(i+0.5)*len/n;if(along)S.box(0.18,0.012,0.02,ux+u,1.55,uz+sg*(ud/2+0.012),{c:0x30353a,g:'wall',sh:80});else S.box(0.02,0.012,0.18,ux+sg*(ud/2+0.012),1.55,uz+u,{c:0x30353a,g:'wall',sh:80});}}}
+  else if(t==='fridge'){var w=L(f[3]-f[1]),d=L(f[4]-f[2]),cx=X((f[1]+f[3])/2),cz=Z((f[2]+f[4])/2);S.box(w,2.0,d,cx,1.0,cz,{c:0x3a4048,g:'wall',sh:70});
+    S.box(w*0.98,0.008,d*1.01,cx,1.25,cz,{c:0x1f2327,g:'wall'});S.box(0.02,0.5,0.02,cx-w/2-0.01,1.0,cz-d*0.3,{c:0xb8bec2,g:'wall',sh:90});S.box(0.02,0.5,0.02,cx-w/2-0.01,1.55,cz-d*0.3,{c:0xb8bec2,g:'wall',sh:90});}
+  else if(t==='stove'){var x=X(f[1]),z=Z(f[2]);S.box(0.6,0.012,0.52,x,0.925,z,{c:0x0d0f11,sh:110});[[-0.15,-0.12],[0.15,-0.12],[-0.15,0.12],[0.15,0.12]].forEach(function(q){S.cyl(0.085,0.002,x+q[0],0.933,z+q[1],{c:0x3a3f45,seg:20});S.cyl(0.05,0.003,x+q[0],0.934,z+q[1],{c:0x2a2e33,seg:16});});
+    S.box(0.6,0.5,0.02,x,0.5,z+0.27,{c:0x1b1f23,sh:90});S.box(0.5,0.3,0.004,x,0.48,z+0.282,{c:0x0b0d0f,sh:110});}
+  else if(t==='sink'){var x=X(f[1]),z=Z(f[2]);S.box(0.52,0.02,0.42,x,0.921,z,{c:0xc9ced2,sh:110});S.box(0.44,0.012,0.34,x,0.928,z,{c:0x5d646b,sh:90});
+    S.cyl(0.016,0.26,x+0.24,1.05,z,{c:0xc9ced2,sh:120});S.cyl(0.012,0.18,x+0.17,1.18,z,{c:0xc9ced2,sh:120,axis:'x'});}else if(t==='dining')F_dining(f[1],f[2],f[3],f[4]);else if(t==='tv')F_tv(f[1],f[2],f[3],f[4]);else if(t==='plant')F_plant(f[1],f[2]);
+  else if(t==='toilet')F_toilet(f[1],f[2],f[3]);else if(t==='vanity')F_vanity(f[1],f[2],f[3],f[4]);
+  else{var w=L(f[3]-f[1]),d=L(f[4]-f[2]),cx=X((f[1]+f[3])/2),cz=Z((f[2]+f[4])/2);
+    if(t==='coffee'){S.rbox(w,0.04,d,cx,0.4,cz,0.06,{c:C.oak,sh:50,gl:0.25,pat:1});legs(cx,cz,w-0.08,d-0.08,0.38,0x1f1f1f);S.box(0.22,0.035,0.16,cx-0.05,0.438,cz,{c:0x0F3C5F});S.box(0.2,0.03,0.14,cx-0.05,0.47,cz,{c:0xd8cfc0});
+      if(!(D.furniture||[]).some(function(q){return q[0]==='rug';})){S.rbox(w+1.5,0.012,d+1.1,cx,0.008,cz,0.05,{c:0xb9b0a2,pat:4,nhm:true});S.rbox(w+1.36,0.013,d+0.96,cx,0.009,cz,0.04,{c:C.rug,pat:4,nhm:true});}}   // שטיח מתחת לשולחן הסלון
+    else if(t==='rug'){S.rbox(w,0.012,d,cx,0.008,cz,0.05,{c:0xb9b0a2,pat:4,nhm:true});S.rbox(w-0.14,0.013,d-0.14,cx,0.009,cz,0.04,{c:C.rug,pat:4,nhm:true});}
+    else if(t==='night'){S.box(w,0.5,d,cx,0.25,cz,{c:C.oak});S.cyl(0.07,0.04,cx,0.52,cz,{c:0x333333});S.cyl(0.012,0.3,cx,0.69,cz,{c:0x333333});S.cyl(0.11,0.16,cx,0.88,cz,{c:0xf6eedd,e:0.4});}
+    else if(t==='desk'){S.box(w,0.04,d,cx,0.74,cz,{c:C.oak});legs(cx,cz,w,d,0.72,0x2b2b2b);}
+    else if(t==='tub'){S.rbox(w,0.55,d,cx,0.275,cz,0.06,{c:0xffffff,sh:90,gl:0.5});S.rbox(w-0.12,0.02,d-0.12,cx,0.545,cz,0.09,{c:0xdfe6ea,sh:90,gl:0.6});}
+    else if(t==='shower'){S.box(w,0.04,d,cx,0.02,cz,{c:0xdfe5ea});S.box(0.01,2.0,d,X(f[3]),1.0,cz,{c:C.glass,a:0.3,g:'wall'});}}});
+// משקופים לדלתות
+D.W.forEach(function(w){w[4].forEach(function(op){if(op[2]!=='door')return;var hz=(w[2]-w[0])>=(w[3]-w[1]),th=L(hz?w[3]-w[1]:w[2]-w[0])+0.03,c0=hz?(w[1]+w[3])/2:(w[0]+w[2])/2;
+  [op[0],op[1]].forEach(function(a){if(hz)S.box(0.05,2.12,th,X(a),1.06,Z(c0),{c:0xffffff,g:'wall'});else S.box(th,2.12,0.05,X(c0),1.06,Z(a),{c:0xffffff,g:'wall'});});
+  var len=L(op[1]-op[0])+0.1,m=(op[0]+op[1])/2;if(hz)S.box(len,0.05,th,X(m),2.12,Z(c0),{c:0xffffff,g:'wall'});else S.box(th,0.05,len,X(c0),2.12,Z(m),{c:0xffffff,g:'wall'});});});
+// ---- שמיים ונוף עירוני רחוק: רואים אותם מהחלונות בסיור בדירה (מוסתרים במבט מלמעלה) ----
+S.group('sky').noHM=true;S.sphere(58,0,0,0,{c:0xffffff,g:'sky',fx:3,ns:true,seg:28});
+(function(){var sd=7;function rnd(){sd=(sd*16807)%2147483647;return sd/2147483647;}
+  for(var i=0;i<46;i++){var a=i/46*6.2832+rnd()*0.1,r=27+rnd()*20,w=4+rnd()*7,h=5+rnd()*rnd()*26,d=4+rnd()*6;
+    S.box(w,h,d,Math.cos(a)*r,h/2-3,Math.sin(a)*r,{c:[0xb7c3cf,0xc4cdd6,0xa9b6c3,0xcfd5da][i%4],g:'sky',fx:4,ns:true,ry:a});}})();
+// ---- דלתות פנים פתוחות עם ידית: הכנף נשענת על הקיר הסמוך כשאפשר, ולא נבנית אם אין לה מקום פנוי ----
+D.W.forEach(function(w){var hz=(w[2]-w[0])>=(w[3]-w[1]),c0=hz?(w[1]+w[3])/2:(w[0]+w[2])/2,th=hz?w[3]-w[1]:w[2]-w[0];
+  w[4].forEach(function(op){if(op[2]!=='door')return;var len=op[1]-op[0],best=null,bs=-1;if(len<45||len>80)return;
+    [[op[0],1],[op[1],-1]].forEach(function(hg){[-1,1].forEach(function(sd){var ok=true,sc=0;
+      for(var k=1;k<=4;k++){var t=k/4,ax=hg[0],off=sd*(th/2+len*t);var px=hz?ax:c0+off,py=hz?c0+off:ax;var ft=floorAt(px,py);
+        if(!ft||ft==='deck'||wallAt(px,py,1)||furnAt(px,py,3)){ok=false;break;}}
+      if(!ok)return;var bx=hg[0]-hg[1]*9,o2=sd*(th/2+len*0.5),sx=hz?bx:c0+o2,sy=hz?c0+o2:bx;if(wallAt(sx,sy,2))sc+=2;            // יש קיר ליד — הכנף נשענת עליו
+      if((D.splits||[]).some(function(s){return Math.hypot(s[0]-(hz?hg[0]:c0),s[1]-(hz?c0:hg[0]))<len*1.3;}))sc-=0.5;
+      if(sc>bs){bs=sc;best=[hg[0],hg[1],sd];}});});
+    if(!best)return;var ax=best[0],sd=best[2],lm=L(len)-0.03,off=sd*(th/2)/K+sd*lm/2,cx=hz?X(ax)-best[1]*0.02:X(c0)+off,cz=hz?Z(c0)+off:Z(ax)-best[1]*0.02;
+    if(hz)S.box(0.04,2.05,lm,cx,1.03,cz,{c:0xfbfaf8,g:'wall',sh:60,gl:0.25});else S.box(lm,2.05,0.04,cx,1.03,cz,{c:0xfbfaf8,g:'wall',sh:60,gl:0.25});
+    var hx=hz?cx:X(c0)+sd*(th/2/K+lm-0.08),hzz=hz?Z(c0)+sd*(th/2/K+lm-0.08):cz;                                                 // ידית בקצה הכנף, משני הצדדים
+    [-1,1].forEach(function(e){if(hz){S.box(0.03,0.02,0.12,hx+e*0.045,1.02,hzz-sd*0.03,{c:0x9aa1a7,g:'wall',sh:120,gl:0.6});S.cyl(0.011,0.05,hx+e*0.03,1.02,hzz,{c:0x9aa1a7,g:'wall',axis:'x',seg:10,sh:120});}
+      else{S.box(0.12,0.02,0.03,hx-sd*0.03,1.02,hzz+e*0.045,{c:0x9aa1a7,g:'wall',sh:120,gl:0.6});S.cyl(0.011,0.05,hx,1.02,hzz+e*0.03,{c:0x9aa1a7,g:'wall',axis:'z',seg:10,sh:120});}});});});
+// ---- וילונות בצדי החלונות בחדרים (לא במטבח ובחדרי רחצה) ומראה מעל כל כיור ----
+D.W.forEach(function(w){var hz=(w[2]-w[0])>=(w[3]-w[1]);
+  w[4].forEach(function(op){if(op[2]==='door')return;[[hz?w[1]:w[0],-1],[hz?w[3]:w[2],1]].forEach(function(fc){
+    var m=(op[0]+op[1])/2,fx=hz?m:fc[0]+fc[1]*8,fy=hz?fc[0]+fc[1]*8:m,ft=floorAt(fx,fy);if(ft!=='wood'&&ft!=='pub')return;
+    var n0=L(op[1]-op[0]);if(n0<0.7)return;
+    [op[0]-3,op[1]+3].forEach(function(t,ei){for(var k=0;k<4;k++){var tt=t+(ei?1:-1)*(-k*4.2)+(ei?-1:1)*0,px=hz?tt:fc[0]+fc[1]*(5+(k%2)*2.4),py=hz?fc[0]+fc[1]*(5+(k%2)*2.4):tt;
+        if(wallAt(px,py,0)||furnAt(px,py,0))continue;S.cyl(0.04,2.36,X(px),1.22,Z(py),{c:0xe9e4da,g:'wall',seg:10,pat:4});}});
+    var rl=n0+0.5;if(hz)S.cyl(0.012,rl,X(m),2.42,Z(fc[0])+fc[1]*0.085,{c:0x3a3f45,g:'wall',axis:'x',seg:8,sh:60});else S.cyl(0.012,rl,X(fc[0])+fc[1]*0.085,2.42,Z(m),{c:0x3a3f45,g:'wall',axis:'z',seg:8,sh:60});});});});
+(D.furniture||[]).forEach(function(f){if(f[0]!=='vanity')return;var x0=Math.min(f[1],f[3]),x1=Math.max(f[1],f[3]),y0=Math.min(f[2],f[4]),y1=Math.max(f[2],f[4]),mx=(x0+x1)/2,my=(y0+y1)/2;
+  var c=[[mx,y0-5,'s',x1-x0],[mx,y1+5,'n',x1-x0],[x0-5,my,'e',y1-y0],[x1+5,my,'w',y1-y0]].filter(function(q){return wallAt(q[0],q[1],0);})[0];if(!c)return;
+  var hzW=(c[2]==='s'||c[2]==='n'),px=hzW?mx:(c[2]==='e'?x0:x1),py=hzW?(c[2]==='s'?y0:y1):my,ry=FRY[c[2]],lf=LF(X(px),Z(py),ry),mw=Math.max(0.4,Math.min(L(c[3])-0.06,0.9)),q=lf(0,0.012);
+  S.box(mw,0.7,0.012,q[0],1.5,q[1],{c:0xcfdbe2,g:'wall',ry:ry,sh:150,gl:1.4});q=lf(0,0.008);S.box(mw+0.03,0.73,0.012,q[0],1.5,q[1],{c:0x2f353b,g:'wall',ry:ry});});
+// ---- תקרת בטון — מוצגת רק כשהמצלמה בתוך הדירה ----
+S.group('roof');(function(){var x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;D.F.forEach(function(f){if(f[4]==='deck')return;x0=Math.min(x0,f[0]);y0=Math.min(y0,f[1]);x1=Math.max(x1,f[2]);y1=Math.max(y1,f[3]);});
+  // תקרה אחת רציפה ועבה (לא לוחות דקים חופפים) — אותו חומר כמו הגבס, שמוצג נכון בכל טלפון
+  if(x1>x0)S.box(L(x1-x0)+0.4,0.12,L(y1-y0)+0.4,X((x0+x1)/2),HW+0.06,Z((y0+y1)/2),{c:0xe4e2de,g:'roof',ns:true});})();   // גוון תקרה מעט כהה מהקירות — עומק, כמו בחדר אמיתי
+// ---- גבס: אמיתי (אטום) / שקוף / בלי ----
+S.group('gypT');S.group('gypR');S.group('gypA');S.group('pool');S.group('cone');S.group('led');S.group('spotTrk');S.group('inst');
+['ceil','gypT','gypR','gypA','roof','pool','cone','led','spotTrk','inst'].forEach(function(k){S.group(k).noHM=true;});S.group('pool').noRefl=true;S.group('inst').noRefl=true;   // לא משתתפים בהצללת הסביבה (הם מעל הראש)
+D.gyp.forEach(function(g){var w=L(g[2]-g[0]),h=HW-g[4],dd=L(g[3]-g[1]),x=X((g[0]+g[2])/2),y=(g[4]+HW)/2,z=Z((g[1]+g[3])/2);
+  S.box(w,h,dd,x,y,z,{c:C.gyp,g:'gypT',a:0.24,edge:true,lc:0x0F3C5F,ns:true});
+  S.box(w,h,dd,x,y,z,{c:0xfdfdfc,g:'gypR',ns:true});});
+// גבס בצורה חופשית — מקשה אחת (למשל מסדרון שנסגר באלכסון): {pts:[[x,y],...], y:גובה תחתית}
+(D.gypPoly||[]).forEach(function(g){var P=g.pts.map(function(q){return [X(q[0]),Z(q[1])];}),y0=g.y||D.GYP_Y;
+  S.prism(P,y0,HW,{c:C.gyp,g:'gypT',a:0.24,edge:true,lc:0x0F3C5F,ns:true});
+  S.prism(P,y0,HW,{c:0xfdfdfc,g:'gypR',ns:true});});
+// סגירת גבס אלכסונית: [x0,y0,x1,y1,רוחב בפיקסלים,גובה תחתית]
+(D.gypDiag||[]).forEach(function(g){var ax=X(g[0]),az=Z(g[1]),bx=X(g[2]),bz=Z(g[3]),len=Math.hypot(bx-ax,bz-az),ang=Math.atan2(bz-az,bx-ax),w=L(g[4]),h=HW-g[5],y=(g[5]+HW)/2,cx=(ax+bx)/2,cz=(az+bz)/2;
+  S.box(len,h,w,cx,y,cz,{c:C.gyp,g:'gypT',a:0.24,edge:true,lc:0x0F3C5F,ns:true,ry:-ang});
+  S.box(len,h,w,cx,y,cz,{c:0xfdfdfc,g:'gypR',ns:true,ry:-ang});});
+// ---- פסי לד מגנטיים: 3 ספוטים ומעלה בשורה אחת, באותו משטח גבס ← פס אחד (מחליף אותם כשהאפשרות פעילה) ----
+var TRK=[],inTrk={};(function(){var G=D.gyp;function gi_(p){for(var i=0;i<G.length;i++){var g=G[i];if(p[0]>=g[0]&&p[0]<=g[2]&&p[1]>=g[1]&&p[1]<=g[3])return i;}return -1;}
+  [0,1].forEach(function(ax){var used={};D.spots.forEach(function(p,i){if(inTrk[i]||used[i])return;var gp=gi_(p);if(gp<0)return;
+    var L_=D.spots.map(function(q,j){return j;}).filter(function(j){var q=D.spots[j];return !inTrk[j]&&gi_(q)===gp&&Math.abs(q[ax]-p[ax])<5;});
+    L_.forEach(function(j){used[j]=1;});if(L_.length<3)return;L_.sort(function(a,b){return D.spots[a][1-ax]-D.spots[b][1-ax];});
+    L_.forEach(function(j){inTrk[j]=1;});var a=D.spots[L_[0]],b=D.spots[L_[L_.length-1]],e=0.3*K;
+    TRK.push({ax:ax,c:p[ax],s0:a[1-ax]-e,s1:b[1-ax]+e,n:L_.length,g:gp});});});})();
+function spotGY(p){return (!D.floorTypes&&p[1]<430&&p[0]<553)?2.47:D.GYP_Y;}
+S.group('spotTrk');S.group('led');
+TRK.forEach(function(t){var len=L(t.s1-t.s0),mid=(t.s0+t.s1)/2,px=t.ax===0?t.c:mid,pz=t.ax===0?mid:t.c,gy=spotGY([px,pz]),x=X(px),z=Z(pz);
+  var W=function(a,b){return t.ax===0?[a,b]:[b,a];};var d1=W(0.045,len+0.01),d2=W(0.028,len-0.04),d3=W(0.012,len-0.08);
+  S.box(d1[0],0.006,d1[1],x,gy-0.002,z,{c:0x15181b,g:'led',sh:20});           // מסילה שחורה שקועה
+  S.box(d2[0],0.006,d2[1],x,gy-0.004,z,{c:0x0b0d0f,g:'led'});
+  S.box(d3[0],0.004,d3[1],x,gy-0.007,z,{c:0xffe6b8,g:'led',e:2.2});});        // מודול לד ליניארי
+// ספוט לכל מטר: טבעת לבנה שקועה, דיסקית לד, אלומה רכה שדועכת כלפי מטה ושלולית אור חמה על הרצפה
+D.spots.forEach(function(p,si){var x=X(p[0]),z=Z(p[1]),gy=spotGY(p),SG=inTrk[si]?'spotTrk':'gypA';
+  S.cyl(0.058,0.008,x,gy-0.004,z,{c:0xf6f6f4,g:SG,sh:90,gl:0.3,seg:28,ns:true});
+  S.cyl(0.043,0.005,x,gy-0.0075,z,{c:0x8f969c,g:SG,seg:24,ns:true});
+  S.disc(0.036,x,gy-0.0105,z,{c:0xfff0cf,g:SG,e:2.6,down:true,seg:24});
+  S.cyl(0.05,0.09,x,gy+0.05,z,{c:0x5c636a,g:SG,seg:14,sh:40});
+  S.disc(0.19,x,gy-0.014,z,{c:0xffe6bd,g:SG,a:0.5,e:1,fx:2,add:true,ns:true,seg:28});                                  // הילה רכה סביב הספוט
+  S.cone(0.04,0.40,gy-0.03,x,gy-0.012,z,{c:0xffdfae,g:'cone',a:0.075,e:1,fx:1,add:true,ns:true,seg:32});
+  S.disc(0.7,x,0.016,z,{c:0xffdcaa,g:'pool',a:0.13,e:1,fx:2,add:true,ns:true,seg:32});});
+// ---- מיני מרכזי + מרכזייה ----
+var mn=D.mini||[0,0,0,0,0],BX=mn[0],BY=mn[1],BW=mn[2],BH=mn[3],PD=mn[4],uy=D.GYP_Y+0.155;
+if(D.mini){ // דירה עם עיליים בלבד — אין מיני, אוויר חוזר ופתח שירות
+var PW=D.miniDir==='w',PN=D.miniDir==='n'||D.miniDir==='s';
+// מיני במאוזן (miniDir 'n'/'s'): הציר הארוך לאורך x, המרכזייה בצד הצפוני/הדרומי והצווארונים יוצאים ישר קדימה — D.COLY = מיקומי x של הצווארונים
+if(PN)(function(){var sg=D.miniDir==='n'?-1:1,bx=X(BX+BW/2),bz=Z(BY+BH/2),bw=L(BW),bh=L(BH);
+  S.rbox(bw,0.25,bh,bx,uy,bz,0.018,{c:0xe4e7ea,g:'ceil',sh:55,gl:0.3});
+  S.rbox(bw+0.008,0.075,bh+0.008,bx,uy+0.03,bz,0.02,{c:C.mini,g:'ceil',sh:45,gl:0.15});
+  S.rbox(bw+0.004,0.012,bh+0.004,bx,uy-0.119,bz,0.019,{c:0xc9ced3,g:'ceil',sh:40});
+  S.box(bw,0.25,bh,bx,uy,bz,{c:C.mini,g:'ceil',a:0.001,edge:true,lc:0x5b3bb0,ns:true});
+  [-0.25,0.25].forEach(function(k){S.box(bw*0.3,0.004,bh*0.72,bx+k*bw,uy+0.127,bz,{c:0xd3d8dc,g:'ceil',sh:40});});
+  S.box(0.22,0.07,0.16,bx-bw/2+0.16,uy+0.16,bz-sg*(bh/2-0.1),{c:0x9ba3aa,g:'ceil',sh:50});
+  S.box(0.1,0.003,0.2,bx,uy+0.1275,bz,{c:0xffffff,g:'ceil'});S.box(0.022,0.0035,0.2,bx-0.039,uy+0.128,bz,{c:C.mini,g:'ceil'});
+  S.box(bw-0.08,0.2,0.02,bx,uy,bz-sg*(bh/2+0.012),{c:0x3d444b,g:'ceil'});                     // מסנן בצד היניקה
+  for(var i=-4;i<=4;i++)S.box(0.006,0.19,0.006,bx+i*(bw-0.12)/9,uy,bz-sg*(bh/2+0.024),{c:0x8d959c,g:'ceil'});
+  // mn[5] = [x0,x1]: מרכזייה ארוכה מהיחידה (למשל כשחלק מהשרשורים יוצא לחלל אחר)
+  var pz=sg<0?Z(BY-PD/2):Z(BY+BH+PD/2),pd=L(PD),p0=mn[5]?X(mn[5][0]):X(BX)+L(2),p1=mn[5]?X(mn[5][1]):X(BX+BW)-L(2),pw=p1-p0,pcx=(p0+p1)/2;
+  S.box(bw-L(4)+0.004,0.215,0.02,bx,uy,bz+sg*(bh/2+0.006),{c:0x2c3136,g:'ceil'});
+  S.box(pw,0.23,pd,pcx,uy,pz,{c:0xc3c9ce,g:'ceil',sh:70,gl:0.45,edge:true,lc:0x6f7a84});
+  [-1,1].forEach(function(k){S.box(pw+0.004,0.006,pd+0.004,pcx,uy+k*0.07,pz,{c:0xa7afb6,g:'ceil',sh:50});});
+  [[1,1],[1,-1],[-1,1],[-1,-1]].forEach(function(q){var rx=bx+q[0]*(bw/2-0.08),rz=bz+q[1]*(bh/2+0.012);
+    S.cyl(0.006,0.34,rx,uy+0.17,rz,{c:0x7b848c,g:'ceil',seg:8});S.box(0.05,0.006,0.04,rx,uy+0.06,rz-q[1]*0.012,{c:0x7b848c,g:'ceil'});});
+  D.COLY.forEach(function(cx){var czz=sg<0?Z(BY-PD)-0.04:Z(BY+BH+PD)+0.04;
+    S.cyl(0.1,0.08,X(cx),uy,czz,{c:0xaab2b9,g:'ceil',axis:'z',sh:60,gl:0.4,seg:24});S.cyl(0.106,0.014,X(cx),uy,czz+sg*0.022,{c:0x6f7880,g:'ceil',axis:'z',seg:24});});
+})();
+else (function(){var bx=X(BX+BW/2),bz=Z(BY+BH/2),bw=L(BW),bh=L(BH),sg=PW?-1:1;
+  // גוף היחידה: פח מגולוון בהיר עם פינות מעוגלות, ופס סגול (הצבע של המיני במקרא) שעוטף אותו
+  S.rbox(bw,0.25,bh,bx,uy,bz,0.018,{c:0xe4e7ea,g:'ceil',sh:55,gl:0.3});
+  S.rbox(bw+0.008,0.075,bh+0.008,bx,uy+0.03,bz,0.02,{c:C.mini,g:'ceil',sh:45,gl:0.15});
+  S.rbox(bw+0.004,0.012,bh+0.004,bx,uy-0.119,bz,0.019,{c:0xc9ced3,g:'ceil',sh:40});
+  S.box(bw,0.25,bh,bx,uy,bz,{c:C.mini,g:'ceil',a:0.001,edge:true,lc:0x5b3bb0,ns:true});      // קו מתאר סגול במבט מלמעלה
+  // פאנלי שירות ותיבת חשמל על הגג של היחידה (נראים במבט "מעל הגבס")
+  [-0.25,0.25].forEach(function(k){S.box(bw*0.72,0.004,bh*0.3,bx,uy+0.127,bz+k*bh,{c:0xd3d8dc,g:'ceil',sh:40});});
+  S.box(0.16,0.07,0.22,bx-sg*(bw/2-0.1),uy+0.16,bz-bh/2+0.16,{c:0x9ba3aa,g:'ceil',sh:50});
+  S.box(0.2,0.003,0.1,bx,uy+0.1275,bz+bh*0.02,{c:0xffffff,g:'ceil'});S.box(0.2,0.0035,0.022,bx,uy+0.128,bz+bh*0.02-0.039,{c:C.mini,g:'ceil'});
+  // מסנן בצד היניקה (הצד שמול המרכזייה)
+  S.box(0.02,0.2,bh-0.08,bx-sg*(bw/2+0.012),uy,bz,{c:0x3d444b,g:'ceil'});
+  for(var i=-4;i<=4;i++)S.box(0.006,0.19,0.006,bx-sg*(bw/2+0.024),uy,bz+i*(bh-0.12)/9,{c:0x8d959c,g:'ceil'});
+  // חיבור גמיש + מרכזייה מפח מגולוון עם תפרים
+  var px=PW?X(BX-PD/2):X(BX+BW+PD/2),pd=L(PD),ph=bh-L(4);
+  S.box(0.02,0.215,ph+0.004,bx+sg*(bw/2+0.006),uy,bz,{c:0x2c3136,g:'ceil'});
+  S.box(pd,0.23,ph,px,uy,bz,{c:0xc3c9ce,g:'ceil',sh:70,gl:0.45,edge:true,lc:0x6f7a84});
+  [-1,1].forEach(function(k){S.box(pd+0.004,0.006,ph+0.004,px,uy+k*0.07,bz,{c:0xa7afb6,g:'ceil',sh:50});});
+  // מוטות תלייה עם אוזניות
+  [[1,1],[1,-1],[-1,1],[-1,-1]].forEach(function(s){var rx=bx+s[0]*(bw/2+0.012),rz=bz+s[1]*(bh/2-0.08);
+    S.cyl(0.006,0.34,rx,uy+0.17,rz,{c:0x7b848c,g:'ceil',seg:8});S.box(0.04,0.006,0.05,rx-s[0]*0.012,uy+0.06,rz,{c:0x7b848c,g:'ceil'});});
+  // צווארוני יציאה עם חבק
+  D.COLY.forEach(function(cy){var cxx=PW?X(BX-PD)-0.04:X(BX+BW+PD)+0.04;
+    S.cyl(0.1,0.08,cxx,uy,Z(cy),{c:0xaab2b9,g:'ceil',axis:'x',sh:60,gl:0.4,seg:24});S.cyl(0.106,0.014,cxx+sg*0.022,uy,Z(cy),{c:0x6f7880,g:'ceil',axis:'x',seg:24});});
+})();
+// אוויר חוזר: אם D.ret קיים — גריל בלבד בתקרת המסדרון, בלי שרשור יניקה (האוויר חוזר דרך החלל שמעל הגבס). מסגרת לבנה צמודה לגבס, פנים כהה עם להבים ליניאריים, ותיבת יניקה מעל הגבס עד היחידה
+(function(){var gx=D.ret?X(D.ret[0]):X(BX)+0.33,gz=D.ret?Z(D.ret[1]):Z(BY)+0.38,gy=D.GYP_Y;
+  S.box(0.6,0.006,0.6,gx,gy-0.003,gz,{c:0xf7f8f8,g:'gypA',sh:50});S.box(0.52,0.008,0.52,gx,gy-0.004,gz,{c:0x8d949a,g:'gypA'});
+  for(var k=-6;k<=6;k++)S.box(0.52,0.012,0.016,gx,gy-0.009,gz+k*0.04,{c:0xf4f6f7,g:'gypA',sh:40});})();
+// ספרינקלר קיים בגבס: [x,y,גובה] — רוזטה לבנה, גוף כרום ונורה אדומה
+(D.sprinklers||[]).forEach(function(p){var x=X(p[0]),z=Z(p[1]),gy=p[2]||D.GYP_Y;
+  S.cyl(0.038,0.006,x,gy-0.004,z,{c:0xf1f3f4,g:'gypA',sh:80,seg:22});S.cyl(0.013,0.032,x,gy-0.022,z,{c:0xb8bec2,g:'gypA',sh:100,seg:12});
+  S.cyl(0.006,0.02,x,gy-0.036,z,{c:0xd8282b,g:'gypA',e:0.35,seg:8});S.cyl(0.03,0.004,x,gy-0.05,z,{c:0xb8bec2,g:'gypA',sh:100,seg:18});});
+// פתח שירות: לוח לבן שקוע מעט, עם חריץ צל כהה מסביב — כמו פתח אמיתי
+(function(){var hx=PN?X(BX)+L(BW)-0.36:X(BX)+0.33,hz=PN?Z(BY+BH/2):Z(BY)+1.0,gy=D.GYP_Y,w=0.54,e=0.005;   // פתח שירות מתחת ליחידה, בקצה האחורי
+  S.box(w,0.01,w,hx,gy-0.001,hz,{c:0xfbfbfa,g:'gypA',sh:30});
+  [[0,-(w/2+e/2),w+2*e,e],[0,w/2+e/2,w+2*e,e],[-(w/2+e/2),0,e,w],[w/2+e/2,0,e,w]].forEach(function(r){S.box(r[2],0.012,r[3],hx+r[0],gy-0.004,hz+r[1],{c:0x596168,g:'gypA'});});
+  S.cyl(0.008,0.004,hx+w/2-0.05,gy-0.007,hz,{c:0xc9ced2,g:'gypA',seg:10});})();
+}
+// ---- שרשורים — צינור מבודד עם צלעות ----
+D.ducts.forEach(function(p){S.tube(p.map(function(q){return [X(q[0]),uy,Z(q[1])];}),0.1,{c:C.duct,g:'ceil',sh:45,rib:0.07,seg:16,res:30});});
+// ---- גרילים שקועים בפאת הגבס: מסגרת אלומיניום דקה, שני ערוצים עמוקים שחורים, להב מכוון בכל ערוץ ----
+D.slots.forEach(function(s){var cx=s[0],cz=s[1],len=L(s[2]),ax=s[3],sg=s[4]||1,H=s[5]||0.10,y=s[6]||(D.GYP_Y+0.06+H/2);   // s[6]: גובה מרכז — גריל בקיר בלי גבס
+  function bx(w,h,dp,ox,oy,c,sh){ox*=sg;if(typeof ax==='number'){var nx=-Math.sin(ax),nz=Math.cos(ax);S.box(w,h,dp,X(cx)+nx*ox,y+oy,Z(cz)+nz*ox,{c:c,g:'ceil',sh:sh||30,ry:-ax});}  // גריל אלכסוני: ax = זווית הגריל בתוכנית
+    else if(ax==='x')S.box(w,h,dp,X(cx),y+oy,Z(cz)+ox,{c:c,g:'ceil',sh:sh||30});else S.box(dp,h,w,X(cx)+ox,y+oy,Z(cz),{c:c,g:'ceil',sh:sh||30});}
+  var ch=(H-0.03)/2;
+  bx(len+0.03,H+0.03,0.004,0.002,0,0xf7f8f9,80);                         // פלנג' לבן רחב, צמוד לגבס
+  bx(len+0.006,H+0.006,0.005,0.0035,0,0xe4e7ea,60);                       // פס פנימי עדין (צל קל)
+  [ch/2+0.004,-(ch/2+0.004)].forEach(function(oy){bx(len-0.012,ch,0.006,0.0045,oy,0x2a2f35);  // ערוץ אפור-כהה
+    bx(len-0.016,0.004,0.007,0.0055,oy,0xd9dde1,90);});                   // מכוון אוויר לבן במרכז כל ערוץ
+  bx(len-0.006,0.008,0.007,0.0055,0,0xf7f8f9,80);                         // מחיצה לבנה בין הערוצים
+  [-1,1].forEach(function(e){var a=len/2-0.004;if(ax==='x')S.box(0.008,H+0.004,0.007,X(cx)+e*a,y,Z(cz)+0.0055*sg,{c:0xf7f8f9,g:'ceil',sh:80});
+    else if(ax==='z')S.box(0.007,H+0.004,0.008,X(cx)+0.0055*sg,y,Z(cz)+e*a,{c:0xf7f8f9,g:'ceil',sh:80});});});   // כיסויי קצה
+// ---- עיליים ----
+// ---- מפזרים עגולים בפתח קיים (למשל 8" מעל דלת הממ"ד): [x,y,פנים n/s/e/w,גובה מרכז,'supply'|'return'] ----
+(D.roundGrilles||[]).forEach(function(g){var x=X(g[0]),z=Z(g[1]),f=g[2],y=g[3]||2.42,d={n:[0,-1],s:[0,1],e:[1,0],w:[-1,0]}[f]||[0,1],ax=d[0]?'x':'z';
+  var px=x+d[0]*0.03,pz=z+d[1]*0.03;
+  S.cyl(0.17,0.022,px,y,pz,{c:0xf6f7f8,g:'wall',axis:ax,seg:36});                               // טבעת לבנה
+  S.cyl(0.108,0.026,px+d[0]*0.004,y,pz+d[1]*0.004,{c:0x15181b,g:'wall',axis:ax,seg:30});       // חלל
+  for(var k=-4;k<=4;k++){var o=k*0.022,w=2*Math.sqrt(Math.max(0,0.0117-o*o));if(w<0.02)continue;
+    if(ax==='z'){S.box(w,0.006,0.006,px,y+o,pz+d[1]*0.016,{c:0xf2f4f5,g:'wall'});if(g[4]==='return')S.box(0.006,w,0.006,px+o,y,pz+d[1]*0.016,{c:0xf2f4f5,g:'wall'});}
+    else{S.box(0.006,0.006,w,px+d[0]*0.016,y+o,pz,{c:0xf2f4f5,g:'wall'});if(g[4]==='return')S.box(0.006,w,0.006,px+d[0]*0.016,y,pz+o,{c:0xf2f4f5,g:'wall'});}}});
+// מזגן עילי מעוצב: גוף לבן מבריק בפרופיל מעוגל, פאנל קדמי, פתח נשיפה כהה עם דש, פס לד ותצוגת טמפרטורה מוארת
+function wallUnit(px,pz,face){var ry=FRY[face]||0,x=X(px),z=Z(pz),lf=LF(x,z,ry),W=0.94,H=0.285,Dp=0.205,zb=0.0,y0=2.16,G='ceil';
+  var prof=[[0,0],[Dp-0.085,0]];qcurve(prof,[Dp-0.085,0],[Dp-0.006,0.004],[Dp,0.075],8);prof.push([Dp,H-0.065]);qcurve(prof,[Dp,H-0.065],[Dp,H],[Dp-0.065,H],8);prof.push([0,H]);
+  var c=lf(0,zb);S.extr(prof,W,c[0],y0,c[1],{c:0xf8f9fa,g:G,ry:ry,sh:120,gl:0.6});
+  var q=lf(0,zb+Dp+0.0012);S.box(W-0.05,H-0.155,0.004,q[0],y0+0.085+(H-0.155)/2,q[1],{c:0xffffff,g:G,ry:ry,sh:140,gl:0.7});      // פאנל קדמי חלק
+  q=lf(0,zb+(Dp-0.07)/2+0.012);S.box(W-0.1,0.004,Dp-0.1,q[0],y0+H+0.001,q[1],{c:0xdfe3e6,g:G,ry:ry});                              // סבכת יניקה עליונה
+  for(var i=-3;i<=3;i++){q=lf(0,zb+(Dp-0.07)/2+0.012+i*0.016);S.box(W-0.12,0.005,0.004,q[0],y0+H+0.003,q[1],{c:0xb9c0c6,g:G,ry:ry});}
+  q=lf(0,zb+Dp-0.062);S.box(W-0.1,0.03,0.085,q[0],y0+0.03,q[1],{c:0x1b2024,g:G,ry:ry});                                            // פתח הנשיפה
+  var fl=[[Dp-0.105,-0.004],[Dp-0.022,0.024],[Dp-0.019,0.029],[Dp-0.108,0.001]];c=lf(0,zb);S.extr(fl,W-0.11,c[0],y0,c[1],{c:0xf8f9fa,g:G,ry:ry,sh:120,gl:0.5,smooth:false});   // דש מכוון
+  q=lf(0,zb+Dp-0.0035);S.box(W-0.16,0.004,0.004,q[0],y0+0.052,q[1],{c:0x8fd8ff,g:G,ry:ry,e:1.5,ns:true});                          // פס לד תכלת מעל הפתח
+  q=lf(-W/2+0.085,zb+Dp+0.0036);S.box(0.075,0.007,0.002,q[0],y0+0.098,q[1],{c:C.stripe,g:G,ry:ry,ns:true});                         // סימן כתום (הצבע של העיליים במקרא)
+  seg7('24°',lf,W/2-0.105,y0+0.165,zb+Dp+0.0042,0.04,ry,{c:0xdff3ff,g:G,e:1.3});}
+D.splits.forEach(function(s){wallUnit(s[0],s[1],s[2]);});
+// ---- מעבים ----
+var CF=(D.condFace==='s'||D.condFace==='e')?1:-1, CX=(D.condFace==='e'||D.condFace==='w');   // כלל ברזל: המאוורר תמיד מול הרפפות
+function condUnit(x,y,z){   // מעבה: גוף מעוגל, מאוורר עם סבכת טבעות שפונה תמיד לרפפות, סבכת סליל בצד, כיסוי ברזים ורגליות
+  var ry=CX?(CF>0?Math.PI/2:-Math.PI/2):(CF>0?0:Math.PI),lf=LF(x,z,ry),AX=CX?'x':'z',sg=CF,q;
+  S.rbox(0.8,0.54,0.3,x,y,z,0.03,{c:0xeef0f1,sh:70,gl:0.25,ry:ry});
+  S.rbox(0.82,0.022,0.32,x,y+0.279,z,0.032,{c:0xe1e5e8,sh:60,ry:ry});
+  [-0.3,0.3].forEach(function(k){q=lf(k,0);S.box(0.06,0.03,0.34,q[0],y-0.285,q[1],{c:0x3a4046,ry:ry});});
+  q=lf(-0.13,0.151);S.cyl(0.215,0.014,q[0],y,q[1],{c:0x1f2327,axis:AX,seg:36});
+  [[0.205,0x9aa3a8],[0.186,0x24282c],[0.152,0x9aa3a8],[0.134,0x24282c],[0.1,0x9aa3a8],[0.083,0x24282c],[0.05,0xb4bcc2]].forEach(function(r,i){
+    q=lf(-0.13,0.158+i*0.0032);S.cyl(r[0],0.003,q[0],y,q[1],{c:r[1],axis:AX,seg:32,sh:r[1]>0x500000?60:0});});
+  q=lf(-0.13,0.184);S.box(0.41,0.009,0.004,q[0],y,q[1],{c:0xaab2b8,ry:ry});S.box(0.009,0.41,0.004,q[0],y,q[1],{c:0xaab2b8,ry:ry});
+  for(var k=0;k<7;k++){q=lf(0.165+k*0.03,0.151);S.box(0.005,0.43,0.004,q[0],y,q[1],{c:0x8b949b,ry:ry});}                              // סבכת הסליל
+  q=lf(0.405,-0.04);S.box(0.03,0.2,0.12,q[0],y-0.12,q[1],{c:0xd4d9dd,ry:ry,sh:40});                                                    // כיסוי ברזים
+  q=lf(-0.33,0.1515);S.box(0.09,0.02,0.002,q[0],y+0.235,q[1],{c:0x2C6E9B,ry:ry,ns:true});}
+D.conds.forEach(function(c){(c[2]===3?[0.34,0.95,1.56]:[0.34,0.95]).forEach(function(y){condUnit(X(c[0]),y,Z(c[1]));});});
+(D.cond1||[]).forEach(function(c){condUnit(X(c[0]),0.34,Z(c[1]));});
+// רפפות במסתור: מסגרת + שלבים אופקיים משופעים
+(D.louvers||[]).forEach(function(lv){var x0=X(lv[0]),z0=Z(lv[1]),x1=X(lv[2]),z1=Z(lv[3]),hz=Math.abs(x1-x0)>=Math.abs(z1-z0),len=hz?Math.abs(x1-x0):Math.abs(z1-z0),cx=(x0+x1)/2,cz=(z0+z1)/2,h=lv[4]||2.4;
+  [-1,1].forEach(function(e){if(hz)S.box(0.05,h,0.06,cx+e*(len/2-0.025),h/2,cz,{c:0x3b4248,g:'wall'});else S.box(0.06,h,0.05,cx,h/2,cz+e*(len/2-0.025),{c:0x3b4248,g:'wall'});});
+  for(var y=0.12;y<h-0.04;y+=0.085){if(hz){S.box(len-0.08,0.012,0.07,cx,y,cz,{c:0x5a6168,g:'wall',sh:30});S.box(len-0.08,0.03,0.008,cx,y-0.012,cz+0.03,{c:0x4b5258,g:'wall'});}
+    else{S.box(0.07,0.012,len-0.08,cx,y,cz,{c:0x5a6168,g:'wall',sh:30});S.box(0.008,0.03,len-0.08,cx+0.03,y-0.012,cz,{c:0x4b5258,g:'wall'});}}
+  if(hz)S.box(len,0.06,0.07,cx,h,cz,{c:0x3b4248,g:'wall'});else S.box(0.07,0.06,len,cx,h,cz,{c:0x3b4248,g:'wall'});});
+if(D.conds.length===2&&D.conds[0][0]===244)S.box(1.9,0.04,0.42,X(281),0.655,Z(278),{c:0x7c858b});
+// ---- צנרת ----
+D.pipes.solid.forEach(function(p){S.tube(p.map(function(q){return [X(q[0]),2.53,Z(q[1])];}),0.024,{c:C.copper,g:'ceil',sh:60,seg:8,res:12});});
+S.group('chase').noHM=true;
+D.pipes.chase.forEach(function(p){S.tube(p.map(function(q){return [X(q[0]),2.28,Z(q[1])];}),0.02,{c:0x2a2e33,g:'chase',seg:8,res:12});});
+D.pipes.prep.forEach(function(p){S.tube(p.map(function(q){return [X(q[0]),2.4,Z(q[1])];}),0.02,{c:0x2a2e33,g:'chase',seg:8,res:12});});
+
+// ---- רנדרר ----
+var cv=document.getElementById('gl'),ov=document.getElementById('ov'),R;
+try{R=new PCE.Renderer(cv);}catch(e){document.getElementById('err').style.display='flex';return;}
+// ספוטים = מקורות אור אמיתיים: הילה חמה על הרצפה, הקירות והריהוט (חזק במצב לילה, עדין ביום)
+// אזורים פתוחים (חדרים שאין קיר ביניהם) — כדי שאור של ספוט יישאר בחדר שלו ולא יעבור קירות
+var ZN=(function(){var FR=D.F.filter(function(f){return f[4]!=='deck';}),n=FR.length,par=[],i,j;for(i=0;i<n;i++)par[i]=i;
+  function fd(i){return par[i]===i?i:(par[i]=fd(par[i]));}
+  function inWall(x,y){return D.W.some(function(w){return x>=w[0]-2&&x<=w[2]+2&&y>=w[1]-2&&y<=w[3]+2;});}
+  for(i=0;i<n;i++)for(j=i+1;j<n;j++){var A=FR[i],B=FR[j],e=10,x0=Math.max(A[0],B[0])-e,x1=Math.min(A[2],B[2])+e,y0=Math.max(A[1],B[1])-e,y1=Math.min(A[3],B[3])+e;
+    if(x1<=x0||y1<=y0)continue;var hz=(x1-x0)>=(y1-y0),len=hz?x1-x0:y1-y0;if(len<40)continue;var open=0,N=12;
+    for(var k=0;k<N;k++){var t=(k+0.5)/N,blk=false;for(var u=0;u<=6;u++){var v=u/6,px=hz?x0+t*(x1-x0):x0+v*(x1-x0),py=hz?y0+v*(y1-y0):y0+t*(y1-y0);if(inWall(px,py)){blk=true;break;}}if(!blk)open++;}
+    if(open/N>0.4)par[fd(i)]=fd(j);}
+  function rectOf(x,y){var best=-1,bd=1e9;for(var i=0;i<n;i++){var f=FR[i];if(x>=f[0]&&x<=f[2]&&y>=f[1]&&y<=f[3])return i;var dx=Math.max(f[0]-x,0,x-f[2]),dy=Math.max(f[1]-y,0,y-f[3]),d=Math.hypot(dx,dy);if(d<bd){bd=d;best=i;}}return bd<30?best:-1;}
+  function bbox(x,y){var r=rectOf(x,y);if(r<0)return [-1e4,-1e4,1e4,1e4];var z=fd(r),b=[1e9,1e9,-1e9,-1e9];for(var i=0;i<n;i++)if(fd(i)===z){var f=FR[i];b[0]=Math.min(b[0],f[0]);b[1]=Math.min(b[1],f[1]);b[2]=Math.max(b[2],f[2]);b[3]=Math.max(b[3],f[3]);}
+    return [X(b[0])-0.12,Z(b[1])-0.12,X(b[2])+0.12,Z(b[3])+0.12];}
+  return {FR:FR,fd:fd,rectOf:rectOf,bbox:bbox};})();
+// גובה התקרה בנקודה: תחתית הגבס אם יש שם גבס, אחרת תקרת הבטון
+function inPoly(P,x,y){var c=false;for(var i=0,j=P.length-1;i<P.length;j=i++){var a=P[i],b=P[j];if((a[1]>y)!==(b[1]>y)&&x<(b[0]-a[0])*(y-a[1])/(b[1]-a[1])+a[0])c=!c;}return c;}
+function ceilY(x,y){var h=HW;(D.gyp||[]).forEach(function(g){if(x>=g[0]&&x<=g[2]&&y>=g[1]&&y<=g[3])h=Math.min(h,g[4]);});
+  (D.gypPoly||[]).forEach(function(g){if(inPoly(g.pts,x,y))h=Math.min(h,g.y||D.GYP_Y);});return h;}
+// תאורת חדר: בחדרים בלי ספוטים — גוף תאורה שטוח בתקרה, בערך אחד לכל 3×3 מ'. רק תאורה ונראות, לא חלק מכתב הכמויות
+var ROOML=(function(){var o=[];ZN.FR.forEach(function(f){var w=L(f[2]-f[0]),d=L(f[3]-f[1]);if(Math.min(w,d)<0.9||w*d<2.6)return;
+  var nx=Math.max(1,Math.round(w/3.3)),nz=Math.max(1,Math.round(d/3.3));
+  for(var i=0;i<nx;i++)for(var j=0;j<nz;j++){var x=f[0]+(i+0.5)*(f[2]-f[0])/nx,y=f[1]+(j+0.5)*(f[3]-f[1])/nz;
+    if((D.spots||[]).some(function(s){return Math.hypot(s[0]-x,s[1]-y)<1.7*K;}))continue;
+    if(o.some(function(s){return Math.hypot(s[0]-x,s[1]-y)<1.9*K;}))continue;
+    if(D.W.some(function(wl){return x>=wl[0]-8&&x<=wl[2]+8&&y>=wl[1]-8&&y<=wl[3]+8;}))continue;o.push([x,y]);}});return o;})();
+S.group('rlamp').noHM=true;
+ROOML.forEach(function(p){var x=X(p[0]),z=Z(p[1]),y=ceilY(p[0],p[1]);p[2]=y;
+  S.cyl(0.15,0.018,x,y-0.009,z,{c:0xf4f4f2,g:'rlamp',sh:60,seg:30,ns:true});S.disc(0.125,x,y-0.019,z,{c:0xfff4dc,g:'rlamp',e:1.6,down:true,seg:30});});
+// ספוטים = מקורות אור אמיתיים (חמים, כלפי מטה). תאורת חדר רכה בחדרים שאין בהם ספוטים (w שלילי = תאורת חדר)
+var LIGHTS=(D.spots||[]).map(function(p){return {p:[X(p[0]),(D.GYP_Y||2.29)-0.04,Z(p[1]),0.6],b:ZN.bbox(p[0],p[1])};}).concat(ROOML.map(function(p){return {p:[X(p[0]),p[2]-0.08,Z(p[1]),-0.8],b:ZN.bbox(p[0],p[1])};}));
+function pickLights(e){var Ls=LIGHTS;if(Ls.length>8&&e)Ls=Ls.slice().sort(function(p,q){return ((p.p[0]-e[0])*(p.p[0]-e[0])+(p.p[2]-e[2])*(p.p[2]-e[2]))-((q.p[0]-e[0])*(q.p[0]-e[0])+(q.p[2]-e[2])*(q.p[2]-e[2]));}).slice(0,8);
+  R.pl=Ls.map(function(l){return l.p;});R.plb=Ls.map(function(l){return l.b;});}
+pickLights(null);R.plI=0.22;var plTick=0;
+R.hmC=[X((BB0[0]+BB0[2])/2),Z((BB0[1]+BB0[3])/2)];R.hmR=Math.max(L(BB0[2]-BB0[0]),L(BB0[3]-BB0[1]))/2+1.2;
+function themeBg(){var dk=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches&&document.documentElement.getAttribute('data-theme')!=='light';R.bg=dk?[0.09,0.12,0.14]:[0.80,0.83,0.85];}
+themeBg();if(window.matchMedia)matchMedia('(prefers-color-scheme: dark)').addEventListener('change',themeBg);
+
+// ---- מצלמה ----
+window.__camRef=null;var goal={eye:[0,10,10],target:[0,0,0]};function snap(){goal.eye=cam.eye.slice();goal.target=cam.target.slice();}
+var cam={eye:[7.5,11.5,12.5],target:[-0.4,0,0.3],fov:48*Math.PI/180},anim=null,mode='iso';
+var VIEWS={};window.__getCam=function(){return {eye:cam.eye.slice(),target:cam.target.slice(),mode:mode};};
+var BB=(function(){var a=[1e9,1e9,-1e9,-1e9];D.F.forEach(function(f){a[0]=Math.min(a[0],f[0]);a[1]=Math.min(a[1],f[1]);a[2]=Math.max(a[2],f[2]);a[3]=Math.max(a[3],f[3]);});return a;})();
+function fitViews(){var asp=(cv.clientWidth||400)/(cv.clientHeight||800),port=asp<0.9,tc=[X((BB[0]+BB[2])/2),0,Z((BB[1]+BB[3])/2)];
+  var wx=L(BB[2]-BB[0])+0.6,wz=L(BB[3]-BB[1])+0.6;
+  var vf=Math.tan(cam.fov/2),hf=vf*asp,span=port?[wz,wx]:[wx,wz];   // [רוחב מסך, גובה מסך] במטרים
+  var dTop=Math.max(span[0]/2/hf,span[1]/2/vf)*1.04+2.6;
+  VIEWS.top=port?{e:[tc[0]+0.06,dTop,tc[2]],t:tc}:{e:[tc[0],dTop,tc[2]+0.06],t:tc};
+  var dIso=dTop*0.92,el=0.95,az=port?1.2:0.62;
+  var fc=D.focus?[X(D.focus[0]),0.4,Z(D.focus[1])]:tc,dMid=dIso*0.56,elM=0.78;
+  VIEWS.iso={e:[fc[0]+dMid*Math.cos(elM)*Math.sin(az),dMid*Math.sin(elM),fc[2]+dMid*Math.cos(elM)*Math.cos(az)],t:fc};
+  VIEWS.all={e:[tc[0]+dIso*Math.cos(el)*Math.sin(az),dIso*Math.sin(el),tc[2]+dIso*Math.cos(el)*Math.cos(az)],t:tc};
+  var az2=port?-1.95:-0.95;VIEWS.iso2={e:[tc[0]+dIso*Math.cos(el)*Math.sin(az2),dIso*Math.sin(el),tc[2]+dIso*Math.cos(el)*Math.cos(az2)],t:tc};}
+fitViews();addEventListener('resize',function(){fitViews();});
+function goTo(e,t,dur){anim={fe:cam.eye.slice(),ft:cam.target.slice(),te:e,tt:t,t:0,d:(dur||1.6)*1.45};}
+function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+var ptr={},pinch=null;
+function orbit(dx,dy){var o=V.sub(goal.eye,goal.target),r=V.len(o),th=Math.atan2(o[0],o[2]),ph=Math.acos(Math.max(-1,Math.min(1,o[1]/r)));
+  if(mode==='tour'){var d=V.sub(goal.target,goal.eye),dl=V.len(d),yw=Math.atan2(d[0],d[2]),pt=Math.asin(d[1]/dl);yw+=dx*0.005;pt=Math.max(-1.2,Math.min(1.2,pt+dy*0.004));
+    goal.target=V.add(goal.eye,[Math.sin(yw)*Math.cos(pt)*0.6,Math.sin(pt)*0.6,Math.cos(yw)*Math.cos(pt)*0.6]);return;}
+  th-=dx*0.006;ph=Math.max(0.05,Math.min(Math.PI*0.49,ph-dy*0.005));goal.eye=V.add(goal.target,[r*Math.sin(ph)*Math.sin(th),r*Math.cos(ph),r*Math.sin(ph)*Math.cos(th)]);}
+function zoom(f){if(mode==='tour')return;var o=V.sub(goal.eye,goal.target),r=Math.max(1.2,Math.min(30,V.len(o)*f));goal.eye=V.add(goal.target,V.mul(V.norm(o),r));}
+function pan(dx,dy){if(mode==='tour')return;var f=V.norm(V.sub(goal.target,goal.eye)),rt=V.norm(V.cross(f,[0,1,0])),up=V.cross(rt,f),k=V.len(V.sub(goal.eye,goal.target))*0.0016;
+  var m=V.add(V.mul(rt,-dx*k),V.mul(up,dy*k));goal.eye=V.add(goal.eye,m);goal.target=V.add(goal.target,m);}
+cv.addEventListener('pointerdown',function(e){cv.setPointerCapture(e.pointerId);ptr[e.pointerId]=[e.clientX,e.clientY];anim=null;if(guideTimer)pauseGuide();});
+cv.addEventListener('pointermove',function(e){if(!ptr[e.pointerId])return;var p=ptr[e.pointerId],dx=e.clientX-p[0],dy=e.clientY-p[1];var ids=Object.keys(ptr);
+  if(ids.length===1){if(e.buttons===2||e.shiftKey)pan(dx,dy);else orbit(dx,dy);}
+  else if(ids.length===2){var a=ptr[ids[0]],b=ptr[ids[1]];var d0=Math.hypot(a[0]-b[0],a[1]-b[1]);ptr[e.pointerId]=[e.clientX,e.clientY];a=ptr[ids[0]];b=ptr[ids[1]];
+    var d1=Math.hypot(a[0]-b[0],a[1]-b[1]);if(d0>0)zoom(d0/d1);pan(dx/2,dy/2);return;}
+  ptr[e.pointerId]=[e.clientX,e.clientY];});
+function up(e){delete ptr[e.pointerId];}cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+cv.addEventListener('wheel',function(e){e.preventDefault();zoom(Math.exp(e.deltaY*0.0012));},{passive:false});cv.addEventListener('contextmenu',function(e){e.preventDefault();});
+
+// ---- תאורה לפי מצב: מבט על ביום · סיור בדירה ביום (שמש מהחלונות + ספוטים) · לילה (רק ספוטים ותאורת חדר) ----
+var inside=false;function isInside(){return mode==='tour'||(!low&&cam.eye[1]<HW-0.05);}
+function lightMode(){var tour=inside=isInside();S.groups.roof.cast=tour;R.reflOn=tour;if(S.groups.sky)S.groups.sky.visible=tour;
+  if(night){R.lt=[0.035,tour?0.16:0.26,1.6];R.plI=tour?1.5:1.25;R.bg=[0.035,0.045,0.06];R.sky=[0.30,0.34,0.44];R.gnd=[0.20,0.19,0.18];R.ao=0.75;}
+  else if(tour){R.lt=[1.2,0.40,1];R.plI=0.62;R.bg=[0.80,0.87,0.93];R.sky=[0.78,0.76,0.72];R.gnd=[0.52,0.48,0.43];R.ao=0.85;}
+  else{R.lt=[1,1,1];R.plI=0.22;themeBg();R.sky=[0.82,0.85,0.9];R.gnd=[0.48,0.45,0.42];R.ao=0.62;}
+  R.shadowDirty=true;}
+// ---- מצבים, קירות, תקרה ----
+var $=function(id){return document.getElementById(id);};
+function press(id,on){$(id).setAttribute('aria-pressed',String(on));}
+var ledOn=false;function syncLed(){if(!S.groups.led)return;var g=gypOn!=='N';S.groups.led.visible=g&&ledOn;S.groups.spotTrk.visible=g&&!ledOn;}
+var low=true,gypOn='T',lblOn=true,airOn=true;
+function setWalls(l){low=l;S.groups.wall.sy=l?0.42:1;if(S.groups.ctrl)S.groups.ctrl.sy=S.groups.wall.sy;var dy=l?-(HW-HW*0.42):0;['ceil','gypT','gypR','gypA','chase'].forEach(function(k){if(S.groups[k])S.groups[k].dy=dy;});R.shadowDirty=true;press('tWall',l);}
+var GM={T:'גבס: שקוף',R:'גבס: אמיתי',N:'בלי גבס'};
+function setGyp(m){if(m===true)m='T';if(m===false)m='N';gypOn=m;S.groups.gypT.visible=m==='T';S.groups.gypR.visible=m==='R';S.groups.gypA.visible=m!=='N';S.groups.pool.visible=m!=='N';if(S.groups.chase)S.groups.chase.visible=m!=='R';syncLed();
+  R.shadowDirty=true;$('tGyp').textContent=GM[m];$('tGyp').setAttribute('aria-pressed',String(m!=='N'));}
+function setLbl(on){lblOn=on;press('tLbl',on);} function setAir(on){airOn=on;press('tAir',on);}
+var roomsEl=$('rooms');
+D.tourRooms.forEach(function(r,i){var b=document.createElement('button');b.textContent=r[0];b.setAttribute('aria-pressed','false');b.onclick=function(){enterRoom(i);};roomsEl.appendChild(b);});
+function enterRoom(i,inst){var r=D.tourRooms[i];Array.prototype.forEach.call(roomsEl.children,function(b,j){b.setAttribute('aria-pressed',String(j===i));});
+  var e=[X(r[1]),r[0]==='מסתור'?1.25:1.6,Z(r[2])],look=[X(r[3]),r[5]>2?1.6+(r[5]-1.6)*0.55:r[5],Z(r[4])],t=V.add(e,V.mul(V.norm(V.sub(look,e)),0.6));if(inst){cam.eye=e;cam.target=t;snap();}else goTo(e,t,1.4);}
+function setMode(m,inst){mode=m;['iso','top','tour'].forEach(function(k){press('m-'+k,k===m);});var tour=m==='tour';roomsEl.hidden=!tour;$('joy').hidden=!tour;
+  $('hint').textContent=tour?'גרירה להסתכלות · ג׳ויסטיק להליכה · לחצו על חדר':'גרירה לסיבוב · צביטה לזום · שתי אצבעות להזזה';$('legend').classList.toggle('min',tour);
+  if(tour){setWalls(false);setGyp('R');enterRoom(0,inst);}
+  else{setWalls(!D.highWalls);if(gypOn==='R')setGyp('T');var v=VIEWS[m];if(inst){cam.eye=v.e.slice();cam.target=v.t.slice();snap();}else goTo(v.e.slice(),v.t.slice());}
+  lightMode();}
+$('m-iso').onclick=function(){stopGuide();setMode('iso');};$('m-top').onclick=function(){stopGuide();setMode('top');};$('m-tour').classList.add('blink');$('m-tour').onclick=function(){this.classList.remove('blink');stopGuide();setMode('tour');};
+$('tOpts').onclick=function(){$('sheet').hidden=!$('sheet').hidden;$('boqSheet').hidden=true;};$('shX').onclick=function(){$('sheet').hidden=true;};
+$('bqX').onclick=function(){$('boqSheet').hidden=true;};
+$('tWall').onclick=function(){setWalls(!low);};$('tGyp').onclick=function(){setGyp({T:'R',R:'N',N:'T'}[gypOn]);};$('tLbl').onclick=function(){setLbl(!lblOn);};$('tAir').onclick=function(){setAir(!airOn);};
+// ג׳ויסטיק
+var joy=$('joy'),knob=$('knob'),jx=0,jy=0,jid=null,keys={};
+function jMove(e){var r=joy.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),m=Math.hypot(dx,dy),RR=46;if(m>RR){dx*=RR/m;dy*=RR/m;}jx=dx/RR;jy=dy/RR;knob.style.transform='translate('+dx+'px,'+dy+'px)';}
+joy.addEventListener('pointerdown',function(e){jid=e.pointerId;joy.setPointerCapture(jid);jMove(e);});joy.addEventListener('pointermove',function(e){if(e.pointerId===jid)jMove(e);});
+function jEnd(){jid=null;jx=jy=0;knob.style.transform='';}joy.addEventListener('pointerup',jEnd);joy.addEventListener('pointercancel',jEnd);
+addEventListener('keydown',function(e){keys[e.key]=true;});addEventListener('keyup',function(e){keys[e.key]=false;});
+function walk(dt){if(mode!=='tour'||anim)return;var f=-jy,r=jx;if(keys.ArrowUp||keys.w)f=1;if(keys.ArrowDown||keys.s)f=-1;if(keys.ArrowLeft||keys.a)r=-1;if(keys.ArrowRight||keys.d)r=1;if(!f&&!r)return;
+  var d=V.sub(goal.target,goal.eye);d[1]=0;d=V.norm(d);var sd=[-d[2],0,d[0]];var m=V.add(V.mul(d,f*1.5*dt),V.mul(sd,r*1.2*dt));
+  var ne=V.add(goal.eye,m);ne[0]=Math.max(X(BB[0]),Math.min(X(BB[2]),ne[0]));ne[2]=Math.max(Z(BB[1]),Math.min(Z(BB[3]),ne[2]));m=V.sub(ne,goal.eye);goal.eye=ne;goal.target=V.add(goal.target,m);}
+
+// ---- סיור מודרך ----
+var ST=D.stations,gi=0,guideTimer=null,guiding=false;
+function station(i,inst){gi=(i+ST.length)%ST.length;var s=ST[gi];$('cn').textContent=(gi+1)+'/'+ST.length;$('ct').textContent=s[0];$('ch').textContent=s[1];$('cs').textContent=s[2];
+  setWalls(!!s[6]);setGyp(s[7]);var e,t;if(s[3]==='pt'){e=[X(s[4][0]),s[4][1],Z(s[4][2])];t=[X(s[5][0]),s[5][1],Z(s[5][2])];}else{e=VIEWS[s[3]].e.slice();t=VIEWS[s[3]].t.slice();}
+  if(inst){cam.eye=e;cam.target=t;snap();}else goTo(e,t,1.8);}
+var TTS=('speechSynthesis' in window)&&('SpeechSynthesisUtterance' in window),voiceOn=TTS,heVoice=null;
+function pickVoice(){try{var vs=speechSynthesis.getVoices();heVoice=vs.filter(function(v){return /^(he|iw)/i.test(v.lang);})[0]||null;}catch(e){}}
+if(TTS){pickVoice();try{speechSynthesis.onvoiceschanged=pickVoice;}catch(e){}}
+function spoken(t){return t.replace(/ס["״]מ/g,'סנטימטר').replace(/(\d)\s*מ['׳]/g,'$1 מטר').replace(/מ['׳]/g,'מטר').replace(/BTU/g,'בי טי יו').replace(/×/g,' על ').replace(/₪\s?([\d,]+)/g,'$1 שקלים').replace(/[·—]/g,', ');}
+function say(txt,done){if(!voiceOn||!TTS){done&&done(false);return;}var fired=false;function f(){if(fired)return;fired=true;done&&done(true);}
+  try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(spoken(txt));u.lang='he-IL';if(heVoice)u.voice=heVoice;u.rate=1;u.onend=f;u.onerror=f;speechSynthesis.speak(u);}catch(e){f();}}
+function hush(){if(TTS)try{speechSynthesis.cancel();}catch(e){}}
+var playing=false;
+function guideStep(i){station(i);clearTimeout(guideTimer);var s=ST[gi],t0=performance.now(),my={};guideTimer=my;
+  function next(){if(!playing||guideTimer!==my)return;if(gi===ST.length-1){pauseGuide();return;}guideStep(gi+1);}
+  var fb=null;say(s[0]+'. '+s[1]+'. '+s[2],function(spokeIt){clearTimeout(fb);if(guideTimer!==my)return;var el=performance.now()-t0;guideTimer=setTimeout(next,spokeIt?Math.max(1300,4200-el):5600);my=guideTimer;});
+  if(voiceOn&&TTS&&!fbDone(my))fb=setTimeout(function(){if(guideTimer===my)next();},26000);}
+function fbDone(m){return typeof m==='number';}
+function startGuide(){if(mode==='tour')setMode('iso',true);guiding=true;playing=true;$('card').hidden=false;$('tGuide').classList.remove('blink');$('tGuide').textContent='■ סיום סיור';$('bPause').textContent='❚❚ עצור';guideStep(0);}
+function pauseGuide(){playing=false;clearTimeout(guideTimer);guideTimer=null;$('bPause').textContent='▶ המשך';}
+function stopGuide(){if(!guiding)return;guiding=false;playing=false;clearTimeout(guideTimer);guideTimer=null;hush();$('card').hidden=true;$('tGuide').textContent='▶ סיור מודרך';setGyp('T');}
+function manual(i){pauseGuide();station(i);var s=ST[gi];say(s[0]+'. '+s[1]+'. '+s[2]);}
+$('tGuide').onclick=function(){$('sheet').hidden=true;if(guiding){stopGuide();setMode(mode);}else startGuide();};$('cx').onclick=function(){stopGuide();setMode(mode);};
+$('bNext').onclick=function(){manual(gi+1);};$('bPrev').onclick=function(){manual(gi-1);};
+$('bPause').onclick=function(){if(playing){pauseGuide();hush();}else{playing=true;$('bPause').textContent='❚❚ עצור';guideStep(gi===ST.length-1?0:gi+1);}};
+if(!TTS)$('bVoice').hidden=true;press('bVoice',voiceOn);
+$('bVoice').onclick=function(){voiceOn=!voiceOn;press('bVoice',voiceOn);$('bVoice').textContent=voiceOn?'🔊 קריינות':'🔇 בלי קול';if(!voiceOn)hush();else{var s=ST[gi];say(s[0]+'. '+s[1]+'. '+s[2]);}};
+
+
+// ---- מצב לילה / לפני / הדמיית קירור / שכבת התקנה / כתב כמויות ----
+var night=false,before=false,cool=false,coolT=0,inst=false;
+function setLed(on){ledOn=on;press('oLed',on);syncLed();R.shadowDirty=true;}
+$('oLed').onclick=function(){setLed(!ledOn);};if(!TRK.length)$('oLed').hidden=true;
+function setNight(on){night=on;press('oNight',on);if(on&&gypOn!=='R')setGyp('R');lightMode();}
+function setBefore(on){before=on;press('oBefore',on);['ceil','gypT','gypR','gypA','pool','cone','led','spotTrk','chase','ctrl'].forEach(function(k){if(S.groups[k])S.groups[k].hidden=on;});R.shadowDirty=true;}
+function setCool(on){cool=on;coolT=0;press('oCool',on);$('hud').hidden=!on;if(on&&!airOn)setAir(true);}
+function setInst(on){inst=on;press('oInst',on);if(S.groups.inst)S.groups.inst.hidden=!on;R.shadowDirty=true;if(on){setGyp('T');setLbl(true);}else setGyp(low?'T':'R');}
+$('oNight').onclick=function(){setNight(!night);};$('oBefore').onclick=function(){setBefore(!before);};$('oCool').onclick=function(){setCool(!cool);};$('oInst').onclick=function(){setInst(!inst);};
+function plenM(Q){var t=0;for(var i=1;i<Q.length;i++)t+=Math.hypot(Q[i][0]-Q[i-1][0],Q[i][1]-Q[i-1][1]);return t/K;}
+$('oBoq').onclick=function(){
+  var rows=(D.boq||[]).slice();
+  if(D.ret)rows=rows.map(function(r){return /אוויר חוזר/.test(r[0])?[r[0],r[1],r[2],'בתקרת המסדרון · בלי שרשור יניקה']:r;});
+  var dl=D.ducts.reduce(function(a,p){return a+plenM(p);},0)+D.ducts.length*0.3;
+  if(D.ducts.length)rows.splice(Math.min(2,rows.length),0,['שרשור 8" מבודד',dl.toFixed(1),"מ'",'להזמנה '+Math.ceil(dl*1.1)+" מ'"]);
+  if(DRUNS.length){var dr=drainLen();rows.push(['צינור ניקוז',dr.toFixed(1),"מ'",'נמדד מהמודל · להזמנה '+Math.ceil(dr*1.2+1)+" מ'"+(DRAIN_FAR.length?' · '+DRAIN_FAR.length+' יחידות לנקודה המרכזית':'')]);}
+  if(ledOn&&TRK.length){var nT=TRK.reduce(function(a,t){return a+t.n;},0),mT=TRK.reduce(function(a,t){return a+L(t.s1-t.s0);},0);
+    rows=rows.map(function(r){if(!/^ספוטים/.test(r[0]))return r;var left=D.spots.length-nT;return [r[0],String(left),r[2],left?'שאר הגבס':'הוחלפו בפסי לד'];}).filter(function(r){return !(/^ספוטים/.test(r[0])&&r[1]==='0');});
+    rows.push(['פס לד מגנטי שקוע · שחור',mT.toFixed(1),"מ'",TRK.length+' פסים · מחליף '+nT+' ספוטים · כולל מודול ליניארי']);}
+  if(POWER.length)rows.push(['נקודות חשמל למזגנים',String(POWER.length),'יח׳','ליד כל יחידה']);
+  $('boqBody').innerHTML='<table class="boq"><tr><th>פריט</th><th>כמות</th><th>הערה</th></tr>'+rows.map(function(r){return '<tr><td>'+r[0]+'</td><td class="n">'+r[1]+' '+(r[2]||'')+'</td><td class="o">'+(r[3]||'')+'</td></tr>';}).join('')+'</table>';
+  $('sheet').hidden=true;$('boqSheet').hidden=false;};
+// ---- בקר קיר למיני המרכזי ----
+// אם לא הוגדר מיקום בנתוני הדירה: בוחרים אוטומטית קיר פנוי באזור הציבורי (מסדרון / סלון), הכי קרוב לאוויר החוזר, בגובה 1.5 מ'.
+function autoThermo(){if(!D.mini)return null;var tx=D.ret?D.ret[0]:D.mini[0]+D.mini[2]/2,ty=D.ret?D.ret[1]:D.mini[1]+D.mini[3]/2,best=null,bs=1e9;
+  D.W.forEach(function(w){var hz=(w[2]-w[0])>=(w[3]-w[1]),a0=hz?w[0]:w[1],a1=hz?w[2]:w[3];if(a1-a0<45)return;
+    [[hz?w[1]:w[0],-1],[hz?w[3]:w[2],1]].forEach(function(fc){
+      for(var t=a0+16;t<=a1-16;t+=6){
+        if(w[4].some(function(op){return t>op[0]-20&&t<op[1]+20;}))continue;
+        var px=hz?t:fc[0],py=hz?fc[0]:t,fx=hz?t:fc[0]+fc[1]*9,fy=hz?fc[0]+fc[1]*9:t;
+        if(floorAt(fx,fy)!=='pub')continue;if(wallAt(fx,fy,2)||furnAt(fx,fy,8))continue;
+        if(wallAt(hz?t-14:fx,hz?fy:t-14,0)||wallAt(hz?t+14:fx,hz?fy:t+14,0))continue;                     // לא בפינה צרה
+        if((D.splits||[]).some(function(s){return Math.hypot(s[0]-px,s[1]-py)<45;}))continue;            // לא מתחת לעילי
+        if((D.slots||[]).some(function(s){return Math.hypot(s[0]-px,s[1]-py)<30;}))continue;
+        var sc=Math.hypot(px-tx,py-ty);if(sc<bs){bs=sc;best=[px,py,hz?(fc[1]<0?'n':'s'):(fc[1]<0?'w':'e'),1.5];}}});});
+  return best;}
+if(D.mini&&!(D.thermo&&D.thermo.length)){var _t=autoThermo();if(_t)D.thermo=[_t];}
+function wallCtrl(px,pz,face,y){var ry=FRY[face]||0,x=X(px),z=Z(pz),lf=LF(x,z,ry),G='ctrl',q;
+  q=lf(0,0.001);S.extr(PCE.rrect(0.118,0.118,0.017,5),0.013,q[0]+Math.sin(ry)*0.0065,y,q[1]+Math.cos(ry)*0.0065,{c:0xfbfbfb,g:G,ry:ry-Math.PI/2,sh:130,gl:0.6});   // פלטה לבנה מבריקה עם פינות מעוגלות
+  q=lf(0,0.0145);S.extr(PCE.rrect(0.086,0.058,0.008,4),0.002,q[0],y+0.016,q[1],{c:0x0c1216,g:G,ry:ry-Math.PI/2,sh:150,gl:0.9,e:0.25});                               // מסך זכוכית כהה
+  seg7('24°',lf,-0.004,y+0.022,0.0162,0.03,ry,{c:0x9be4ff,g:G,e:2.2});
+  q=lf(-0.028,0.0162);S.box(0.012,0.003,0.0016,q[0],y-0.004,q[1],{c:0x4cc0e6,g:G,ry:ry,e:1.8,ns:true});                      // סימן מצב קירור
+  q=lf(0.02,0.0162);S.box(0.03,0.003,0.0016,q[0],y-0.004,q[1],{c:0x7f8a92,g:G,ry:ry,e:0.8,ns:true});
+  [-0.03,0,0.03].forEach(function(k){q=lf(k,0.0145);S.cyl(0.0075,0.003,q[0],y-0.038,q[1],{c:0xe3e7ea,g:G,axis:(face==='e'||face==='w')?'x':'z',seg:16,sh:80});});}   // כפתורי מגע
+(D.thermo||[]).forEach(function(t){wallCtrl(t[0],t[1],t[2],t[3]||1.5);
+  while((D.acInfo=D.acInfo||[]).length<D.acLabels.length)D.acInfo.push('');
+  D.acLabels.push(['בקר קיר',t[0],t[1],(t[3]||1.5)+0.17,'#5b6b7a','wall']);D.acInfo.push('בקר קיר למיני המרכזי: הפעלה, טמפרטורה ומהירות מאוורר. מותקן בגובה 1.5 מ׳, קרוב לאוויר החוזר.');});
+// ---- שכבת מתקין: נקודות ניקוז מהתוכנית, מסלולי ניקוז (כחול), נקודות חשמל (כתום) ----
+(D.drains||[]).forEach(function(d){var x=X(d[0]),z=Z(d[1]),y=d[3]||2.2;S.cyl(0.03,0.05,x,y,z,{c:0x1f6fd1,g:'inst',seg:16,e:0.6});S.cyl(0.05,0.01,x,y-0.03,z,{c:0xffffff,g:'inst',seg:16});});
+// ניקוז — כלל של מאור: לפי הכנת הקבלן. יש הכנה ליד היחידה (עד 1.5 מ') ← ישר אליה. אין ← לנקודה המרכזית (kind 'c'), ואם לא סומנה — לקרובה
+var DRAIN_FAR=[];
+var DRUNS=D.drainRuns||(function(){var P=D.drains||[];if(!P.length)return [];var U=[];
+  (D.splits||[]).forEach(function(sp){U.push([sp[0],sp[1],'עילי']);});if(D.mini)U.push([D.mini[0]+D.mini[2]/2,D.mini[1]+D.mini[3]/2,'מיני']);
+  var C=P.filter(function(p){return p[4]==='c';})[0];
+  return U.map(function(u){var best=null,bd=1e9;P.forEach(function(p){var d=Math.hypot(p[0]-u[0],p[1]-u[1]);if(d<bd){bd=d;best=p;}});
+    var h=u[2]==='מיני'?2.35:2.25;
+    if(bd/K<=1.5)return [[u[0],u[1],h],[best[0],best[1],best[3]||2.2]];
+    var t=C||best;DRAIN_FAR.push(u[2]);return [[u[0],u[1],h],[u[0],t[1],2.42],[t[0],t[1],2.42],[t[0],t[1],t[3]||2.2]];});})();
+DRUNS.forEach(function(p){S.tube(p.map(function(q){return [X(q[0]),q[2]||2.2,Z(q[1])];}),0.016,{c:0x2f86e8,g:'inst',seg:8,res:12,e:0.4});});
+// נקודת חשמל — תמיד ליד היחידה, בכל חדר (כלל של מאור). אם אין נתונים — נוצרות אוטומטית מהיחידות
+var POWER=D.power||(function(){var o=[];(D.splits||[]).forEach(function(sp){var f=sp[2],dx=(f==='n'||f==='s')?22:0,dy=(f==='e'||f==='w')?-22:0;o.push([sp[0]+dx,sp[1]+dy,2.3,'חשמל · עילי']);});
+  if(D.mini){var m=D.mini;o.push([m[0]+m[2]/2,m[1]+6,2.45,'חשמל · מיני']);}return o;})();
+POWER.forEach(function(p){var x=X(p[0]),z=Z(p[1]),y=p[2]||2.3;S.box(0.08,0.08,0.03,x,y,z,{c:0xfafafa,g:'inst',edge:true,lc:0xe0782b});S.cyl(0.03,0.04,x,y,z,{c:0xf08a24,g:'inst',seg:14,e:0.9});});
+S.groups.inst.hidden=true;
+R.upload(S);   // אחרי שכל הגיאומטריה נבנתה (כולל בקר הקיר ושכבת המתקין)
+function drainLen(){return DRUNS.reduce(function(a,p){var t=0;for(var i=1;i<p.length;i++)t+=Math.hypot(p[i][0]-p[i-1][0],p[i][1]-p[i-1][1])/K+Math.abs((p[i][2]||2.2)-(p[i-1][2]||2.2));return a+t;},0);}
+// ---- לחיצה על פריט: כרטיס פרטים ----
+var tapInfo=null,tapT=null;
+cv.addEventListener('pointerdown',function(e){tapInfo={x:e.clientX,y:e.clientY,t:performance.now()};});
+cv.addEventListener('pointerup',function(e){if(!tapInfo)return;var mv=Math.hypot(e.clientX-tapInfo.x,e.clientY-tapInfo.y),dt2=performance.now()-tapInfo.t;tapInfo=null;if(mv>8||dt2>400)return;
+  var best=-1,bd=48;D.acLabels.forEach(function(a,i){var q=R.project([X(a[1]),a[3],Z(a[2])],a[5]);if(!q)return;var d=Math.hypot(q[0]-e.clientX,q[1]-e.clientY);if(d<bd){bd=d;best=i;}});
+  var box=$('info');if(best<0){box.hidden=true;return;}var a=D.acLabels[best],inf=(D.acInfo||[])[best]||'';
+  box.innerHTML='<b>'+a[0]+'</b><span>'+inf+'</span>';box.hidden=false;clearTimeout(tapT);tapT=setTimeout(function(){box.hidden=true;},6000);});
+
+// ---- שכבת תוויות וזרימת אוויר ----
+var g2=ov.getContext('2d');
+function chip(x,y,txt,bg,fs){g2.font='800 '+fs+'px Heebo, Arial, sans-serif';var w=g2.measureText(txt).width+fs*1.3,h=fs*1.75;g2.fillStyle=bg;var r=h/2;
+  g2.beginPath();g2.moveTo(x-w/2+r,y-h/2);g2.arcTo(x+w/2,y-h/2,x+w/2,y+h/2,r);g2.arcTo(x+w/2,y+h/2,x-w/2,y+h/2,r);g2.arcTo(x-w/2,y+h/2,x-w/2,y-h/2,r);g2.arcTo(x-w/2,y-h/2,x+w/2,y-h/2,r);g2.fill();
+  g2.fillStyle='#fff';g2.textAlign='center';g2.textBaseline='middle';g2.fillText(txt,x,y+1);}
+var DIRS={n:[0,-1],s:[0,1],e:[1,0],w:[-1,0]},emit=[];
+D.slots.forEach(function(sl){var sg=sl[4]||1,d=typeof sl[3]==='number'?[-Math.sin(sl[3])*sg,Math.cos(sl[3])*sg]:(sl[3]==='x'?[0,sg]:[sg,0]),len=L(sl[2]);
+  emit.push({o:[X(sl[0])+d[0]*0.07,D.GYP_Y+0.1,Z(sl[1])+d[1]*0.07],d:[d[0],-0.25,d[1]],s:typeof sl[3]==='number'?[Math.cos(sl[3])*len*0.9,Math.sin(sl[3])*len*0.9]:(sl[3]==='x'?[len*0.9,0]:[0,len*0.9]),p:[sl[0],sl[1]],pd:d});});
+(D.roundGrilles||[]).forEach(function(g){if(g[4]!=='supply')return;var d=DIRS[g[2]]||[0,1];emit.push({o:[X(g[0])+d[0]*0.05,g[3]||2.42,Z(g[1])+d[1]*0.05],d:[d[0],-0.25,d[1]],s:d[0]?[0,0.15]:[0.15,0],p:[g[0],g[1]],pd:d});});
+D.splits.forEach(function(sp){var d=DIRS[sp[2]]||[0,1];
+  emit.push({o:[X(sp[0])+d[0]*0.25,2.2,Z(sp[1])+d[1]*0.25],d:[d[0],-0.35,d[1]],s:d[0]?[0,0.8]:[0.8,0],p:[sp[0],sp[1]],pd:d});});
+// ---- הדמיית קירור כמפת חום: אזורים פתוחים (בלי קיר ביניהם), אריחי רצפה מכתום לכחול לפי המרחק מהמפזר ----
+var HEAT=(function(){var FR=D.F.filter(function(f){return f[4]!=='deck';}),n=FR.length,par=[];for(var i=0;i<n;i++)par[i]=i;
+  function fd(i){return par[i]===i?i:(par[i]=fd(par[i]));}
+  function inWall(x,y){return D.W.some(function(w){return x>=w[0]-2&&x<=w[2]+2&&y>=w[1]-2&&y<=w[3]+2;});}
+  for(var i=0;i<n;i++)for(var j=i+1;j<n;j++){var A=FR[i],B=FR[j],e=10,x0=Math.max(A[0],B[0])-e,x1=Math.min(A[2],B[2])+e,y0=Math.max(A[1],B[1])-e,y1=Math.min(A[3],B[3])+e;
+    if(x1<=x0||y1<=y0)continue;var hz=(x1-x0)>=(y1-y0),len=hz?x1-x0:y1-y0;if(len<40)continue;var open=0,N=12;
+    for(var k=0;k<N;k++){var t=(k+0.5)/N,blk=false;for(var u=0;u<=6;u++){var v=u/6,px=hz?x0+t*(x1-x0):x0+v*(x1-x0),py=hz?y0+v*(y1-y0):y0+t*(y1-y0);if(inWall(px,py)){blk=true;break;}}if(!blk)open++;}
+    if(open/N>0.4)par[fd(i)]=fd(j);}
+  function rectOf(x,y){for(var i=0;i<n;i++){var f=FR[i];if(x>=f[0]&&x<=f[2]&&y>=f[1]&&y<=f[3])return i;}return -1;}
+  var land=emit.map(function(e){var x=e.p[0]+e.pd[0]*K*1.4,y=e.p[1]+e.pd[1]*K*1.4,r=rectOf(x,y);return {x:x,y:y,z:r<0?-1:fd(r)};});
+  var T=0.55*K,tiles=[];FR.forEach(function(f,i){var z=fd(i),src=land.filter(function(l){return l.z===z;});if(!src.length)return;
+    for(var x=f[0];x<f[2]-2;x+=T)for(var y=f[1];y<f[3]-2;y+=T){var xb=Math.min(x+T,f[2]),yb=Math.min(y+T,f[3]),cx=(x+xb)/2,cy=(y+yb)/2;
+      var d=Math.min.apply(null,src.map(function(l){return Math.hypot(cx-l.x,cy-l.y);}))/K;
+      tiles.push({c:[[X(x),0.02,Z(y)],[X(xb),0.02,Z(y)],[X(xb),0.02,Z(yb)],[X(x),0.02,Z(yb)]],d:d});}});
+  var md=tiles.reduce(function(a,t){return Math.max(a,t.d);},1);return {tiles:tiles,max:md};})();
+function heatCol(v){var a=[240,138,60],b=[58,150,250];return 'rgba('+Math.round(a[0]+(b[0]-a[0])*v)+','+Math.round(a[1]+(b[1]-a[1])*v)+','+Math.round(a[2]+(b[2]-a[2])*v)+',';}
+var NP=360,life=new Float32Array(NP),off=new Float32Array(NP);for(var i=0;i<NP;i++){life[i]=Math.random();off[i]=Math.random()-0.5;}
+function overlay(dt){var dpr=Math.min(window.devicePixelRatio||1,2),W=ov.clientWidth,H=ov.clientHeight;if(ov.width!==Math.round(W*dpr)){ov.width=Math.round(W*dpr);ov.height=Math.round(H*dpr);}
+  g2.setTransform(dpr,0,0,dpr,0,0);g2.clearRect(0,0,W,H);g2.direction='rtl';
+  if(airOn&&!before){for(var i=0;i<NP;i++){life[i]+=dt*0.42;if(life[i]>1){life[i]=0;off[i]=Math.random()-0.5;}var e=emit[i%emit.length],t=life[i],ds=t*2.4;
+    var p=[e.o[0]+e.s[0]*off[i]+e.d[0]*ds,e.o[1]+e.d[1]*ds*0.9-t*t*0.3,e.o[2]+e.s[1]*off[i]+e.d[2]*ds];var q=R.project(p,'ceil');if(!q)continue;
+    var a=Math.sin(Math.PI*t)*0.85,rr=Math.max(1.5,5/q[2]*0+3.2);g2.fillStyle='rgba(64,170,235,'+a.toFixed(3)+')';g2.beginPath();g2.arc(q[0],q[1],rr,0,6.283);g2.fill();}}
+  if(cool&&!before){coolT=Math.min(1,coolT+dt/12);var mins=Math.round(coolT*15),tmp=(29-Math.min(1,coolT*1.15)*6).toFixed(1);
+    $('hud').innerHTML=tmp+'°<small>'+(mins?'אחרי כ-'+mins+' דקות':'מדליקים את המיזוג')+' · יעד 23°</small>';
+    var front=coolT*(HEAT.max+2.5);
+    HEAT.tiles.forEach(function(t){var Q=[];for(var k=0;k<4;k++){var q=R.project(t.c[k],'base');if(!q)return;Q.push(q);}
+      var v=Math.max(0,Math.min(1,(front-t.d)/2.5));g2.fillStyle=heatCol(v)+(0.24+0.10*v).toFixed(3)+')';
+      g2.beginPath();g2.moveTo(Q[0][0],Q[0][1]);for(k=1;k<4;k++)g2.lineTo(Q[k][0],Q[k][1]);g2.closePath();g2.fill();});}
+  if(lblOn&&!before){if(mode!=='tour')D.rooms.forEach(function(r){var q=R.project([X(r[1]),1.3,Z(r[2])],'base');if(q)chip(q[0],q[1],r[0],'rgba(20,28,32,0.55)',12);});
+    D.acLabels.forEach(function(a){var q=R.project([X(a[1]),a[3],Z(a[2])],a[5]);if(q)chip(q[0],q[1],a[0],a[4],12.5);});}
+  if(inst&&!before){(D.drains||[]).forEach(function(d){var q=R.project([X(d[0]),(d[3]||2.2)+0.18,Z(d[1])],'base');if(q)chip(q[0],q[1],mode==='tour'?(d[2]||'ניקוז'):'💧','#1f6fd1',11);});
+    POWER.forEach(function(p){var q=R.project([X(p[0]),(p[2]||2.3)+0.16,Z(p[1])],'base');if(q)chip(q[0],q[1],mode==='tour'?(p[3]||'חשמל'):'⚡','#e0782b',11);});}}
+
+// ---- לולאה ----
+var last=performance.now();
+function frame(now){var rawMs=now-last,dt=Math.min(rawMs/1000,0.05);last=now;
+  if(anim){anim.t+=dt/anim.d;var k=ease(Math.min(anim.t,1));cam.eye=V.lerp(anim.fe,anim.te,k);cam.target=V.lerp(anim.ft,anim.tt,k);snap();if(anim.t>=1)anim=null;}
+  else{var kd=1-Math.exp(-dt*6.5);cam.eye=V.lerp(cam.eye,goal.eye,kd);cam.target=V.lerp(cam.target,goal.target,kd);}
+  walk(dt);if(isInside()!==inside)lightMode();S.groups.roof.visible=inside;S.groups.rlamp.visible=!low&&!before;if(mode==='tour'&&cam.eye[1]>1.8)cam.eye[1]=1.62;
+  if(LIGHTS.length>8&&(plTick++%10===0))pickLights(mode==='tour'?cam.eye:cam.target);
+  S.groups.cone.visible=!low&&gypOn==='R'&&(cam.eye[1]<HW||night);
+  // מציירים מחדש רק כשמשהו השתנה (מצלמה, תאורה, שכבות) — חוסך סוללה וחום בטלפון
+  var sig=cam.eye.concat(cam.target).map(function(v){return v.toFixed(4);}).join()+'|'+R.lt.join()+'|'+R.plI+'|'+R.bg.join()+'|'+R.q+'|'+cv.clientWidth+'x'+cv.clientHeight+'|'+R.pl.length+(R.pl[0]||[]).join()+'|'+Object.keys(S.groups).map(function(k){var g=S.groups[k];return (g.visible?1:0)+''+(g.hidden?1:0)+g.sy;}).join('');
+  if(sig!==lastSig||R.shadowDirty){R.render(cam);lastSig=sig;
+    if(R.q&&!h){if(rawMs>55&&rawMs<1500){slowN++;if(slowN>25){R.q=0;R.shadowDirty=true;}}else if(slowN>0)slowN--;}}   // טלפון חלש: מוותרים על הצללת הסביבה ומורידים רזולוציה, בלי לפגוע בתוכן
+  overlay(dt);if(h&&++shotFrames>6)return;requestAnimationFrame(frame);}
+// הקלטת סרטון הליכה: מציב מצלמה (ביחידות התוכנית) ומצייר פריים אחד באופן סינכרוני
+window.__pcFrame=function(e,t,dt){anim=null;cam.eye=[X(e[0]),e[1],Z(e[2])];cam.target=[X(t[0]),t[1],Z(t[2])];snap();
+  if(isInside()!==inside)lightMode();S.groups.roof.visible=inside;S.groups.rlamp.visible=!low&&!before;
+  if(LIGHTS.length>8)pickLights(cam.eye);S.groups.cone.visible=!low&&gypOn==='R'&&(cam.eye[1]<HW||night);R.render(cam);overlay(dt||0.04);};
+window.__pcUI={setLbl:setLbl,setAir:setAir,setGyp:setGyp,setWalls:setWalls};
+var shotFrames=0,lastSig='',slowN=0;
+// מצב צילום לבדיקה: #shot=iso | top | room:N | st:N
+setGyp('T');
+var h=(location.hash.match(/shot=([\w:]+)/)||[])[1];
+if(h){var a=h.split(':');if(a[0]==='room'){setMode('tour',true);enterRoom(+a[1],true);}else if(a[0]==='st'){guiding=true;$('card').hidden=false;station(+a[1],true);}else setMode(a[0],true);}
+else{setWalls(!D.highWalls);setMode('iso',true);}
+var _dbg=(location.hash.match(/dbg=(\d)/)||[])[1];if(_dbg)R.dbg=+_dbg;
+if(/lowq/.test(location.hash)){R.q=0;R.shadowDirty=true;}
+var _cm=(location.hash.match(/cam=([\d.,-]+)/)||[])[1];if(_cm){_cm=_cm.split(',').map(Number);setMode('tour',true);cam.eye=[X(_cm[0]),_cm[1],Z(_cm[2])];cam.target=[X(_cm[3]),_cm[4],Z(_cm[5])];snap();}   // בדיקה: #cam=x,גובה,y,x,גובה,y
+if(/night/.test(location.hash))setNight(true);if(/before/.test(location.hash))setBefore(true);if(/inst/.test(location.hash))setInst(true);if(/led/.test(location.hash))setLed(true);if(/cool/.test(location.hash)){setCool(true);coolT=0.85;}
+requestAnimationFrame(function(t){last=t;frame(t);window.__ready=true;});
+})();
+</script>
+
+
+<script>/* זווית פתיחה לסיור הזה בלבד: מבט מהסלון אל החדרים (לא נוגע במנוע) */
+(function(){var n=0;function go(){if(!window.__ready||!window.__pcFrame){if(n++<200)return setTimeout(go,50);return;}
+ if(location.hash)return;var port=innerWidth/innerHeight<0.9;
+ if(port)window.__pcFrame([-330,12.5,560],[640,0,480]);else window.__pcFrame([-220,9,545],[660,0,470]);}go();})();</script>
+</body></html>
