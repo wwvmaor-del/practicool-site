@@ -214,12 +214,12 @@ footer{text-align:center;color:var(--mut);font-size:.88rem;padding:2rem 5% 2.5re
 <script>
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a');if(!a||typeof gtag!=='function')return;if(a.href.indexOf('wa.me')>-1)gtag('event','whatsapp_click',{page:'vrf'});else if(a.href.indexOf('tel:')===0)gtag('event','phone_click',{page:'vrf'});});
 document.getElementById('f').addEventListener('submit',async function(e){
- e.preventDefault();var f=e.target,b=f.querySelector('button[type=submit]');b.disabled=true;b.textContent='שולח...';
- var d=new FormData(f);d.append('access_key','0ac1bba8-fb1a-41e3-a861-c75ad4f730e2');d.append('subject','ליד חדש – דף נחיתה VRF');d.append('from_name','דף נחיתה VRF');d.append('נשלח מדף','practicool.co.il/vrf');
- try{var r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:d});var j=await r.json();if(!j.success)throw 0;
-  if(typeof gtag==='function')gtag('event','generate_lead',{page:'vrf',property:f['סוג נכס'].value});
+ e.preventDefault();var f=e.target,b=f.querySelector('button[type=submit]');if(f.botcheck&&f.botcheck.checked)return;b.disabled=true;b.textContent='שולח...';
+ var data={access_key:'0ac1bba8-fb1a-41e3-a861-c75ad4f730e2',subject:'ליד חדש – דף נחיתה VRF',from_name:'דף נחיתה VRF','שם':f['שם'].value,'טלפון':f['טלפון'].value,'עיר':f['עיר'].value,'סוג נכס':f['סוג נכס'].value,'נשלח מדף':'practicool.co.il/vrf',botcheck:''};
+ try{var r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)});var j=await r.json();if(!j.success)throw 0;
+  if(typeof gtag==='function')gtag('event','generate_lead',{method:'form',page:'vrf'});
   f.style.display='none';document.getElementById('ok').style.display='block';
- }catch(x){b.disabled=false;b.textContent='קבלו הצעת מחיר ל-VRF';alert('השליחה לא הצליחה – אפשר לשלוח לנו בוואטסאפ או להתקשר 051-500-2490');}
+ }catch(x){b.disabled=false;b.textContent='קבלו הצעת מחיר ל-VRF';var o=document.getElementById('ok');o.innerHTML='<b>לא הצלחנו לשלוח כרגע.</b>שלחו לנו בוואטסאפ או התקשרו 051-500-2490<br><br><a class="btn-wa" href="https://wa.me/972515002490" target="_blank" rel="noopener">שליחה בוואטסאפ</a>';o.style.display='block';}
 });
 </script>
 </body>

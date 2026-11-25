@@ -995,3 +995,4 @@ requestAnimationFrame(function(t){last=t;frame(t);window.__ready=true;});
 })();
 </script>
 
+<script id="pc-novoice">(function(){var n=0;function f(){var b=document.getElementById("bVoice");if(!window.__ready||!b){if(n++<200)setTimeout(f,50);return;}if(b.getAttribute("aria-pressed")==="true")b.click();b.hidden=true;}f();})();</script>

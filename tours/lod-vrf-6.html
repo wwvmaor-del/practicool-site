@@ -1034,4 +1034,4 @@ requestAnimationFrame(function(t){last=t;frame(t);window.__ready=true;});
 (function(){var n=0;function go(){if(!window.__ready||!window.__pcFrame){if(n++<200)return setTimeout(go,50);return;}
  if(location.hash)return;var port=innerWidth/innerHeight<0.9;
  if(port)window.__pcFrame([-330,12.5,560],[640,0,480]);else window.__pcFrame([-220,9,545],[660,0,470]);}go();})();</script>
-</body></html>
+<script id="pc-novoice">(function(){var n=0;function f(){var b=document.getElementById("bVoice");if(!window.__ready||!b){if(n++<200)setTimeout(f,50);return;}if(b.getAttribute("aria-pressed")==="true")b.click();b.hidden=true;}f();})();</script></body></html>
