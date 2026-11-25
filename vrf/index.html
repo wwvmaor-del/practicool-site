@@ -37,8 +37,9 @@ h1 span{color:var(--blue)}
 .form-card .fs{color:var(--mut);font-size:.9rem;text-align:center;margin-bottom:1.1rem}
 .fg{margin-bottom:.85rem}
 .fg label{display:block;font-size:.86rem;font-weight:500;color:#cbd5e1;margin-bottom:.25rem}
-.fg input,.fg select{width:100%;padding:.75rem .9rem;border-radius:8px;border:1px solid #334155;background:var(--input);color:#fff;font:inherit;font-size:1rem}
-.fg input:focus,.fg select:focus{outline:none;border-color:var(--blue)}
+.fg textarea{resize:vertical;min-height:58px}
+.fg input,.fg select,.fg textarea{width:100%;padding:.75rem .9rem;border-radius:8px;border:1px solid #334155;background:var(--input);color:#fff;font:inherit;font-size:1rem}
+.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--blue)}
 .btn-main{display:block;width:100%;background:var(--blue);color:#fff;border:0;border-radius:8px;padding:.9rem;font:inherit;font-size:1.1rem;font-weight:700;cursor:pointer;text-align:center;text-decoration:none}
 .btn-main:hover{background:var(--blue2)}
 .or{text-align:center;color:var(--mut);font-size:.85rem;margin:.7rem 0}
@@ -131,6 +132,7 @@ footer{text-align:center;color:var(--mut);font-size:.88rem;padding:2rem 5% 2.5re
     <div class="fg"><label for="p">טלפון *</label><input id="p" name="טלפון" type="tel" required autocomplete="tel" inputmode="tel"></div>
     <div class="fg"><label for="c">עיר *</label><input id="c" name="עיר" required></div>
     <div class="fg"><label for="t">סוג נכס</label><select id="t" name="סוג נכס"><option>דירה חדשה מקבלן</option><option>דירה קיימת</option><option>וילה / בית פרטי</option></select></div>
+    <div class="fg"><label for="r">סיבת הפנייה / הערות</label><textarea id="r" name="סיבת הפנייה" rows="2" placeholder="לדוגמה: דירה חדשה בלוד, מסירה בעוד 4 חודשים"></textarea></div>
     <input type="checkbox" name="botcheck" class="pc-hp" tabindex="-1" autocomplete="off">
     <button class="btn-main" type="submit">קבלו הצעת מחיר ל-VRF</button>
     <p class="or">או להתייעצות ישירה</p>
@@ -215,7 +217,7 @@ footer{text-align:center;color:var(--mut);font-size:.88rem;padding:2rem 5% 2.5re
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a');if(!a||typeof gtag!=='function')return;if(a.href.indexOf('wa.me')>-1)gtag('event','whatsapp_click',{page:'vrf'});else if(a.href.indexOf('tel:')===0)gtag('event','phone_click',{page:'vrf'});});
 document.getElementById('f').addEventListener('submit',async function(e){
  e.preventDefault();var f=e.target,b=f.querySelector('button[type=submit]');if(f.botcheck&&f.botcheck.checked)return;b.disabled=true;b.textContent='שולח...';
- var data={access_key:'0ac1bba8-fb1a-41e3-a861-c75ad4f730e2',subject:'ליד חדש – דף נחיתה VRF',from_name:'דף נחיתה VRF','שם':f['שם'].value,'טלפון':f['טלפון'].value,'עיר':f['עיר'].value,'סוג נכס':f['סוג נכס'].value,'נשלח מדף':'practicool.co.il/vrf',botcheck:''};
+ var data={access_key:'0ac1bba8-fb1a-41e3-a861-c75ad4f730e2',subject:'ליד חדש – דף נחיתה VRF',from_name:'דף נחיתה VRF','שם':f['שם'].value,'טלפון':f['טלפון'].value,'עיר':f['עיר'].value,'סוג נכס':f['סוג נכס'].value,'סיבת הפנייה':f['סיבת הפנייה'].value,'נשלח מדף':'practicool.co.il/vrf',botcheck:''};
  try{var r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)});var j=await r.json();if(!j.success)throw 0;
   if(typeof gtag==='function')gtag('event','generate_lead',{method:'form',page:'vrf'});
   f.style.display='none';document.getElementById('ok').style.display='block';
