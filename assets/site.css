@@ -1665,3 +1665,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible,input:focus-visible,s
 .pc-art .pc-cta a{display:inline-block;padding:13px 22px;border-radius:10px;font-weight:800;text-decoration:none}
 .pc-art .pc-cta .a1{background:#0EA5E9;color:#fff}.pc-art .pc-cta .a2{background:#22C55E;color:#fff}
 .pc-art .pc-tw{overflow-x:auto}
+.pc-art .pc-kicker{color:#0EA5E9;font-weight:800;letter-spacing:.05em;margin:0 0 6px}
+.pc-art .pc-fig{margin:14px 0 6px}.pc-art .pc-fig img{width:100%;height:auto;border-radius:12px;border:1px solid #D6E2EC;display:block}
+.pc-art figcaption{font-size:14px;color:#516074;margin-top:6px}
+.pc-art .pc-vidbox{margin:14px 0 8px}.pc-art .pc-vidbox video{width:100%;max-height:640px;height:auto;border-radius:12px;background:#0A1628;display:block}
