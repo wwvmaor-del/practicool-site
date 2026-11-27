@@ -45,6 +45,10 @@ h1 span{color:var(--blue)}
 .or{text-align:center;color:var(--mut);font-size:.85rem;margin:.7rem 0}
 .btn-wa{display:block;text-align:center;background:var(--wa);color:#fff;border-radius:8px;padding:.8rem;text-decoration:none;font-weight:700}
 .btn-wa:hover{background:var(--wa2)}
+.fg .lbl{display:block;font-size:.86rem;font-weight:500;color:#cbd5e1;margin-bottom:.25rem}
+.chips{display:grid;grid-template-columns:repeat(3,1fr);gap:.45rem}.chips label{margin:0;cursor:pointer}.chips input{position:absolute;opacity:0;pointer-events:none}.chips span{display:block;text-align:center;padding:.7rem .3rem;border:1px solid #334155;border-radius:8px;background:var(--input);color:#cbd5e1;font-size:.92rem;font-weight:500;transition:.15s}.chips input:checked+span{border-color:var(--blue);background:rgba(14,165,233,.16);color:#fff;font-weight:700}.chips input:focus-visible+span{outline:2px solid var(--blue);outline-offset:2px}
+.trust{text-align:center;color:#94a3b8;font-size:.8rem;margin:.55rem 0 0}
+.btn-wa.ghost{background:transparent;border:1.5px solid var(--wa);color:#4ade80;padding:.7rem}.btn-wa.ghost:hover{background:var(--wa);color:#fff}
 .priv{color:var(--mut);font-size:.75rem;text-align:center;margin-top:.7rem}
 .pc-hp{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip-path:inset(50%)!important;opacity:0!important;pointer-events:none}
 .ok{display:none;text-align:center;background:rgba(34,197,94,.12);border:1px solid var(--wa);border-radius:10px;padding:1.2rem}
@@ -131,12 +135,13 @@ footer{text-align:center;color:var(--mut);font-size:.88rem;padding:2rem 5% 2.5re
     <div class="fg"><label for="n">שם מלא *</label><input id="n" name="שם" required autocomplete="name"></div>
     <div class="fg"><label for="p">טלפון *</label><input id="p" name="טלפון" type="tel" required autocomplete="tel" inputmode="tel"></div>
     <div class="fg"><label for="c">עיר *</label><input id="c" name="עיר" required></div>
-    <div class="fg"><label for="t">סוג נכס</label><select id="t" name="סוג נכס"><option>דירה חדשה מקבלן</option><option>דירה קיימת</option><option>וילה / בית פרטי</option></select></div>
+    <div class="fg"><span class="lbl">סוג נכס</span><div class="chips" role="radiogroup" aria-label="סוג נכס"><label><input type="radio" name="סוג נכס" value="דירה חדשה מקבלן" checked><span>דירה חדשה</span></label><label><input type="radio" name="סוג נכס" value="דירה קיימת"><span>דירה קיימת</span></label><label><input type="radio" name="סוג נכס" value="וילה / בית פרטי"><span>וילה / בית</span></label></div></div>
     <div class="fg"><label for="r">סיבת הפנייה / הערות</label><textarea id="r" name="סיבת הפנייה" rows="2" placeholder="לדוגמה: דירה חדשה בלוד, מסירה בעוד 4 חודשים"></textarea></div>
     <input type="checkbox" name="botcheck" class="pc-hp" tabindex="-1" autocomplete="off">
     <button class="btn-main" type="submit">קבלו הצעת מחיר ל-VRF</button>
+    <p class="trust">ללא התחייבות · אחריות יצרן + אחריות על ההתקנה</p>
     <p class="or">או להתייעצות ישירה</p>
-    <a class="btn-wa" href="https://wa.me/972515002490?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%94%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%9C-VRF" target="_blank" rel="noopener">שליחת הודעה בוואטסאפ</a>
+    <a class="btn-wa ghost" href="https://wa.me/972515002490?text=%D7%94%D7%99%D7%99%2C%20%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%94%D7%A6%D7%A2%D7%AA%20%D7%9E%D7%97%D7%99%D7%A8%20%D7%9C-VRF" target="_blank" rel="noopener">שליחת הודעה בוואטסאפ</a>
     <p class="priv">הפרטים משמשים רק לחזרה אליכם בעניין הפנייה.</p>
    </form>
    <div class="ok" id="ok"><b>תודה! הפרטים התקבלו.</b>נחזור אליכם בהקדם. רוצים לשלוח כבר עכשיו תוכנית דירה?<br><br><a class="btn-wa" href="https://wa.me/972515002490" target="_blank" rel="noopener">שליחת תוכנית בוואטסאפ</a></div>
