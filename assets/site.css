@@ -1615,6 +1615,7 @@ img{height:auto}
 .pc-simband{background:#0A1628;color:#fff;text-align:center;padding:40px 20px}.pc-simband h2{font:900 28px Heebo,sans-serif;margin:0 0 8px}.pc-simband p{margin:0 0 18px;color:#F0F6FB}
 .pc-simband a{display:inline-block;background:#C9A227;color:#0A1628;text-decoration:none;font:800 18px Heebo,sans-serif;border-radius:12px;padding:14px 28px}
 
+.pcw-card .ib>.ic{display:none!important}
 .pc-hp{position:absolute!important;width:1px!important;height:1px!important;margin:0!important;padding:0!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;clip-path:inset(50%)!important;opacity:0!important;pointer-events:none}.pc-formnote{font-size:13px;color:#516074;margin:0}.pc-formnote a{color:inherit;text-decoration:underline}
 
 @media(min-width:1440px){.hdr .in>.con:first-child{flex:0 0 auto!important;margin-left:28px}.hdr .in>.con:nth-child(2){flex:1 1 auto!important;min-width:0}.hdr .nav{flex-wrap:wrap!important;justify-content:center;column-gap:16px;row-gap:6px}}
