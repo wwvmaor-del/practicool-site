@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-30 -30 180 180" width="180" height="180">
+<title>פרקטי-קור – סמל</title>
+<style>
+@keyframes cw{to{transform:rotate(360deg)}}
+@keyframes ccw{to{transform:rotate(-360deg)}}
+@keyframes dash{0%,100%{stroke-dashoffset:0;opacity:.35}50%{stroke-dashoffset:-12;opacity:.9}}
+@keyframes ring{0%,100%{opacity:.25;transform:scale(1)}50%{opacity:.7;transform:scale(1.04)}}
+.r{transform-origin:60px 60px;animation:ring 4s ease-in-out infinite}
+.r2{animation-delay:.6s}
+.a{transform-origin:30px 30px}
+.cw24{animation:cw 24s linear infinite}.ccw16{animation:ccw 16s linear infinite}.ccw30{animation:ccw 30s linear infinite}.cw10{animation:cw 10s linear infinite}
+.w{animation:dash 2.5s ease-in-out infinite}.w2{animation-delay:.35s}.w3{animation-delay:.7s}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<defs>
+<linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#b8e8ff"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#0369a1"/></linearGradient>
+<linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#38bdf8" stop-opacity=".22"/><stop offset="50%" stop-color="#0ea5e9" stop-opacity=".08"/><stop offset="100%" stop-color="#020d1f" stop-opacity=".85"/></linearGradient>
+<linearGradient id="hi" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff" stop-opacity=".14"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<radialGradient id="halo"><stop offset="0%" stop-color="#0ea5e9" stop-opacity=".35"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
+<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+<filter id="dot" x="-300%" y="-300%" width="700%" height="700%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<circle cx="60" cy="60" r="88" fill="url(#halo)"/>
+<circle class="r" cx="60" cy="60" r="72" fill="none" stroke="#38bdf8" stroke-opacity=".28" stroke-width="1"/>
+<circle class="r r2" cx="60" cy="60" r="84" fill="none" stroke="#38bdf8" stroke-opacity=".14" stroke-width="1"/>
+<rect x=".5" y=".5" width="119" height="119" rx="30" fill="url(#glass)" stroke="#38bdf8" stroke-opacity=".38"/>
+<rect x="10" y="2" width="76" height="40" rx="20" fill="url(#hi)"/>
+<g transform="translate(14,14) scale(1.533)">
+<path class="w" d="M3 18 Q8 15 7 9" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" fill="none" stroke-dasharray="8 4"/>
+<path class="w w2" d="M3 27 Q10 24 8 17" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" fill="none" stroke-dasharray="8 4"/>
+<path class="w w3" d="M3 36 Q8 39 7 45" stroke="#38bdf8" stroke-width="1.8" stroke-linecap="round" fill="none" stroke-dasharray="8 4"/>
+<g class="a ccw30"><polygon points="30,4 51,16 51,44 30,56 9,44 9,16" stroke="rgba(56,189,248,0.25)" stroke-width="1" fill="none"/></g>
+<g class="a cw24" stroke-linecap="round" filter="url(#glow)">
+<line x1="30" y1="6" x2="30" y2="54" stroke="url(#g)" stroke-width="2.2"/><line x1="6" y1="30" x2="54" y2="30" stroke="url(#g)" stroke-width="2.2"/>
+<line x1="11.5" y1="11.5" x2="48.5" y2="48.5" stroke="url(#g)" stroke-width="2"/><line x1="48.5" y1="11.5" x2="11.5" y2="48.5" stroke="url(#g)" stroke-width="2"/>
+<line x1="30" y1="6" x2="24" y2="13" stroke="url(#g)" stroke-width="1.8"/><line x1="30" y1="6" x2="36" y2="13" stroke="url(#g)" stroke-width="1.8"/>
+<line x1="30" y1="54" x2="24" y2="47" stroke="url(#g)" stroke-width="1.8"/><line x1="30" y1="54" x2="36" y2="47" stroke="url(#g)" stroke-width="1.8"/>
+<line x1="6" y1="30" x2="13" y2="24" stroke="url(#g)" stroke-width="1.8"/><line x1="6" y1="30" x2="13" y2="36" stroke="url(#g)" stroke-width="1.8"/>
+<line x1="54" y1="30" x2="47" y2="24" stroke="url(#g)" stroke-width="1.8"/><line x1="54" y1="30" x2="47" y2="36" stroke="url(#g)" stroke-width="1.8"/>
+</g>
+<g class="a ccw16" stroke-linecap="round">
+<line x1="30" y1="16" x2="30" y2="44" stroke="rgba(86,200,245,.55)" stroke-width="1.6"/><line x1="16" y1="30" x2="44" y2="30" stroke="rgba(86,200,245,.55)" stroke-width="1.6"/>
+<line x1="19.4" y1="19.4" x2="40.6" y2="40.6" stroke="rgba(86,200,245,.5)" stroke-width="1.4"/><line x1="40.6" y1="19.4" x2="19.4" y2="40.6" stroke="rgba(86,200,245,.5)" stroke-width="1.4"/>
+</g>
+<g class="a cw10" stroke-linecap="round"><line x1="30" y1="22" x2="30" y2="38" stroke="rgba(184,232,255,.35)" stroke-width="1.4"/><line x1="22" y1="30" x2="38" y2="30" stroke="rgba(184,232,255,.35)" stroke-width="1.4"/></g>
+<circle cx="30" cy="30" r="2.8" fill="#fff" filter="url(#dot)"/>
+</g>
+</svg>
